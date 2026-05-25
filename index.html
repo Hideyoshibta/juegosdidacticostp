@@ -299,10 +299,7 @@
 
     .card-top {
       position: relative;
-      background: linear-gradient(135deg, #FCE4F3 0%, #D4F56A 100%);
-      padding: 2rem 1.5rem 1.5rem;
-      display: flex; align-items: center; justify-content: center;
-      min-height: 200px;
+      overflow: hidden;
     }
 
     /* category color variations */
@@ -313,18 +310,13 @@
     .card-top.cat-selva { background: linear-gradient(135deg,#E0F7FA,#B2EBF2); }
     .card-top.cat-mar   { background: linear-gradient(135deg,#E3F2FD,#BBDEFB); }
 
-    .card-img-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
-      width: 100%;
+    .card-img-single {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      display: block;
+      border-radius: 0;
+      transition: transform .5s;
     }
-    .card-img-grid img {
-      width: 100%; aspect-ratio:1; object-fit:cover;
-      border-radius: 8px;
-      transition: transform .4s;
-    }
-    .product-card:hover .card-img-grid img { transform:scale(1.07); }
+    .product-card:hover .card-img-single { transform:scale(1.06); }
 
     .card-badge-top {
       position:absolute; top:12px; right:12px;
@@ -524,11 +516,7 @@
     <!-- 1. ABECEDARIO -->
     <div class="product-card" data-cat="letras">
       <div class="card-top cat-abc">
-        <div class="card-img-grid">
-          <img src="https://juegosdidacticostp.com/abecedario.png" alt="Abecedario 1" />
-          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Abecedario 2" />
-          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Abecedario 3" />
-        </div>
+        <img src="https://juegosdidacticostp.com/abecedario.png" alt="Abecedario" class="card-img-single" />
         <span class="card-badge-top">⭐ Más vendido</span>
       </div>
       <div class="card-body">
@@ -546,11 +534,7 @@
     <!-- 2. LOS NÚMEROS -->
     <div class="product-card" data-cat="numeros">
       <div class="card-top cat-num">
-        <div class="card-img-grid">
-          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Números 1" />
-          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Números 2" />
-          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Números 3" />
-        </div>
+        <img src="https://juegosdidacticostp.com/imagen3.png" alt="Los Números" class="card-img-single" />
         <span class="card-badge-top">🔢 Nuevo</span>
       </div>
       <div class="card-body">
@@ -568,11 +552,7 @@
     <!-- 3. ANIMALES DOMÉSTICOS -->
     <div class="product-card" data-cat="animales">
       <div class="card-top cat-dom">
-        <div class="card-img-grid">
-          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Doméstico 1" />
-          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Doméstico 2" />
-          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Doméstico 3" />
-        </div>
+        <img src="https://juegosdidacticostp.com/animales domesticos.png" alt="Animales Domésticos" class="card-img-single" />
         <span class="card-badge-top">🐶 Popular</span>
       </div>
       <div class="card-body">
@@ -590,11 +570,7 @@
     <!-- 4. ANIMALES DE LA GRANJA -->
     <div class="product-card" data-cat="animales">
       <div class="card-top cat-granja">
-        <div class="card-img-grid">
-          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Granja 1" />
-          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Granja 2" />
-          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Granja 3" />
-        </div>
+        <img src="https://juegosdidacticostp.com/animales de la granja.png" alt="Animales de la Granja" class="card-img-single" />
         <span class="card-badge-top">🐄 Clásico</span>
       </div>
       <div class="card-body">
@@ -612,11 +588,7 @@
     <!-- 5. ANIMALES DE LA SELVA -->
     <div class="product-card" data-cat="animales">
       <div class="card-top cat-selva">
-        <div class="card-img-grid">
-          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Selva 1" />
-          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Selva 2" />
-          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Selva 3" />
-        </div>
+        <img src="https://juegosdidacticostp.com/animales de la selva.png" alt="Animales de la Selva" class="card-img-single" />
         <span class="card-badge-top">🦁 Aventura</span>
       </div>
       <div class="card-body">
@@ -634,11 +606,7 @@
     <!-- 6. ANIMALES DEL MAR -->
     <div class="product-card" data-cat="animales">
       <div class="card-top cat-mar">
-        <div class="card-img-grid">
-          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Mar 1" />
-          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Mar 2" />
-          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Mar 3" />
-        </div>
+        <img src="https://juegosdidacticostp.com/animales del mar.png" alt="Animales del Mar" class="card-img-single" />
         <span class="card-badge-top">🐠 Especial</span>
       </div>
       <div class="card-body">
