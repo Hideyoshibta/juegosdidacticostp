@@ -1,132 +1,763 @@
-<html lang="es"><head>
-    <link rel="icon" href="/image4.png" type="image/png">
-    <meta charset="UTF-8">
-    <title>Juegos Didácticos TP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juegos Didácticos TP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink:      #E91E8C;
+      --pink-light:#F06BB7;
+      --pink-pale: #FCE4F3;
+      --green:     #7CB518;
+      --green-mid: #A8D520;
+      --green-light:#D4F56A;
+      --orange:    #FF8C00;
+      --orange2:   #FFA500;
+      --yellow:    #FFD600;
+      --cream:     #FFFDE7;
+      --dark:      #1C2B0E;
+      --white:     #FFFFFF;
+      --shadow-card: 0 8px 30px rgba(0,0,0,.15);
+    }
 
-    <!-- Fuente infantil -->
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&amp;display=swap" rel="stylesheet">
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Baloo 2', cursive;
-            background: #f7f9fF;
-            color: #333;
-        }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
 
-        header {
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            text-align: center;
-            padding: 30px 15px;
-        }
+    /* ── HERO BG GRADIENT (rosa → verde del catálogo) ── */
+    .hero-bg {
+      background: linear-gradient(160deg, #F06BB7 0%, #E91E8C 30%, #9DC215 65%, #7CB518 100%);
+    }
 
-        header h1 {
-            font-size: 40px;
-            color: #fff;
-            margin: 0;
-        }
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .85rem 2rem;
+      background: rgba(233,30,140,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid var(--yellow);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,.2); }
 
-        header p {
-            color: #fff;
-            font-size: 20px;
-        }
+    .nav-logo {
+      display: flex; align-items: center; gap: .6rem;
+      text-decoration: none;
+    }
+    .nav-logo-text {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 900; font-size: 1.3rem;
+      color: #fff;
+      line-height: 1;
+    }
+    .nav-logo-text span { color: var(--yellow); }
 
-        section {
-            padding: 40px 20px;
-            max-width: 1100px;
-            margin: auto;
-        }
+    .nav-cta {
+      background: var(--yellow);
+      color: var(--dark);
+      border: none; border-radius: 50px;
+      padding: .5rem 1.4rem;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800; font-size: .95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,.2);
+    }
+    .nav-cta:hover { transform: translateY(-2px) scale(1.05); }
 
-        .intro {
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 40px;
-        }
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 1.5rem 5rem;
+      overflow: hidden;
+    }
 
-        .productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
+    /* Diagonal divider at bottom */
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 80px;
+      background: var(--cream);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    }
 
-        .producto {
-            background: #fff;
-            border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            text-align: center;
-        }
+    /* Floating circles deco */
+    .hero-deco {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .deco-circle {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      animation: floatC 8s ease-in-out infinite alternate;
+    }
+    .deco-circle:nth-child(1){ width:300px;height:300px; top:-80px;left:-80px; animation-delay:0s;}
+    .deco-circle:nth-child(2){ width:180px;height:180px; top:60%;right:-50px; animation-delay:2s;}
+    .deco-circle:nth-child(3){ width:120px;height:120px; top:20%;right:15%; animation-delay:4s;}
+    .deco-circle:nth-child(4){ width:240px;height:240px; bottom:-60px;left:20%; animation-delay:1s;}
+    @keyframes floatC {
+      from { transform: translateY(0) scale(1); }
+      to   { transform: translateY(-25px) scale(1.06); }
+    }
 
-        .producto img {
-            width: 100%;
-            border-radius: 15px;
-        }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,.25);
+      border: 2px solid rgba(255,255,255,.5);
+      color: #fff;
+      border-radius: 50px; padding: .3rem 1rem;
+      font-weight: 800; font-size: .85rem;
+      margin-bottom: 1.4rem;
+      animation: pop .7s cubic-bezier(.34,1.56,.64,1) both;
+      backdrop-filter: blur(6px);
+    }
+    @keyframes pop { from{opacity:0;transform:scale(.5)} to{opacity:1;transform:scale(1)} }
 
-        .producto h3 {
-            font-size: 22px;
-            margin: 15px 0 10px;
-            color: #ff6f61;
-        }
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 20px rgba(0,0,0,.2);
+      animation: slideUp .7s .15s both;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--yellow);
+      position: relative;
+    }
+    .hero h1 em::after {
+      content:'';
+      position:absolute; bottom:-6px; left:0; right:0; height:5px;
+      background: var(--yellow);
+      border-radius: 3px;
+      transform: scaleX(0); transform-origin: left;
+      animation: lineGrow 1s .9s forwards;
+    }
+    @keyframes lineGrow { to{ transform:scaleX(1); } }
 
-        footer {
-            background: #6a11cb;
-            color: white;
-            text-align: center;
-            padding: 25px 15px;
-            margin-top: 40px;
-        }
+    .hero p {
+      max-width: 550px;
+      font-size: clamp(1rem,2.5vw,1.2rem);
+      color: rgba(255,255,255,.9);
+      line-height: 1.7;
+      margin-bottom: 2.4rem;
+      animation: slideUp .7s .3s both;
+    }
 
-        footer a {
-            color: #ffd700;
-            text-decoration: none;
-            font-size: 20px;
-        }
-    </style>
+    @keyframes slideUp {
+      from{opacity:0;transform:translateY(28px)}
+      to  {opacity:1;transform:translateY(0)}
+    }
+
+    .hero-btns {
+      display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+      animation: slideUp .7s .45s both;
+    }
+
+    .btn-primary {
+      background: var(--yellow);
+      color: var(--dark);
+      border: none; border-radius: 50px;
+      padding: .9rem 2.2rem;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800; font-size: 1.05rem;
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      box-shadow: 0 6px 22px rgba(0,0,0,.2);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .btn-primary:hover { transform:translateY(-4px) scale(1.04); box-shadow:0 12px 32px rgba(0,0,0,.25); }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2.5px solid #fff;
+      border-radius: 50px;
+      padding: .9rem 2.2rem;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800; font-size: 1.05rem;
+      cursor: pointer; text-decoration: none;
+      transition: background .2s, color .2s, transform .2s;
+    }
+    .btn-outline:hover { background:#fff; color:var(--pink); transform:translateY(-4px); }
+
+    /* floating emojis */
+    .floaters { position:absolute; inset:0; pointer-events:none; }
+    .floater {
+      position: absolute; font-size: 2.2rem;
+      animation: floatA 6s ease-in-out infinite;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.2));
+    }
+    .floater:nth-child(1){top:14%;left:6%; animation-delay:0s;}
+    .floater:nth-child(2){top:18%;right:8%; animation-delay:1.2s; font-size:1.8rem;}
+    .floater:nth-child(3){top:62%;left:4%; animation-delay:2.1s; font-size:2.5rem;}
+    .floater:nth-child(4){top:68%;right:6%; animation-delay:.8s;}
+    .floater:nth-child(5){top:38%;left:2%; animation-delay:3s; font-size:1.6rem;}
+    .floater:nth-child(6){top:44%;right:2%; animation-delay:1.6s; font-size:2rem;}
+    @keyframes floatA{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: var(--green);
+      padding: 1.6rem 2rem;
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 2.5rem;
+    }
+    .stat { text-align:center; opacity:0; transform:translateY(18px); transition:opacity .6s, transform .6s; }
+    .stat.visible { opacity:1; transform:translateY(0); }
+    .stat strong {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem; font-weight: 900;
+      color: var(--yellow); display:block;
+    }
+    .stat span { font-size:.83rem; color:#fff; opacity:.85; }
+
+    /* ── SECTIONS ── */
+    section { position:relative; z-index:1; padding:5.5rem 1.5rem; }
+    .section-label {
+      display: inline-block;
+      background: var(--pink);
+      color: #fff;
+      border-radius: 50px; padding: .25rem 1rem;
+      font-weight: 800; font-size: .8rem;
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 900;
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      margin-bottom: .5rem;
+    }
+    .section-sub { color:#557a1a; font-size:1.05rem; margin-bottom:3rem; }
+    .section-head { text-align:center; }
+
+    /* ── COLLECTION TABS ── */
+    .products-section { background: #fff; }
+
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      justify-content: center;
+      margin-bottom: 2.8rem;
+    }
+    .tab {
+      background: var(--pink-pale);
+      color: var(--pink);
+      border: 2px solid var(--pink);
+      border-radius: 50px; padding: .45rem 1.2rem;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 700; font-size: .9rem;
+      cursor: pointer;
+      transition: background .2s, color .2s, transform .2s;
+    }
+    .tab:hover, .tab.active {
+      background: var(--pink); color:#fff;
+      transform: translateY(-2px);
+    }
+
+    /* ── PRODUCTS GRID ── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.8rem;
+      max-width: 1150px; margin: 0 auto;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 2.5px solid transparent;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s, border-color .3s;
+      opacity:0; transform:translateY(36px);
+    }
+    .product-card.visible { opacity:1; transform:translateY(0); }
+    .product-card:hover {
+      transform:translateY(-10px) scale(1.02);
+      box-shadow: 0 22px 55px rgba(233,30,140,.18);
+      border-color: var(--pink);
+    }
+
+    .card-top {
+      position: relative;
+      background: linear-gradient(135deg, #FCE4F3 0%, #D4F56A 100%);
+      padding: 2rem 1.5rem 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 200px;
+    }
+
+    /* category color variations */
+    .card-top.cat-abc   { background: linear-gradient(135deg,#FCE4F3,#F9C6E8); }
+    .card-top.cat-num   { background: linear-gradient(135deg,#FFF3CD,#FFE082); }
+    .card-top.cat-dom   { background: linear-gradient(135deg,#E8F5E9,#C8E6C9); }
+    .card-top.cat-granja{ background: linear-gradient(135deg,#FFF8E1,#FFE0B2); }
+    .card-top.cat-selva { background: linear-gradient(135deg,#E0F7FA,#B2EBF2); }
+    .card-top.cat-mar   { background: linear-gradient(135deg,#E3F2FD,#BBDEFB); }
+
+    .card-img-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      width: 100%;
+    }
+    .card-img-grid img {
+      width: 100%; aspect-ratio:1; object-fit:cover;
+      border-radius: 8px;
+      transition: transform .4s;
+    }
+    .product-card:hover .card-img-grid img { transform:scale(1.07); }
+
+    .card-badge-top {
+      position:absolute; top:12px; right:12px;
+      background: var(--pink); color:#fff;
+      border-radius:20px; padding:.22rem .75rem;
+      font-weight:800; font-size:.72rem;
+    }
+
+    .card-body {
+      padding: 1.4rem 1.5rem;
+      border-top: 3px solid var(--pink-pale);
+    }
+    .card-body h3 {
+      font-family:'Baloo 2',cursive;
+      font-weight:800; font-size:1.15rem;
+      margin-bottom:.4rem;
+    }
+    .card-body p { color:#6b5f7e; font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+
+    .tag-row { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.1rem; }
+    .tag {
+      background:var(--green-light); color:var(--dark);
+      border-radius:20px; padding:.18rem .65rem;
+      font-size:.75rem; font-weight:700;
+    }
+
+    .card-btn {
+      display:block; width:100%;
+      background: var(--pink); color:#fff;
+      border:none; border-radius:12px;
+      padding:.6rem;
+      font-family:'Baloo 2',cursive;
+      font-weight:800; font-size:.92rem;
+      cursor:pointer; text-decoration:none; text-align:center;
+      transition: background .2s, transform .2s;
+    }
+    .card-btn:hover { background:var(--orange); transform:translateY(-2px); }
+
+    /* ── WHY ── */
+    .why-section {
+      background: linear-gradient(160deg, var(--pink) 0%, #C2185B 100%);
+      color:#fff;
+    }
+    .why-section .section-title { color:#fff; }
+    .why-section .section-sub { color:rgba(255,255,255,.65); }
+    .why-section .section-label { background:rgba(255,255,255,.25); color:#fff; border:2px solid rgba(255,255,255,.4); }
+
+    .why-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px,1fr));
+      gap:1.4rem; max-width:980px; margin:0 auto;
+    }
+    .why-card {
+      background: rgba(255,255,255,.12);
+      border:2px solid rgba(255,255,255,.2);
+      border-radius:20px; padding:2rem 1.4rem;
+      text-align:center;
+      transition:background .3s,transform .3s;
+      opacity:0; transform:translateY(28px);
+    }
+    .why-card.visible { opacity:1; transform:translateY(0); }
+    .why-card:hover { background:rgba(255,255,255,.22); transform:translateY(-6px); }
+    .why-icon { font-size:2.8rem; margin-bottom:.9rem; display:block; animation:wobble 3s ease-in-out infinite; }
+    @keyframes wobble{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+    .why-card h4 { font-family:'Baloo 2',cursive; font-weight:800; font-size:1rem; margin-bottom:.35rem; color:var(--yellow); }
+    .why-card p  { font-size:.88rem; opacity:.8; line-height:1.6; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 50%, var(--orange) 100%);
+      text-align:center; padding:5rem 1.5rem;
+    }
+    .cta-section h2 {
+      font-family:'Baloo 2',cursive;
+      font-size:clamp(2rem,5vw,3.2rem);
+      font-weight:900; color:#fff;
+      margin-bottom:1rem;
+      text-shadow:0 3px 16px rgba(0,0,0,.15);
+    }
+    .cta-section p { color:rgba(255,255,255,.92); font-size:1.1rem; margin-bottom:2.2rem; }
+
+    .btn-wa {
+      background:#fff; color:var(--green);
+      border:none; border-radius:50px;
+      padding:1rem 2.6rem;
+      font-family:'Baloo 2',cursive;
+      font-weight:900; font-size:1.1rem;
+      cursor:pointer; text-decoration:none;
+      display:inline-flex; align-items:center; gap:.6rem;
+      box-shadow:0 8px 28px rgba(0,0,0,.18);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .btn-wa:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 14px 40px rgba(0,0,0,.28); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); color:rgba(255,255,255,.5);
+      text-align:center; padding:2rem 1.5rem; font-size:.88rem;
+    }
+    footer a { color:var(--yellow); text-decoration:none; }
+
+    /* ── WA BUBBLE ── */
+    .wa-float {
+      position:fixed; bottom:1.5rem; right:1.5rem; z-index:300;
+      background:#25D366; border-radius:50%;
+      width:62px; height:62px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.9rem;
+      text-decoration:none;
+      box-shadow:0 6px 24px rgba(37,211,102,.55);
+      animation:pulse 2.5s ease-in-out infinite;
+      transition:transform .2s;
+    }
+    .wa-float:hover { transform:scale(1.15); animation:none; }
+    @keyframes pulse{0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.55)}50%{box-shadow:0 6px 44px rgba(37,211,102,.85)}}
+
+    /* ── STAGGER DELAYS ── */
+    .product-card:nth-child(2){transition-delay:.08s}
+    .product-card:nth-child(3){transition-delay:.16s}
+    .product-card:nth-child(4){transition-delay:.24s}
+    .product-card:nth-child(5){transition-delay:.32s}
+    .product-card:nth-child(6){transition-delay:.40s}
+    .why-card:nth-child(2){transition-delay:.1s}
+    .why-card:nth-child(3){transition-delay:.2s}
+    .why-card:nth-child(4){transition-delay:.3s}
+    .stat:nth-child(2){transition-delay:.1s}
+    .stat:nth-child(3){transition-delay:.2s}
+    .stat:nth-child(4){transition-delay:.3s}
+
+    @media(max-width:600px){
+      nav{padding:.7rem 1rem;}
+      .floater{display:none;}
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-    <h1>Juegos Didácticos TP</h1>
-    <p>Aprender jugando es más divertido 🌈</p>
-</header>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-text">JUEGOS <span>DIDÁCTICOS</span> TP</div>
+  </a>
+  <a href="https://wa.me/573163399222" class="nav-cta" target="_blank" rel="noopener">📲 Pedir ya</a>
+</nav>
 
-<section>
-    <div class="intro">
-        🧸 Nuestros productos están diseñados para estimular  
-        el aprendizaje, la creatividad y el desarrollo sensorial  
-        de los más pequeños.
-    </div>
+<!-- HERO -->
+<section class="hero hero-bg">
+  <div class="hero-deco" aria-hidden="true">
+    <div class="deco-circle"></div>
+    <div class="deco-circle"></div>
+    <div class="deco-circle"></div>
+    <div class="deco-circle"></div>
+  </div>
+  <div class="floaters" aria-hidden="true">
+    <span class="floater">🧸</span>
+    <span class="floater">🌈</span>
+    <span class="floater">🎲</span>
+    <span class="floater">⭐</span>
+    <span class="floater">🔤</span>
+    <span class="floater">🐄</span>
+  </div>
 
-    <div class="productos">
-        <div class="producto">
-            <img src=https://juegosdidacticostp.com/imagen1.jpeg alt="Cubos de letras">
-            <h3>Cubos de Letras Acolchados</h3>
-            <p>Suaves, seguros y perfectos para aprender jugando.</p>
-        </div>
-
-        <div class="producto">
-            <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Niño jugando con cubos">
-            <h3>Juego Sensorial</h3>
-            <p>Estimula la motricidad y la imaginación.</p>
-        </div>
-
-        <div class="producto">
-            <img src="https://juegosdidacticostp.com/imagen3.png" alt="Cubos didácticos">
-            <h3>Kit Didáctico</h3>
-            <p>Colores, números y letras para aprender fácil.</p>
-        </div>
-    </div>
+  <div class="hero-badge">🌟 Colección educativa para niños</div>
+  <h1>Aprende jugando<br>con <em>Juegos TP</em></h1>
+  <p>Cubos didácticos de alta calidad diseñados para estimular el aprendizaje, la creatividad y el desarrollo sensorial de los más pequeños.</p>
+  <div class="hero-btns">
+    <a href="#productos" class="btn-primary">🧸 Ver colección</a>
+    <a href="https://wa.me/573163399222" class="btn-outline" target="_blank" rel="noopener">💬 Escríbenos</a>
+  </div>
 </section>
 
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><strong>100%</strong><span>Materiales seguros</span></div>
+  <div class="stat"><strong>+500</strong><span>Familias felices</span></div>
+  <div class="stat"><strong>6</strong><span>Colecciones temáticas</span></div>
+  <div class="stat"><strong>⭐5.0</strong><span>Satisfacción</span></div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="productos">
+  <div class="section-head">
+    <span class="section-label">Colección completa</span>
+    <h2 class="section-title">Nuestros Juegos Didácticos 🎁</h2>
+    <p class="section-sub">Cubos educativos para cada etapa del aprendizaje</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="filterCards('all',this)">Todos</button>
+    <button class="tab" onclick="filterCards('letras',this)">🔤 Letras</button>
+    <button class="tab" onclick="filterCards('numeros',this)">🔢 Números</button>
+    <button class="tab" onclick="filterCards('animales',this)">🐾 Animales</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+
+    <!-- 1. ABECEDARIO -->
+    <div class="product-card" data-cat="letras">
+      <div class="card-top cat-abc">
+        <div class="card-img-grid">
+          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Abecedario 1" />
+          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Abecedario 2" />
+          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Abecedario 3" />
+        </div>
+        <span class="card-badge-top">⭐ Más vendido</span>
+      </div>
+      <div class="card-body">
+        <h3>Abecedario</h3>
+        <p>Cubos de letras acolchados para que los pequeños aprendan el alfabeto jugando con colores y texturas.</p>
+        <div class="tag-row">
+          <span class="tag">🔤 Letras</span>
+          <span class="tag">👶 0+ años</span>
+          <span class="tag">🧶 Suave</span>
+        </div>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20el%20Abecedario" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- 2. LOS NÚMEROS -->
+    <div class="product-card" data-cat="numeros">
+      <div class="card-top cat-num">
+        <div class="card-img-grid">
+          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Números 1" />
+          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Números 2" />
+          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Números 3" />
+        </div>
+        <span class="card-badge-top">🔢 Nuevo</span>
+      </div>
+      <div class="card-body">
+        <h3>Los Números</h3>
+        <p>Aprende a contar del 1 al 10 con cubos coloridos que hacen del aprendizaje numérico una aventura divertida.</p>
+        <div class="tag-row">
+          <span class="tag">🔢 Números</span>
+          <span class="tag">👧 2+ años</span>
+          <span class="tag">🎨 Colores</span>
+        </div>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Los%20Números" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- 3. ANIMALES DOMÉSTICOS -->
+    <div class="product-card" data-cat="animales">
+      <div class="card-top cat-dom">
+        <div class="card-img-grid">
+          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Doméstico 1" />
+          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Doméstico 2" />
+          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Doméstico 3" />
+        </div>
+        <span class="card-badge-top">🐶 Popular</span>
+      </div>
+      <div class="card-body">
+        <h3>Animales Domésticos</h3>
+        <p>Descubre a los amigos del hogar: perros, gatos, conejos y más. Ideal para aprender con amor por los animales.</p>
+        <div class="tag-row">
+          <span class="tag">🐶 Mascotas</span>
+          <span class="tag">👧 2+ años</span>
+          <span class="tag">🏠 Hogar</span>
+        </div>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20Domésticos" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- 4. ANIMALES DE LA GRANJA -->
+    <div class="product-card" data-cat="animales">
+      <div class="card-top cat-granja">
+        <div class="card-img-grid">
+          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Granja 1" />
+          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Granja 2" />
+          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Granja 3" />
+        </div>
+        <span class="card-badge-top">🐄 Clásico</span>
+      </div>
+      <div class="card-body">
+        <h3>Animales de la Granja</h3>
+        <p>Vacas, gallinas, cerdos y caballos en vibrantes cubos didácticos. ¡El campo en las manos de tu peque!</p>
+        <div class="tag-row">
+          <span class="tag">🐄 Granja</span>
+          <span class="tag">👧 2+ años</span>
+          <span class="tag">🌾 Naturaleza</span>
+        </div>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Granja" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- 5. ANIMALES DE LA SELVA -->
+    <div class="product-card" data-cat="animales">
+      <div class="card-top cat-selva">
+        <div class="card-img-grid">
+          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Selva 1" />
+          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Selva 2" />
+          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Selva 3" />
+        </div>
+        <span class="card-badge-top">🦁 Aventura</span>
+      </div>
+      <div class="card-body">
+        <h3>Animales de la Selva</h3>
+        <p>Leones, monos, jirafas y elefantes para despertar el espíritu explorador de los más pequeños.</p>
+        <div class="tag-row">
+          <span class="tag">🦁 Selva</span>
+          <span class="tag">👦 3+ años</span>
+          <span class="tag">🌿 Exótico</span>
+        </div>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Selva" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- 6. ANIMALES DEL MAR -->
+    <div class="product-card" data-cat="animales">
+      <div class="card-top cat-mar">
+        <div class="card-img-grid">
+          <img src="https://juegosdidacticostp.com/imagen3.png" alt="Mar 1" />
+          <img src="https://juegosdidacticostp.com/imagen1.jpeg" alt="Mar 2" />
+          <img src="https://juegosdidacticostp.com/imagen2.jpeg" alt="Mar 3" />
+        </div>
+        <span class="card-badge-top">🐠 Especial</span>
+      </div>
+      <div class="card-body">
+        <h3>Animales del Mar</h3>
+        <p>Ballenas, pulpos, peces y delfines en cubos llenos de color. ¡Sumérgete en el océano del aprendizaje!</p>
+        <div class="tag-row">
+          <span class="tag">🐠 Mar</span>
+          <span class="tag">👦 3+ años</span>
+          <span class="tag">🌊 Océano</span>
+        </div>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20del%20Mar" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section">
+  <div class="section-head">
+    <span class="section-label">Nuestro compromiso</span>
+    <h2 class="section-title">¿Por qué Juegos TP? 💛</h2>
+    <p class="section-sub">Más que juguetes, herramientas de desarrollo</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">🛡️</span>
+      <h4>100% Seguros</h4>
+      <p>Materiales no tóxicos con bordes suaves, verificados para bebés y niños.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🧠</span>
+      <h4>Aprendizaje activo</h4>
+      <p>Cada cubo estimula habilidades cognitivas, motricidad y creatividad real.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🚀</span>
+      <h4>Envío a toda Colombia</h4>
+      <p>Despachamos rápido para que tu peque reciba su sorpresa sin esperas.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💬</span>
+      <h4>Atención personalizada</h4>
+      <p>Te asesoramos por WhatsApp para encontrar el juego ideal para tu niño.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>¿Listo para regalar<br>aprendizaje? 🎉</h2>
+  <p>Escríbenos y te asesoramos. Envíos rápidos a todo Colombia 🇨🇴</p>
+  <a href="https://wa.me/573163399222" class="btn-wa" target="_blank" rel="noopener">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/></svg>
+    Escríbenos en WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
 <footer>
-    <p>📲 Contáctanos por WhatsApp</p>
-    <a href="https://wa.me/573163399222" target="_blank">Escríbenos aquí</a>
+  <p>© 2025 Juegos Didácticos TP &nbsp;·&nbsp; <a href="https://wa.me/573163399222">+57 316 339 9222</a> &nbsp;·&nbsp; Hecho con 💛 en Colombia 🇨🇴</p>
 </footer>
 
+<!-- WA FLOAT -->
+<a href="https://wa.me/573163399222" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 
+<script>
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
 
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.product-card, .why-card, .stat').forEach(el => observer.observe(el));
 
+  // Parallax floaters
+  window.addEventListener('mousemove', e => {
+    const cx = innerWidth/2, cy = innerHeight/2;
+    const dx = (e.clientX-cx)/cx, dy = (e.clientY-cy)/cy;
+    document.querySelectorAll('.floater').forEach((f,i) => {
+      const d = (i%3+1)*7;
+      f.style.transform = `translate(${dx*d}px,${dy*d}px) rotate(${dx*5}deg)`;
+    });
+  });
 
-</body></html>
+  // Counter animation
+  const statsObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.stat strong').forEach(s => {
+        const txt = s.textContent;
+        if(txt.includes('100')) count(s, 100, '%');
+        else if(txt.includes('500')) count(s, 500, '+');
+        else if(txt === '6') count(s, 6, '');
+      });
+      statsObs.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+  statsObs.observe(document.querySelector('.stats-bar'));
+
+  function count(el, target, suffix) {
+    let n = 0, step = target/40;
+    const iv = setInterval(() => {
+      n += step; if(n >= target){ el.textContent = target+suffix; clearInterval(iv); return; }
+      el.textContent = Math.floor(n)+suffix;
+    }, 28);
+  }
+
+  // Tab filter
+  function filterCards(cat, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
