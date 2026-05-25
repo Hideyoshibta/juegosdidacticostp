@@ -8,47 +8,66 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
        VARIABLES & RESET
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     :root {
       --pink:        #E91E8C;
+      --pink-dark:   #AD1457;
       --pink-pale:   #FCE4F3;
       --green:       #7CB518;
       --green-mid:   #A8D520;
       --green-light: #D4F56A;
       --orange:      #FF8C00;
       --yellow:      #FFD600;
-      --cream:       #FFFDE7;
       --dark:        #1C2B0E;
       --card-shadow: 0 6px 28px rgba(0,0,0,.13);
     }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Nunito', sans-serif;
-      background: var(--cream);
+      /* gradient que cubre toda la página de arriba abajo */
+      background: linear-gradient(180deg,
+        #F472B6 0%,
+        #E91E8C 8%,
+        #C2185B 20%,
+        #8BC34A 38%,
+        #7CB518 52%,
+        #5a9c0e 65%,
+        #E91E8C 80%,
+        #AD1457 100%
+      );
+      background-attachment: fixed;
       color: var(--dark);
       overflow-x: hidden;
     }
 
-    /* ══════════════════════════════════════════
-       NAV
-    ══════════════════════════════════════════ */
+    /* ══════════════════════════════════════
+       NAV — sin borde inferior visible al inicio
+    ══════════════════════════════════════ */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       display: flex; align-items: center; justify-content: space-between;
-      padding: .8rem 2rem;
-      background: rgba(233,30,140,.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 3px solid var(--yellow);
-      transition: box-shadow .3s;
+      padding: .85rem 2rem;
+      background: rgba(233,30,140,.0);   /* transparente al inicio */
+      backdrop-filter: blur(0px);
+      border-bottom: 3px solid transparent; /* oculto al inicio */
+      transition: background .4s, border-color .4s, backdrop-filter .4s, box-shadow .4s;
     }
-    nav.scrolled { box-shadow: 0 4px 18px rgba(0,0,0,.22); }
+    nav.scrolled {
+      background: rgba(233,30,140,.95);
+      backdrop-filter: blur(14px);
+      border-bottom-color: var(--yellow);
+      box-shadow: 0 4px 20px rgba(0,0,0,.22);
+    }
     .nav-logo {
       font-family: 'Baloo 2', cursive;
       font-weight: 900; font-size: 1.25rem;
       color: #fff; text-decoration: none; line-height: 1.1;
+      text-shadow: 0 2px 8px rgba(0,0,0,.25);
     }
     .nav-logo span { color: var(--yellow); }
     .nav-cta {
@@ -57,30 +76,23 @@
       padding: .5rem 1.4rem;
       font-family: 'Baloo 2', cursive; font-weight: 800; font-size: .92rem;
       cursor: pointer; text-decoration: none;
-      box-shadow: 0 3px 12px rgba(0,0,0,.18);
-      transition: transform .2s;
+      box-shadow: 0 3px 14px rgba(0,0,0,.2);
+      transition: transform .2s, box-shadow .2s;
     }
-    .nav-cta:hover { transform: scale(1.06) translateY(-1px); }
+    .nav-cta:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.28); }
 
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
        HERO
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     .hero {
       position: relative;
       min-height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 8rem 1.5rem 6rem;
+      padding: 8rem 1.5rem 7rem;
       overflow: hidden;
-      background: linear-gradient(155deg, #F472B6 0%, #E91E8C 28%, #ABDB10 68%, #7CB518 100%);
     }
-    /* wave at bottom */
-    .hero-wave {
-      position: absolute; bottom: -1px; left: 0; right: 0;
-      line-height: 0;
-    }
-    .hero-wave svg { display: block; width: 100%; }
 
     /* decorative circles */
     .hero-deco { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -99,7 +111,7 @@
     .floaters { position: absolute; inset: 0; pointer-events: none; }
     .floater {
       position: absolute; font-size: 2.2rem;
-      filter: drop-shadow(0 3px 7px rgba(0,0,0,.18));
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.2));
       animation: floatY 6s ease-in-out infinite;
     }
     .floater:nth-child(1){top:13%;left:6%;animation-delay:0s;}
@@ -130,7 +142,7 @@
       font-size: clamp(2.6rem,7.5vw,5rem);
       color: #fff; line-height: 1.02;
       margin-bottom: 1rem;
-      text-shadow: 0 3px 18px rgba(0,0,0,.18);
+      text-shadow: 0 3px 18px rgba(0,0,0,.2);
       animation: riseUp .7s .15s both;
     }
     .hero h1 em {
@@ -167,7 +179,7 @@
       box-shadow: 0 5px 20px rgba(0,0,0,.2);
       transition: transform .22s, box-shadow .22s;
     }
-    .btn-yellow:hover { transform:translateY(-4px) scale(1.04); box-shadow:0 10px 28px rgba(0,0,0,.25); }
+    .btn-yellow:hover { transform:translateY(-4px) scale(1.04); box-shadow:0 10px 28px rgba(0,0,0,.28); }
     .btn-white-outline {
       background: transparent; color: #fff;
       border: 2.5px solid #fff; border-radius: 50px;
@@ -178,11 +190,18 @@
     }
     .btn-white-outline:hover { background:#fff; color:var(--pink); transform:translateY(-4px); }
 
-    /* ══════════════════════════════════════════
+    /* wave que combina con la siguiente sección */
+    .hero-wave { position: absolute; bottom: -2px; left: 0; right: 0; line-height: 0; }
+    .hero-wave svg { display: block; width: 100%; }
+
+    /* ══════════════════════════════════════
        STATS BAR
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     .stats-bar {
-      background: var(--green);
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      border-top: 2px solid rgba(255,255,255,.2);
+      border-bottom: 2px solid rgba(255,255,255,.2);
       padding: 1.6rem 1rem;
       display: flex; flex-wrap: wrap;
       justify-content: center; gap: 1.5rem 3rem;
@@ -197,49 +216,68 @@
       font-family: 'Baloo 2', cursive; font-size: 2rem; font-weight: 900;
       color: var(--yellow); display: block; line-height: 1;
     }
-    .stat span { font-size: .82rem; color:#fff; opacity:.88; }
+    .stat span { font-size: .82rem; color:#fff; font-weight: 700; }
 
-    /* ══════════════════════════════════════════
-       SHARED SECTION STYLES
-    ══════════════════════════════════════════ */
-    .section-wrap { padding: 5rem 1.5rem; }
+    /* ══════════════════════════════════════
+       SECCIONES — glassmorphism sobre el fondo
+    ══════════════════════════════════════ */
+    .section-wrap {
+      padding: 5rem 1.5rem;
+    }
+
+    /* tarjetas de producto sobre fondo glass */
+    .products-bg {
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(10px);
+    }
+
     .section-head { text-align: center; margin-bottom: 3rem; }
     .section-pill {
       display: inline-block;
-      background: var(--pink); color: #fff;
+      background: rgba(255,255,255,.3);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,.5);
       border-radius: 50px; padding: .22rem .95rem;
       font-weight: 800; font-size: .78rem;
       text-transform: uppercase; letter-spacing: .07em;
       margin-bottom: .7rem;
+      backdrop-filter: blur(4px);
     }
     .section-title {
       font-family: 'Baloo 2', cursive; font-weight: 900;
       font-size: clamp(1.8rem,3.8vw,2.7rem);
+      color: #fff;
       line-height: 1.1; margin-bottom: .4rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,.15);
     }
-    .section-sub { color: #5a7a1a; font-size: 1rem; }
+    .section-sub { color: rgba(255,255,255,.8); font-size: 1rem; font-weight: 600; }
 
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
        TABS
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     .tabs {
       display: flex; flex-wrap: wrap; gap: .55rem;
       justify-content: center; margin-bottom: 2.6rem;
     }
     .tab {
-      background: var(--pink-pale); color: var(--pink);
-      border: 2px solid var(--pink); border-radius: 50px;
+      background: rgba(255,255,255,.2);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,.5);
+      border-radius: 50px;
       padding: .4rem 1.15rem;
       font-family: 'Baloo 2', cursive; font-weight: 700; font-size: .88rem;
-      cursor: pointer; transition: background .2s, color .2s, transform .2s;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: background .2s, transform .2s;
     }
-    .tab:hover, .tab.active { background:var(--pink); color:#fff; transform:translateY(-2px); }
+    .tab:hover, .tab.active {
+      background: #fff; color: var(--pink);
+      transform: translateY(-2px);
+    }
 
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
        PRODUCTS GRID
-    ══════════════════════════════════════════ */
-    .products-bg { background: #fff; }
-
+    ══════════════════════════════════════ */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -249,23 +287,33 @@
 
     /* ── CARD ── */
     .product-card {
-      background: #fff;
+      background: rgba(255,255,255,.95);
       border-radius: 20px;
       overflow: hidden;
-      border: 2.5px solid #f0e6f6;
+      border: 2.5px solid rgba(255,255,255,.8);
       box-shadow: var(--card-shadow);
       display: flex; flex-direction: column;
-      opacity: 0; transform: translateY(36px);
-      transition: opacity .5s, transform .5s, box-shadow .3s, border-color .3s;
+      /* scroll reveal — empieza invisible */
+      opacity: 0; transform: translateY(50px) scale(.97);
+      transition: opacity .6s cubic-bezier(.22,1,.36,1),
+                  transform .6s cubic-bezier(.22,1,.36,1),
+                  box-shadow .3s, border-color .3s;
     }
-    .product-card.visible { opacity:1; transform:translateY(0); }
+    .product-card.visible { opacity:1; transform:translateY(0) scale(1); }
     .product-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 48px rgba(233,30,140,.18);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 22px 52px rgba(233,30,140,.25);
       border-color: var(--pink);
     }
 
-    /* image container — fixed height, coloured bg so contain never shows white gaps */
+    /* transition delays para entrada escalonada */
+    .product-card:nth-child(2){ transition-delay:.1s }
+    .product-card:nth-child(3){ transition-delay:.2s }
+    .product-card:nth-child(4){ transition-delay:.3s }
+    .product-card:nth-child(5){ transition-delay:.4s }
+    .product-card:nth-child(6){ transition-delay:.5s }
+
+    /* image box — altura fija con fondo de color */
     .card-img-box {
       position: relative;
       width: 100%; height: 220px;
@@ -280,22 +328,19 @@
     .card-img-box.bg-mar    { background: linear-gradient(135deg,#E3F2FD,#90CAF9); }
 
     .card-img-box img {
-      max-width: 88%;
-      max-height: 88%;
+      max-width: 90%; max-height: 90%;
       width: auto; height: auto;
-      object-fit: contain;
-      display: block;
+      object-fit: contain; display: block;
       transition: transform .45s cubic-bezier(.34,1.56,.64,1);
-      /* no aspect-ratio forced — image shows at natural ratio inside the fixed box */
     }
-    .product-card:hover .card-img-box img { transform: scale(1.08); }
+    .product-card:hover .card-img-box img { transform: scale(1.1) rotate(-1deg); }
 
     .card-badge {
       position: absolute; top: 11px; right: 11px;
       background: var(--pink); color: #fff;
       border-radius: 20px; padding: .2rem .7rem;
       font-weight: 800; font-size: .7rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
     }
 
     /* card body */
@@ -306,6 +351,7 @@
     }
     .card-body h3 {
       font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.12rem;
+      color: var(--dark);
       margin-bottom: .38rem; line-height: 1.2;
     }
     .card-body p {
@@ -321,31 +367,22 @@
     .card-btn {
       display: block; width: 100%;
       background: var(--pink); color: #fff;
-      border: none; border-radius: 12px;
-      padding: .62rem;
+      border: none; border-radius: 12px; padding: .65rem;
       font-family: 'Baloo 2', cursive; font-weight: 800; font-size: .9rem;
       cursor: pointer; text-decoration: none; text-align: center;
-      transition: background .2s, transform .2s;
+      transition: background .2s, transform .2s, box-shadow .2s;
       margin-top: auto;
+      box-shadow: 0 4px 14px rgba(233,30,140,.3);
     }
-    .card-btn:hover { background: var(--orange); transform: translateY(-2px); }
+    .card-btn:hover { background: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,140,0,.35); }
 
-    /* stagger delays */
-    .product-card:nth-child(2){ transition-delay:.09s }
-    .product-card:nth-child(3){ transition-delay:.17s }
-    .product-card:nth-child(4){ transition-delay:.25s }
-    .product-card:nth-child(5){ transition-delay:.33s }
-    .product-card:nth-child(6){ transition-delay:.41s }
-
-    /* ══════════════════════════════════════════
-       WHY US
-    ══════════════════════════════════════════ */
+    /* ══════════════════════════════════════
+       WHY US — glass sobre fondo
+    ══════════════════════════════════════ */
     .why-bg {
-      background: linear-gradient(150deg, #E91E8C 0%, #AD1457 100%);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
     }
-    .why-bg .section-title { color: #fff; }
-    .why-bg .section-sub   { color: rgba(255,255,255,.6); }
-    .why-bg .section-pill  { background: rgba(255,255,255,.22); border:2px solid rgba(255,255,255,.35); }
 
     .why-grid {
       display: grid;
@@ -353,40 +390,46 @@
       gap: 1.3rem; max-width: 980px; margin: 0 auto;
     }
     .why-card {
-      background: rgba(255,255,255,.1);
-      border: 2px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.12);
+      border: 2px solid rgba(255,255,255,.22);
       border-radius: 18px; padding: 1.8rem 1.3rem;
       text-align: center;
-      opacity: 0; transform: translateY(26px);
-      transition: opacity .5s, transform .5s, background .3s;
+      opacity: 0; transform: translateY(30px) scale(.96);
+      transition: opacity .6s cubic-bezier(.22,1,.36,1),
+                  transform .6s cubic-bezier(.22,1,.36,1),
+                  background .3s;
     }
-    .why-card.visible { opacity:1; transform:translateY(0); }
-    .why-card:hover { background: rgba(255,255,255,.2); transform: translateY(-6px); }
-    .why-card:nth-child(2){ transition-delay:.1s }
-    .why-card:nth-child(3){ transition-delay:.2s }
-    .why-card:nth-child(4){ transition-delay:.3s }
-    .why-icon { font-size: 2.7rem; display:block; margin-bottom:.8rem; animation: wobble 3s ease-in-out infinite; }
+    .why-card.visible { opacity:1; transform:translateY(0) scale(1); }
+    .why-card:hover { background: rgba(255,255,255,.22); transform: translateY(-6px) scale(1.02); }
+    .why-card:nth-child(2){ transition-delay:.12s }
+    .why-card:nth-child(3){ transition-delay:.24s }
+    .why-card:nth-child(4){ transition-delay:.36s }
+    .why-icon { font-size: 2.7rem; display:block; margin-bottom:.8rem; animation: wobble 3.5s ease-in-out infinite; }
     @keyframes wobble { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
     .why-card h4 {
       font-family:'Baloo 2',cursive; font-weight:800; font-size:1rem;
       color:var(--yellow); margin-bottom:.3rem;
     }
-    .why-card p { font-size:.87rem; color:rgba(255,255,255,.78); line-height:1.62; }
+    .why-card p { font-size:.87rem; color:rgba(255,255,255,.82); line-height:1.62; }
 
-    /* ══════════════════════════════════════════
-       CTA SECTION
-    ══════════════════════════════════════════ */
+    /* ══════════════════════════════════════
+       CTA
+    ══════════════════════════════════════ */
     .cta-bg {
-      background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 55%, var(--orange) 100%);
-      text-align: center; padding: 5.5rem 1.5rem;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(10px);
+      border-top: 2px solid rgba(255,255,255,.2);
+      border-bottom: 2px solid rgba(255,255,255,.2);
+      text-align: center;
+      padding: 6rem 1.5rem;
     }
     .cta-bg h2 {
       font-family:'Baloo 2',cursive; font-weight:900;
-      font-size: clamp(2rem,5vw,3.1rem);
+      font-size: clamp(2rem,5vw,3.2rem);
       color:#fff; margin-bottom:.9rem;
-      text-shadow:0 3px 14px rgba(0,0,0,.15);
+      text-shadow:0 3px 16px rgba(0,0,0,.18);
     }
-    .cta-bg p { color:rgba(255,255,255,.9); font-size:1.08rem; margin-bottom:2.1rem; }
+    .cta-bg p { color:rgba(255,255,255,.9); font-size:1.08rem; margin-bottom:2.2rem; font-weight:600; }
     .btn-wa {
       background:#fff; color:var(--green);
       border:none; border-radius:50px;
@@ -394,23 +437,25 @@
       font-family:'Baloo 2',cursive; font-weight:900; font-size:1.08rem;
       cursor:pointer; text-decoration:none;
       display:inline-flex; align-items:center; gap:.55rem;
-      box-shadow:0 7px 26px rgba(0,0,0,.18);
+      box-shadow:0 7px 26px rgba(0,0,0,.22);
       transition:transform .2s, box-shadow .2s;
     }
-    .btn-wa:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 13px 38px rgba(0,0,0,.26); }
+    .btn-wa:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 14px 40px rgba(0,0,0,.3); }
 
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
        FOOTER
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     footer {
-      background: var(--dark); color: rgba(255,255,255,.48);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+      color: rgba(255,255,255,.55);
       text-align: center; padding: 2rem 1.5rem; font-size: .86rem;
     }
     footer a { color: var(--yellow); text-decoration: none; }
 
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
        WHATSAPP FLOAT
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     .wa-float {
       position:fixed; bottom:1.4rem; right:1.4rem; z-index:400;
       background:#25D366; border-radius:50%;
@@ -421,19 +466,38 @@
       animation:waPulse 2.5s ease-in-out infinite;
       transition:transform .2s;
     }
-    .wa-float:hover { transform:scale(1.14); animation:none; }
+    .wa-float:hover { transform:scale(1.15); animation:none; }
     @keyframes waPulse {
       0%,100%{ box-shadow:0 5px 22px rgba(37,211,102,.55); }
-      50%    { box-shadow:0 5px 42px rgba(37,211,102,.85); }
+      50%    { box-shadow:0 5px 44px rgba(37,211,102,.88); }
     }
 
-    /* ══════════════════════════════════════════
+    /* ══════════════════════════════════════
+       SCROLL-REVEAL — clase base para
+       cualquier elemento que quieras animar
+    ══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1),
+                  transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.from-left  { transform: translateX(-50px); }
+    .reveal.from-right { transform: translateX(50px); }
+    .reveal.zoom-in    { transform: scale(.88); }
+    .reveal.visible    { opacity:1; transform:none; }
+
+    /* ══════════════════════════════════════
        RESPONSIVE
-    ══════════════════════════════════════════ */
+    ══════════════════════════════════════ */
     @media(max-width:640px){
       nav { padding:.7rem 1rem; }
       .floater { display:none; }
       .products-grid { grid-template-columns:1fr; max-width:400px; margin:0 auto; }
+      .why-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:440px){
+      .why-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -448,10 +512,8 @@
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-deco" aria-hidden="true">
-    <div class="deco-c"></div>
-    <div class="deco-c"></div>
-    <div class="deco-c"></div>
-    <div class="deco-c"></div>
+    <div class="deco-c"></div><div class="deco-c"></div>
+    <div class="deco-c"></div><div class="deco-c"></div>
   </div>
   <div class="floaters" aria-hidden="true">
     <span class="floater">🧸</span>
@@ -470,10 +532,10 @@
     <a href="https://wa.me/573163399222" class="btn-white-outline" target="_blank" rel="noopener">💬 Escríbenos</a>
   </div>
 
-  <!-- wave divider -->
   <div class="hero-wave">
-    <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,40 C360,80 1080,0 1440,50 L1440,70 L0,70 Z" fill="#FFFDE7"/>
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,50 C200,90 400,20 600,55 C800,90 1100,10 1440,45 L1440,80 L0,80 Z"
+            fill="rgba(255,255,255,.08)"/>
     </svg>
   </div>
 </section>
@@ -488,13 +550,13 @@
 
 <!-- ── PRODUCTS ── -->
 <section class="section-wrap products-bg" id="productos">
-  <div class="section-head">
+  <div class="section-head reveal zoom-in">
     <span class="section-pill">Colección completa</span>
     <h2 class="section-title">Nuestros Juegos Didácticos 🎁</h2>
     <p class="section-sub">Cubos educativos para cada etapa del aprendizaje</p>
   </div>
 
-  <div class="tabs">
+  <div class="tabs reveal">
     <button class="tab active" onclick="filterCards('all',this)">Todos</button>
     <button class="tab" onclick="filterCards('letras',this)">🔤 Letras</button>
     <button class="tab" onclick="filterCards('numeros',this)">🔢 Números</button>
@@ -535,14 +597,14 @@
           <span class="tag">👧 2+ años</span>
           <span class="tag">🎨 Colores</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Los%20Números" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Los%20N%C3%BAmeros" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
       </div>
     </div>
 
     <!-- 3. ANIMALES DOMÉSTICOS -->
     <div class="product-card" data-cat="animales">
       <div class="card-img-box bg-dom">
-        <img src="https://juegosdidacticostp.com/animales domesticos.png" alt="Animales Domésticos" loading="lazy" />
+        <img src="https://juegosdidacticostp.com/animales%20domesticos.png" alt="Animales Domésticos" loading="lazy" />
         <span class="card-badge">🐶 Popular</span>
       </div>
       <div class="card-body">
@@ -553,7 +615,7 @@
           <span class="tag">👧 2+ años</span>
           <span class="tag">🏠 Hogar</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20Domésticos" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20Dom%C3%A9sticos" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
       </div>
     </div>
 
@@ -616,7 +678,7 @@
 
 <!-- ── WHY US ── -->
 <section class="section-wrap why-bg">
-  <div class="section-head">
+  <div class="section-head reveal zoom-in">
     <span class="section-pill">Nuestro compromiso</span>
     <h2 class="section-title">¿Por qué Juegos TP? 💛</h2>
     <p class="section-sub">Más que juguetes, herramientas de desarrollo</p>
@@ -647,15 +709,17 @@
 
 <!-- ── CTA ── -->
 <section class="cta-bg">
-  <h2>¿Listo para regalar<br>aprendizaje? 🎉</h2>
-  <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
-  <a href="https://wa.me/573163399222" class="btn-wa" target="_blank" rel="noopener">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/>
-    </svg>
-    Escríbenos en WhatsApp
-  </a>
+  <div class="reveal zoom-in">
+    <h2>¿Listo para regalar<br>aprendizaje? 🎉</h2>
+    <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
+    <a href="https://wa.me/573163399222" class="btn-wa" target="_blank" rel="noopener">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/>
+      </svg>
+      Escríbenos en WhatsApp
+    </a>
+  </div>
 </section>
 
 <!-- ── FOOTER ── -->
@@ -667,60 +731,67 @@
 <a href="https://wa.me/573163399222" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 
 <script>
-  // Nav shadow on scroll
+  /* ── Nav: aparece con color sólo al hacer scroll ── */
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 40));
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
 
-  // Scroll reveal
-  const revealObs = new IntersectionObserver(entries => {
+  /* ── IntersectionObserver único para TODOS los elementos animados ── */
+  const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.product-card, .why-card, .stat').forEach(el => revealObs.observe(el));
 
-  // Smooth scroll for hero button
-  document.querySelector('a[href="#productos"]').addEventListener('click', e => {
+  // Tarjetas de producto, why-cards, stats, y cualquier .reveal
+  document.querySelectorAll('.product-card, .why-card, .stat, .reveal').forEach(el => io.observe(el));
+
+  /* ── Smooth scroll botón hero ── */
+  const heroBtn = document.querySelector('a[href="#productos"]');
+  if (heroBtn) heroBtn.addEventListener('click', e => {
     e.preventDefault();
     document.getElementById('productos').scrollIntoView({ behavior:'smooth' });
   });
 
-  // Mouse parallax on floaters
+  /* ── Parallax suave en emojis flotantes ── */
   window.addEventListener('mousemove', e => {
-    const cx = innerWidth/2, cy = innerHeight/2;
-    const dx = (e.clientX - cx)/cx, dy = (e.clientY - cy)/cy;
+    const cx = innerWidth / 2, cy = innerHeight / 2;
+    const dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
     document.querySelectorAll('.floater').forEach((f, i) => {
       const d = (i % 3 + 1) * 7;
       f.style.transform = `translate(${dx*d}px,${dy*d}px) rotate(${dx*5}deg)`;
     });
   });
 
-  // Counter animation for stats
-  const statsObs = new IntersectionObserver(entries => {
+  /* ── Contador animado en stats ── */
+  const statsIO = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       e.target.querySelectorAll('.stat strong').forEach(s => {
         const txt = s.textContent;
-        if (txt.includes('100')) animCount(s, 100, '%');
-        else if (txt.includes('500')) animCount(s, 500, '+');
-        else if (txt === '6') animCount(s, 6, '');
+        if (txt.includes('100')) tick(s, 100, '%');
+        else if (txt.includes('500')) tick(s, 500, '+');
+        else if (txt === '6') tick(s, 6, '');
       });
-      statsObs.unobserve(e.target);
+      statsIO.unobserve(e.target);
     });
   }, { threshold: 0.5 });
-  statsObs.observe(document.querySelector('.stats-bar'));
+  statsIO.observe(document.querySelector('.stats-bar'));
 
-  function animCount(el, target, suffix) {
+  function tick(el, target, suffix) {
     let n = 0;
-    const step = target / 42;
     const iv = setInterval(() => {
-      n += step;
+      n += target / 42;
       if (n >= target) { el.textContent = target + suffix; clearInterval(iv); return; }
       el.textContent = Math.floor(n) + suffix;
     }, 26);
   }
 
-  // Tab filter
+  /* ── Filtro de categorías ── */
   function filterCards(cat, btn) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
