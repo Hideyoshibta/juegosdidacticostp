@@ -12,29 +12,29 @@
        VARIABLES
     ══════════════════════════════════════ */
     :root {
-      --bg:        #0A0A14;
-      --bg-2:      #12122A;
-      --bg-3:      #1A1A38;
-      --ink:       #F2F2FA;
-      --ink-soft:  #9797B8;
-      --ink-faint: #63637F;
+      --bg:        #FAF8FF;
+      --bg-2:      #F2EEFC;
+      --bg-3:      #EAE1FA;
+      --ink:       #2B2640;
+      --ink-soft:  #6E668C;
+      --ink-faint: #A79ECB;
 
-      --violet: #7B61FF;
-      --violet-glow: rgba(123, 97, 255, 0.4);
-      --cyan: #22D3EE;
-      --cyan-glow: rgba(34, 211, 238, 0.38);
-      --gold: #FFC857;
-      --gold-glow: rgba(255, 200, 87, 0.38);
-      --coral: #FF6B81;
-      --coral-glow: rgba(255, 107, 129, 0.38);
-      --mint: #34D399;
-      --mint-glow: rgba(52, 211, 153, 0.38);
-      --ocean: #4F9DDE;
-      --ocean-glow: rgba(79, 157, 222, 0.38);
+      --violet: #8B7CF6;
+      --violet-glow: rgba(139, 124, 246, 0.3);
+      --cyan: #34B8C4;
+      --cyan-glow: rgba(52, 184, 196, 0.28);
+      --gold: #F0A93E;
+      --gold-glow: rgba(240, 169, 62, 0.28);
+      --coral: #F2607A;
+      --coral-glow: rgba(242, 96, 122, 0.28);
+      --mint: #2FBF8F;
+      --mint-glow: rgba(47, 191, 143, 0.28);
+      --ocean: #4F8FE0;
+      --ocean-glow: rgba(79, 143, 224, 0.28);
 
       --whatsapp: #25D366;
-      --glass: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.1);
+      --glass: rgba(139, 124, 246, 0.06);
+      --glass-border: rgba(43, 38, 64, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,8 +52,8 @@
     .bg-grid {
       position: absolute; inset: 0; z-index: 0; pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(43,38,64,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43,38,64,0.05) 1px, transparent 1px);
       background-size: 48px 48px;
     }
 
@@ -64,13 +64,13 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       display: flex; align-items: center; justify-content: space-between;
       padding: .9rem 2rem;
-      background: rgba(10,10,20,0);
+      background: rgba(250,248,255,0);
       backdrop-filter: blur(0px);
       border-bottom: 1px solid transparent;
       transition: background .4s, border-color .4s, backdrop-filter .4s;
     }
     nav.scrolled {
-      background: rgba(10,10,20,.85);
+      background: rgba(250,248,255,.85);
       backdrop-filter: blur(16px);
       border-bottom-color: var(--glass-border);
     }
@@ -203,9 +203,9 @@
     }
 
     .story-glow { position: absolute; inset: 0; z-index: 0; }
-    .glow-violet { background: radial-gradient(circle at 35% 45%, rgba(123,97,255,0.16), transparent 55%); }
-    .glow-cyan   { background: radial-gradient(circle at 65% 45%, rgba(34,211,238,0.14), transparent 55%); }
-    .glow-mint   { background: radial-gradient(circle at 35% 45%, rgba(52,211,153,0.14), transparent 55%); }
+    .glow-violet { background: radial-gradient(circle at 35% 45%, rgba(139,124,246,0.35), transparent 60%); }
+    .glow-cyan   { background: radial-gradient(circle at 65% 45%, rgba(52,184,196,0.32), transparent 60%); }
+    .glow-mint   { background: radial-gradient(circle at 35% 45%, rgba(47,191,143,0.32), transparent 60%); }
 
     /* cubo 3D — animación de entrada (zoom desde el fondo) una sola vez,
        luego queda estático en su lugar, solo girando */
@@ -280,6 +280,9 @@
       .cube-stage { transition: none !important; opacity: 1; transform: none; filter: none; }
       .story-info { transition: none !important; }
     }
+
+    .wave-divider { display: block; width: 100%; height: 70px; margin-bottom: -1px; }
+    .wave-divider svg { display: block; width: 100%; height: 100%; }
 
     /* ══════════════════════════════════════
        STATS BAR
@@ -394,7 +397,7 @@
 
     .card-badge {
       position: absolute; top: 11px; right: 11px;
-      color: #0A0A14; border-radius: 20px; padding: .2rem .7rem;
+      color: var(--ink); border-radius: 20px; padding: .2rem .7rem;
       font-weight: 800; font-size: .7rem;
     }
     .badge-violet { background: var(--violet); color: #fff; }
@@ -424,9 +427,9 @@
     }
     .btn-violet { background: var(--violet); box-shadow: 0 4px 16px var(--violet-glow); }
     .btn-cyan   { background: var(--cyan); box-shadow: 0 4px 16px var(--cyan-glow); }
-    .btn-gold   { background: var(--gold); color: #0A0A14; box-shadow: 0 4px 16px var(--gold-glow); }
+    .btn-gold   { background: var(--gold); color: var(--ink); box-shadow: 0 4px 16px var(--gold-glow); }
     .btn-coral  { background: var(--coral); box-shadow: 0 4px 16px var(--coral-glow); }
-    .btn-mint   { background: var(--mint); color: #0A0A14; box-shadow: 0 4px 16px var(--mint-glow); }
+    .btn-mint   { background: var(--mint); color: var(--ink); box-shadow: 0 4px 16px var(--mint-glow); }
     .btn-ocean  { background: var(--ocean); box-shadow: 0 4px 16px var(--ocean-glow); }
     .card-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
@@ -644,6 +647,10 @@
 
 </section>
 
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,30 C360,70 1080,0 1440,30 L1440,70 L0,70 Z" fill="#F2EEFC"/></svg>
+</div>
+
 <!-- ── STATS ── -->
 <div class="stats-bar">
   <div class="stat"><strong>100%</strong><span>Materiales seguros</span></div>
@@ -774,6 +781,10 @@
   </div>
 </section>
 
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,40 C400,0 1040,70 1440,20 L1440,70 L0,70 Z" fill="#F2EEFC"/></svg>
+</div>
+
 <!-- ── WHY US ── -->
 <section class="section-wrap why-bg">
   <div class="section-head reveal zoom-in">
@@ -805,6 +816,10 @@
   </div>
 </section>
 
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,20 C400,70 1040,0 1440,40 L1440,70 L0,70 Z" fill="#FAF8FF"/></svg>
+</div>
+
 <!-- ── CTA ── -->
 <section class="cta-bg">
   <div class="reveal zoom-in">
@@ -819,6 +834,10 @@
     </a>
   </div>
 </section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,30 C400,0 1040,70 1440,20 L1440,70 L0,70 Z" fill="#F2EEFC"/></svg>
+</div>
 
 <!-- ── FOOTER ── -->
 <footer>
