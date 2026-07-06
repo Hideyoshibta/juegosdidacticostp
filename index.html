@@ -6,80 +6,94 @@
   <title>Juegos Didácticos TP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ══════════════════════════════════════
-       VARIABLES & RESET
+       VARIABLES
     ══════════════════════════════════════ */
     :root {
-      --pink:        #E91E8C;
-      --pink-dark:   #AD1457;
-      --pink-pale:   #FCE4F3;
-      --green:       #7CB518;
-      --green-mid:   #A8D520;
-      --green-light: #D4F56A;
-      --orange:      #FF8C00;
-      --yellow:      #FFD600;
-      --dark:        #1C2B0E;
-      --card-shadow: 0 6px 28px rgba(0,0,0,.13);
+      --bg:        #0A0A14;
+      --bg-2:      #12122A;
+      --bg-3:      #1A1A38;
+      --ink:       #F2F2FA;
+      --ink-soft:  #9797B8;
+      --ink-faint: #63637F;
+
+      --violet: #7B61FF;
+      --violet-glow: rgba(123, 97, 255, 0.4);
+      --cyan: #22D3EE;
+      --cyan-glow: rgba(34, 211, 238, 0.38);
+      --gold: #FFC857;
+      --gold-glow: rgba(255, 200, 87, 0.38);
+      --coral: #FF6B81;
+      --coral-glow: rgba(255, 107, 129, 0.38);
+      --mint: #34D399;
+      --mint-glow: rgba(52, 211, 153, 0.38);
+      --ocean: #4F9DDE;
+      --ocean-glow: rgba(79, 157, 222, 0.38);
+
+      --whatsapp: #25D366;
+      --glass: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.1);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      /* gradient que cubre toda la página de arriba abajo */
-      background: linear-gradient(180deg,
-        #F472B6 0%,
-        #E91E8C 8%,
-        #C2185B 20%,
-        #8BC34A 38%,
-        #7CB518 52%,
-        #5a9c0e 65%,
-        #E91E8C 80%,
-        #AD1457 100%
-      );
-      background-attachment: fixed;
-      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
       overflow-x: hidden;
     }
 
+    h1, h2, h3, .display { font-family: 'Sora', sans-serif; }
+
+    .bg-grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
     /* ══════════════════════════════════════
-       NAV — sin borde inferior visible al inicio
+       NAV
     ══════════════════════════════════════ */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       display: flex; align-items: center; justify-content: space-between;
-      padding: .85rem 2rem;
-      background: rgba(233,30,140,.0);   /* transparente al inicio */
+      padding: .9rem 2rem;
+      background: rgba(10,10,20,0);
       backdrop-filter: blur(0px);
-      border-bottom: 3px solid transparent; /* oculto al inicio */
-      transition: background .4s, border-color .4s, backdrop-filter .4s, box-shadow .4s;
+      border-bottom: 1px solid transparent;
+      transition: background .4s, border-color .4s, backdrop-filter .4s;
     }
     nav.scrolled {
-      background: rgba(233,30,140,.95);
-      backdrop-filter: blur(14px);
-      border-bottom-color: var(--yellow);
-      box-shadow: 0 4px 20px rgba(0,0,0,.22);
+      background: rgba(10,10,20,.85);
+      backdrop-filter: blur(16px);
+      border-bottom-color: var(--glass-border);
     }
     .nav-logo {
-      font-family: 'Baloo 2', cursive;
-      font-weight: 900; font-size: 1.25rem;
-      color: #fff; text-decoration: none; line-height: 1.1;
-      text-shadow: 0 2px 8px rgba(0,0,0,.25);
+      font-family: 'Sora', sans-serif;
+      font-weight: 800; font-size: 1.15rem;
+      color: var(--ink); text-decoration: none; line-height: 1.1;
     }
-    .nav-logo span { color: var(--yellow); }
+    .nav-logo span {
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
     .nav-cta {
-      background: var(--yellow); color: var(--dark);
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      color: #fff;
       border: none; border-radius: 50px;
-      padding: .5rem 1.4rem;
-      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: .92rem;
+      padding: .55rem 1.5rem;
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: .88rem;
       cursor: pointer; text-decoration: none;
-      box-shadow: 0 3px 14px rgba(0,0,0,.2);
+      box-shadow: 0 4px 20px var(--violet-glow);
       transition: transform .2s, box-shadow .2s;
     }
-    .nav-cta:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.28); }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 26px var(--violet-glow); }
 
     /* ══════════════════════════════════════
        HERO
@@ -92,186 +106,240 @@
       text-align: center;
       padding: 8rem 1.5rem 7rem;
       overflow: hidden;
+      background: radial-gradient(circle at 50% 25%, var(--bg-3), var(--bg) 65%);
     }
 
-    /* decorative circles */
-    .hero-deco { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .deco-c {
-      position: absolute; border-radius: 50%;
-      background: rgba(255,255,255,.1);
-      animation: driftC 9s ease-in-out infinite alternate;
-    }
-    .deco-c:nth-child(1){ width:320px;height:320px;top:-90px;left:-90px;animation-delay:0s; }
-    .deco-c:nth-child(2){ width:190px;height:190px;top:55%;right:-55px;animation-delay:2.5s; }
-    .deco-c:nth-child(3){ width:130px;height:130px;top:18%;right:14%;animation-delay:4s; }
-    .deco-c:nth-child(4){ width:250px;height:250px;bottom:-70px;left:22%;animation-delay:1.2s; }
-    @keyframes driftC { from{transform:translateY(0) scale(1)} to{transform:translateY(-22px) scale(1.07)} }
-
-    /* floating emojis */
-    .floaters { position: absolute; inset: 0; pointer-events: none; }
+    .floaters { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
     .floater {
-      position: absolute; font-size: 2.2rem;
-      filter: drop-shadow(0 3px 7px rgba(0,0,0,.2));
+      position: absolute; font-size: 2.1rem;
       animation: floatY 6s ease-in-out infinite;
     }
-    .floater:nth-child(1){top:13%;left:6%;animation-delay:0s;}
-    .floater:nth-child(2){top:17%;right:7%;animation-delay:1.3s;font-size:1.9rem;}
-    .floater:nth-child(3){top:60%;left:4%;animation-delay:2.2s;font-size:2.5rem;}
-    .floater:nth-child(4){top:66%;right:5%;animation-delay:.9s;}
-    .floater:nth-child(5){top:37%;left:2%;animation-delay:3.1s;font-size:1.7rem;}
-    .floater:nth-child(6){top:43%;right:2%;animation-delay:1.7s;font-size:2rem;}
+    .floater.f-violet { filter: drop-shadow(0 0 16px var(--violet-glow)); }
+    .floater.f-cyan   { filter: drop-shadow(0 0 16px var(--cyan-glow)); }
+    .floater.f-gold   { filter: drop-shadow(0 0 16px var(--gold-glow)); }
+    .floater.f-coral  { filter: drop-shadow(0 0 16px var(--coral-glow)); }
+    .floater:nth-child(1){top:14%;left:7%;animation-delay:0s;}
+    .floater:nth-child(2){top:18%;right:8%;animation-delay:1.3s;font-size:1.8rem;}
+    .floater:nth-child(3){top:60%;left:5%;animation-delay:2.2s;font-size:2.4rem;}
+    .floater:nth-child(4){top:64%;right:6%;animation-delay:.9s;}
+    .floater:nth-child(5){top:38%;left:3%;animation-delay:3.1s;font-size:1.7rem;}
+    .floater:nth-child(6){top:42%;right:3%;animation-delay:1.7s;font-size:1.9rem;}
     @keyframes floatY {
-      0%,100%{ transform:translateY(0) rotate(-5deg); }
-      50%    { transform:translateY(-18px) rotate(5deg); }
+      0%,100%{ transform:translateY(0) rotate(-4deg); }
+      50%    { transform:translateY(-18px) rotate(4deg); }
     }
 
     .hero-badge {
+      position: relative; z-index: 2;
       display: inline-flex; align-items: center; gap: .4rem;
-      background: rgba(255,255,255,.22);
-      border: 2px solid rgba(255,255,255,.45);
-      color: #fff; border-radius: 50px;
-      padding: .3rem 1rem; font-weight: 800; font-size: .84rem;
-      margin-bottom: 1.4rem;
-      backdrop-filter: blur(6px);
-      animation: popIn .7s cubic-bezier(.34,1.56,.64,1) both;
+      background: rgba(123, 97, 255, 0.1);
+      border: 1px solid rgba(123, 97, 255, 0.35);
+      color: var(--violet);
+      border-radius: 50px;
+      padding: .35rem 1.1rem; font-weight: 600; font-size: .82rem;
+      margin-bottom: 1.6rem;
     }
-    @keyframes popIn{ from{opacity:0;transform:scale(.5)} to{opacity:1;transform:scale(1)} }
 
     .hero h1 {
-      font-family: 'Baloo 2', cursive; font-weight: 900;
-      font-size: clamp(2.6rem,7.5vw,5rem);
-      color: #fff; line-height: 1.02;
-      margin-bottom: 1rem;
-      text-shadow: 0 3px 18px rgba(0,0,0,.2);
-      animation: riseUp .7s .15s both;
+      position: relative; z-index: 2;
+      font-size: clamp(2.5rem,7vw,4.6rem);
+      font-weight: 800;
+      line-height: 1.08;
+      margin-bottom: 1.1rem;
+      background: linear-gradient(120deg, var(--ink), var(--ink-soft));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
     .hero h1 em {
-      font-style: normal; color: var(--yellow); position: relative;
+      font-style: normal;
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    .hero h1 em::after {
-      content:''; position:absolute; bottom:-5px; left:0; right:0; height:5px;
-      background: var(--yellow); border-radius:3px;
-      transform:scaleX(0); transform-origin:left;
-      animation: growLine 1s .9s forwards;
-    }
-    @keyframes growLine{ to{transform:scaleX(1)} }
 
     .hero p {
+      position: relative; z-index: 2;
       max-width: 540px;
-      font-size: clamp(.98rem,2.2vw,1.18rem);
-      color: rgba(255,255,255,.93); line-height: 1.72;
+      font-size: clamp(.98rem,2.2vw,1.14rem);
+      color: var(--ink-soft); line-height: 1.72;
       margin-bottom: 2.4rem;
-      animation: riseUp .7s .3s both;
     }
-    @keyframes riseUp { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:translateY(0)} }
 
     .hero-btns {
+      position: relative; z-index: 2;
       display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
-      animation: riseUp .7s .45s both;
     }
-    .btn-yellow {
-      background: var(--yellow); color: var(--dark);
+    .btn-primary {
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      color: #fff;
       border: none; border-radius: 50px;
-      padding: .85rem 2.2rem;
-      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem;
+      padding: .9rem 2.2rem;
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: .98rem;
       cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: .45rem;
-      box-shadow: 0 5px 20px rgba(0,0,0,.2);
+      display: inline-flex; align-items: center; gap: .5rem;
+      box-shadow: 0 6px 26px var(--violet-glow);
       transition: transform .22s, box-shadow .22s;
     }
-    .btn-yellow:hover { transform:translateY(-4px) scale(1.04); box-shadow:0 10px 28px rgba(0,0,0,.28); }
-    .btn-white-outline {
-      background: transparent; color: #fff;
-      border: 2.5px solid #fff; border-radius: 50px;
-      padding: .85rem 2.2rem;
-      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem;
+    .btn-primary:hover { transform:translateY(-4px); box-shadow:0 10px 34px var(--violet-glow); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--glass-border); border-radius: 50px;
+      padding: .9rem 2.2rem;
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: .98rem;
       cursor: pointer; text-decoration: none;
-      transition: background .2s, color .2s, transform .2s;
+      transition: background .2s, border-color .2s, transform .2s;
     }
-    .btn-white-outline:hover { background:#fff; color:var(--pink); transform:translateY(-4px); }
+    .btn-outline:hover { background: var(--glass); border-color: var(--ink-soft); transform:translateY(-4px); }
 
-    /* wave que combina con la siguiente sección */
-    .hero-wave { position: absolute; bottom: -2px; left: 0; right: 0; line-height: 0; }
-    .hero-wave svg { display: block; width: 100%; }
+    /* ══════════════════════════════════════
+       SCROLL STORY — cubos 3D reales
+    ══════════════════════════════════════ */
+    .scroll-story { position: relative; background: var(--bg); }
+
+    .story-scene {
+      position: relative;
+      min-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      padding: 4rem 1.5rem;
+    }
+
+    .story-glow { position: absolute; inset: 0; z-index: 0; }
+    .glow-violet { background: radial-gradient(circle at 35% 45%, rgba(123,97,255,0.16), transparent 55%); }
+    .glow-cyan   { background: radial-gradient(circle at 65% 45%, rgba(34,211,238,0.14), transparent 55%); }
+    .glow-mint   { background: radial-gradient(circle at 35% 45%, rgba(52,211,153,0.14), transparent 55%); }
+
+    /* cubo 3D — animación de entrada (zoom desde el fondo) una sola vez,
+       luego queda estático en su lugar, solo girando */
+    .cube-stage {
+      position: relative; z-index: 2; perspective: 900px;
+      opacity: 0;
+      transform: scale(0.4) translateZ(-700px);
+      filter: blur(10px);
+      transition: opacity 1s cubic-bezier(.22,1,.36,1),
+                  transform 1.1s cubic-bezier(.22,1,.36,1),
+                  filter 1.1s ease-out;
+    }
+    .cube-stage.visible {
+      opacity: 1;
+      transform: scale(1) translateZ(0);
+      filter: blur(0px);
+    }
+    .cube-spin { width: 180px; height: 180px; transform-style: preserve-3d; animation: spinCube 14s linear infinite; }
+    @keyframes spinCube { from { transform: rotateY(0deg) rotateX(-12deg); } to { transform: rotateY(360deg) rotateX(-12deg); } }
+    .cube3d { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+    .face {
+      position: absolute; width: 180px; height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px; backface-visibility: hidden; border-radius: 18px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 0 40px rgba(0,0,0,0.4);
+    }
+    .face.front  { transform: translateZ(90px); }
+    .face.back   { transform: rotateY(180deg) translateZ(90px); }
+    .face.right  { transform: rotateY(90deg) translateZ(90px); }
+    .face.left   { transform: rotateY(-90deg) translateZ(90px); }
+    .face.top    { transform: rotateX(90deg) translateZ(90px); }
+    .face.bottom { transform: rotateX(-90deg) translateZ(90px); }
+
+    .cube-violet .face { background: linear-gradient(155deg, #8A72FF, #5B3FE0); }
+    .cube-violet .face.front { background: linear-gradient(155deg, #9C87FF, #6C50F0); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2), 0 0 60px var(--violet-glow); }
+    .cube-cyan .face { background: linear-gradient(155deg, #4FE3F7, #0EA5C4); }
+    .cube-cyan .face.front { background: linear-gradient(155deg, #63EAFA, #16B8D9); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2), 0 0 60px var(--cyan-glow); }
+    .cube-mint .face { background: linear-gradient(155deg, #4FE0B0, #16A87A); }
+    .cube-mint .face.front { background: linear-gradient(155deg, #63EAC0, #1BC08A); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2), 0 0 60px var(--mint-glow); }
+
+    .story-content {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      gap: 4rem; max-width: 1100px; margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .story-content.reverse { flex-direction: row-reverse; }
+
+    .story-info { max-width: 380px; opacity: 0; transform: translateY(30px); transition: opacity .7s cubic-bezier(.22,1,.36,1) .3s, transform .7s cubic-bezier(.22,1,.36,1) .3s; }
+    .story-info.visible { opacity: 1; transform: none; }
+    .story-info.left  { text-align: left; }
+    .story-info.right { text-align: right; }
+
+    .story-tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 16px; border: 1px solid; }
+    .tag-violet { color: var(--violet); border-color: rgba(123,97,255,.4); background: rgba(123,97,255,.1); }
+    .tag-cyan   { color: var(--cyan);   border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.1); }
+    .tag-mint   { color: var(--mint);   border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.1); }
+
+    .story-info h2 { font-size: clamp(22px, 3.2vw, 30px); margin-bottom: 12px; font-weight: 700; }
+    .story-info p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 14px; }
+    .story-info ul { list-style: none; font-size: 13px; color: var(--ink-soft); }
+    .story-info li { padding: 4px 0; }
+    .story-info.right li { text-align: right; }
+
+    @media (max-width: 880px) {
+      .story-content, .story-content.reverse { flex-direction: column; text-align: center !important; }
+      .story-info { max-width: 90%; text-align: center !important; }
+      .story-info li { text-align: center !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cube-spin { animation: none !important; }
+      .cube-stage { transition: none !important; opacity: 1; transform: none; filter: none; }
+      .story-info { transition: none !important; }
+    }
 
     /* ══════════════════════════════════════
        STATS BAR
     ══════════════════════════════════════ */
     .stats-bar {
-      background: rgba(255,255,255,.12);
-      backdrop-filter: blur(8px);
-      border-top: 2px solid rgba(255,255,255,.2);
-      border-bottom: 2px solid rgba(255,255,255,.2);
-      padding: 1.6rem 1rem;
+      position: relative;
+      background: var(--bg-2);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1.7rem 1rem;
       display: flex; flex-wrap: wrap;
       justify-content: center; gap: 1.5rem 3rem;
     }
-    .stat {
-      text-align: center;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .6s, transform .6s;
-    }
+    .stat { text-align: center; opacity: 0; transform: translateY(16px); transition: opacity .6s, transform .6s; }
     .stat.visible { opacity:1; transform:translateY(0); }
     .stat strong {
-      font-family: 'Baloo 2', cursive; font-size: 2rem; font-weight: 900;
-      color: var(--yellow); display: block; line-height: 1;
+      font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800;
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      display: block; line-height: 1;
     }
-    .stat span { font-size: .82rem; color:#fff; font-weight: 700; }
+    .stat span { font-size: .82rem; color: var(--ink-soft); font-weight: 600; }
 
     /* ══════════════════════════════════════
-       SECCIONES — glassmorphism sobre el fondo
+       SECCIONES
     ══════════════════════════════════════ */
-    .section-wrap {
-      padding: 5rem 1.5rem;
-    }
+    .section-wrap { position: relative; padding: 5.5rem 1.5rem; }
+    .products-bg { background: var(--bg); }
 
-    /* tarjetas de producto sobre fondo glass */
-    .products-bg {
-      background: rgba(255,255,255,.15);
-      backdrop-filter: blur(10px);
-    }
-
-    .section-head { text-align: center; margin-bottom: 3rem; }
+    .section-head { position: relative; z-index: 1; text-align: center; margin-bottom: 3rem; }
     .section-pill {
       display: inline-block;
-      background: rgba(255,255,255,.3);
-      color: #fff;
-      border: 2px solid rgba(255,255,255,.5);
+      background: var(--glass); color: var(--ink-soft);
+      border: 1px solid var(--glass-border);
       border-radius: 50px; padding: .22rem .95rem;
-      font-weight: 800; font-size: .78rem;
+      font-weight: 700; font-size: .76rem;
       text-transform: uppercase; letter-spacing: .07em;
-      margin-bottom: .7rem;
-      backdrop-filter: blur(4px);
+      margin-bottom: .8rem;
     }
     .section-title {
-      font-family: 'Baloo 2', cursive; font-weight: 900;
-      font-size: clamp(1.8rem,3.8vw,2.7rem);
-      color: #fff;
-      line-height: 1.1; margin-bottom: .4rem;
-      text-shadow: 0 2px 12px rgba(0,0,0,.15);
+      font-family: 'Sora', sans-serif; font-weight: 800;
+      font-size: clamp(1.8rem,3.8vw,2.6rem);
+      color: var(--ink); line-height: 1.15; margin-bottom: .5rem;
     }
-    .section-sub { color: rgba(255,255,255,.8); font-size: 1rem; font-weight: 600; }
+    .section-sub { color: var(--ink-soft); font-size: 1rem; font-weight: 500; }
 
     /* ══════════════════════════════════════
        TABS
     ══════════════════════════════════════ */
-    .tabs {
-      display: flex; flex-wrap: wrap; gap: .55rem;
-      justify-content: center; margin-bottom: 2.6rem;
-    }
+    .tabs { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: .55rem; justify-content: center; margin-bottom: 2.8rem; }
     .tab {
-      background: rgba(255,255,255,.2);
-      color: #fff;
-      border: 2px solid rgba(255,255,255,.5);
-      border-radius: 50px;
-      padding: .4rem 1.15rem;
-      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: .88rem;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: background .2s, transform .2s;
+      background: var(--glass); color: var(--ink-soft);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px; padding: .42rem 1.2rem;
+      font-family: 'Sora', sans-serif; font-weight: 600; font-size: .86rem;
+      cursor: pointer; transition: background .2s, color .2s, transform .2s, border-color .2s;
     }
     .tab:hover, .tab.active {
-      background: #fff; color: var(--pink);
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      color: #fff; border-color: transparent;
       transform: translateY(-2px);
     }
 
@@ -279,213 +347,167 @@
        PRODUCTS GRID
     ══════════════════════════════════════ */
     .products-grid {
+      position: relative; z-index: 1;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.8rem;
-      max-width: 1160px; margin: 0 auto;
+      gap: 1.8rem; max-width: 1160px; margin: 0 auto;
     }
 
-    /* ── CARD ── */
     .product-card {
-      background: rgba(255,255,255,.95);
+      background: var(--bg-2);
       border-radius: 20px;
       overflow: hidden;
-      border: 2.5px solid rgba(255,255,255,.8);
-      box-shadow: var(--card-shadow);
+      border: 1px solid var(--glass-border);
       display: flex; flex-direction: column;
-      /* scroll reveal — empieza invisible */
       opacity: 0; transform: translateY(50px) scale(.97);
       transition: opacity .6s cubic-bezier(.22,1,.36,1),
                   transform .6s cubic-bezier(.22,1,.36,1),
                   box-shadow .3s, border-color .3s;
     }
     .product-card.visible { opacity:1; transform:translateY(0) scale(1); }
-    .product-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 22px 52px rgba(233,30,140,.25);
-      border-color: var(--pink);
-    }
 
-    /* transition delays para entrada escalonada */
     .product-card:nth-child(2){ transition-delay:.1s }
     .product-card:nth-child(3){ transition-delay:.2s }
     .product-card:nth-child(4){ transition-delay:.3s }
     .product-card:nth-child(5){ transition-delay:.4s }
     .product-card:nth-child(6){ transition-delay:.5s }
 
-    /* image box — altura fija con fondo de color */
     .card-img-box {
-      position: relative;
-      width: 100%; height: 220px;
+      position: relative; width: 100%; height: 220px;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      overflow: hidden; background: var(--bg-3);
     }
-    .card-img-box.bg-abc    { background: linear-gradient(135deg,#FCE4F3,#F8BBD9); }
-    .card-img-box.bg-num    { background: linear-gradient(135deg,#FFF9C4,#FFE082); }
-    .card-img-box.bg-dom    { background: linear-gradient(135deg,#E8F5E9,#A5D6A7); }
-    .card-img-box.bg-granja { background: linear-gradient(135deg,#FFF3E0,#FFCC80); }
-    .card-img-box.bg-selva  { background: linear-gradient(135deg,#E0F7FA,#80DEEA); }
-    .card-img-box.bg-mar    { background: linear-gradient(135deg,#E3F2FD,#90CAF9); }
+    .card-img-box.acc-violet { background: radial-gradient(circle, rgba(123,97,255,0.22), var(--bg-3) 70%); }
+    .card-img-box.acc-cyan   { background: radial-gradient(circle, rgba(34,211,238,0.2), var(--bg-3) 70%); }
+    .card-img-box.acc-gold   { background: radial-gradient(circle, rgba(255,200,87,0.2), var(--bg-3) 70%); }
+    .card-img-box.acc-coral  { background: radial-gradient(circle, rgba(255,107,129,0.2), var(--bg-3) 70%); }
+    .card-img-box.acc-mint   { background: radial-gradient(circle, rgba(52,211,153,0.2), var(--bg-3) 70%); }
+    .card-img-box.acc-ocean  { background: radial-gradient(circle, rgba(79,157,222,0.2), var(--bg-3) 70%); }
 
     .card-img-box img {
-      max-width: 90%; max-height: 90%;
-      width: auto; height: auto;
+      max-width: 82%; max-height: 82%; width: auto; height: auto;
       object-fit: contain; display: block;
       transition: transform .45s cubic-bezier(.34,1.56,.64,1);
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.4));
     }
-    .product-card:hover .card-img-box img { transform: scale(1.1) rotate(-1deg); }
+    .product-card:hover .card-img-box img { transform: scale(1.08) rotate(-1deg); }
 
     .card-badge {
       position: absolute; top: 11px; right: 11px;
-      background: var(--pink); color: #fff;
-      border-radius: 20px; padding: .2rem .7rem;
+      color: #0A0A14; border-radius: 20px; padding: .2rem .7rem;
       font-weight: 800; font-size: .7rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,.18);
     }
+    .badge-violet { background: var(--violet); color: #fff; }
+    .badge-cyan   { background: var(--cyan); }
+    .badge-gold   { background: var(--gold); }
+    .badge-coral  { background: var(--coral); color: #fff; }
+    .badge-mint   { background: var(--mint); }
+    .badge-ocean  { background: var(--ocean); color: #fff; }
 
-    /* card body */
     .card-body {
       padding: 1.3rem 1.4rem 1.4rem;
-      border-top: 3px solid var(--pink-pale);
+      border-top: 1px solid var(--glass-border);
       display: flex; flex-direction: column; flex: 1;
     }
-    .card-body h3 {
-      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.12rem;
-      color: var(--dark);
-      margin-bottom: .38rem; line-height: 1.2;
-    }
-    .card-body p {
-      color: #6b5a7e; font-size: .88rem; line-height: 1.62;
-      margin-bottom: .9rem; flex: 1;
-    }
+    .card-body h3 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); margin-bottom: .4rem; line-height: 1.25; }
+    .card-body p { color: var(--ink-soft); font-size: .87rem; line-height: 1.62; margin-bottom: .9rem; flex: 1; }
     .tag-row { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1rem; }
-    .tag {
-      background: var(--green-light); color: var(--dark);
-      border-radius: 20px; padding: .15rem .6rem;
-      font-size: .73rem; font-weight: 700;
-    }
+    .pill-tag { background: var(--glass); color: var(--ink-soft); border: 1px solid var(--glass-border); border-radius: 20px; padding: .15rem .6rem; font-size: .72rem; font-weight: 600; }
+
     .card-btn {
       display: block; width: 100%;
-      background: var(--pink); color: #fff;
-      border: none; border-radius: 12px; padding: .65rem;
-      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: .9rem;
+      color: #fff; border: none; border-radius: 12px; padding: .68rem;
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: .88rem;
       cursor: pointer; text-decoration: none; text-align: center;
-      transition: background .2s, transform .2s, box-shadow .2s;
+      transition: transform .2s, box-shadow .2s, filter .2s;
       margin-top: auto;
-      box-shadow: 0 4px 14px rgba(233,30,140,.3);
     }
-    .card-btn:hover { background: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,140,0,.35); }
+    .btn-violet { background: var(--violet); box-shadow: 0 4px 16px var(--violet-glow); }
+    .btn-cyan   { background: var(--cyan); box-shadow: 0 4px 16px var(--cyan-glow); }
+    .btn-gold   { background: var(--gold); color: #0A0A14; box-shadow: 0 4px 16px var(--gold-glow); }
+    .btn-coral  { background: var(--coral); box-shadow: 0 4px 16px var(--coral-glow); }
+    .btn-mint   { background: var(--mint); color: #0A0A14; box-shadow: 0 4px 16px var(--mint-glow); }
+    .btn-ocean  { background: var(--ocean); box-shadow: 0 4px 16px var(--ocean-glow); }
+    .card-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
     /* ══════════════════════════════════════
-       WHY US — glass sobre fondo
+       WHY US
     ══════════════════════════════════════ */
-    .why-bg {
-      background: rgba(0,0,0,.18);
-      backdrop-filter: blur(6px);
-    }
-
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.3rem; max-width: 980px; margin: 0 auto;
-    }
+    .why-bg { background: var(--bg-2); }
+    .why-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.3rem; max-width: 980px; margin: 0 auto; }
     .why-card {
-      background: rgba(255,255,255,.12);
-      border: 2px solid rgba(255,255,255,.22);
-      border-radius: 18px; padding: 1.8rem 1.3rem;
-      text-align: center;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 18px; padding: 1.9rem 1.3rem; text-align: center;
       opacity: 0; transform: translateY(30px) scale(.96);
-      transition: opacity .6s cubic-bezier(.22,1,.36,1),
-                  transform .6s cubic-bezier(.22,1,.36,1),
-                  background .3s;
+      transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1), background .3s, border-color .3s;
     }
     .why-card.visible { opacity:1; transform:translateY(0) scale(1); }
-    .why-card:hover { background: rgba(255,255,255,.22); transform: translateY(-6px) scale(1.02); }
+    .why-card:hover { background: rgba(255,255,255,.08); border-color: var(--violet); transform: translateY(-6px) scale(1.02); }
     .why-card:nth-child(2){ transition-delay:.12s }
     .why-card:nth-child(3){ transition-delay:.24s }
     .why-card:nth-child(4){ transition-delay:.36s }
-    .why-icon { font-size: 2.7rem; display:block; margin-bottom:.8rem; animation: wobble 3.5s ease-in-out infinite; }
-    @keyframes wobble { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
-    .why-card h4 {
-      font-family:'Baloo 2',cursive; font-weight:800; font-size:1rem;
-      color:var(--yellow); margin-bottom:.3rem;
-    }
-    .why-card p { font-size:.87rem; color:rgba(255,255,255,.82); line-height:1.62; }
+    .why-icon { font-size: 2.6rem; display:block; margin-bottom:.8rem; }
+    .why-card h4 { font-family:'Sora',sans-serif; font-weight:700; font-size:1rem; color: var(--ink); margin-bottom:.35rem; }
+    .why-card p { font-size:.87rem; color: var(--ink-soft); line-height:1.62; }
 
     /* ══════════════════════════════════════
        CTA
     ══════════════════════════════════════ */
     .cta-bg {
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(10px);
-      border-top: 2px solid rgba(255,255,255,.2);
-      border-bottom: 2px solid rgba(255,255,255,.2);
-      text-align: center;
-      padding: 6rem 1.5rem;
+      position: relative; background: var(--bg);
+      border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
+      text-align: center; padding: 6.5rem 1.5rem;
     }
-    .cta-bg h2 {
-      font-family:'Baloo 2',cursive; font-weight:900;
-      font-size: clamp(2rem,5vw,3.2rem);
-      color:#fff; margin-bottom:.9rem;
-      text-shadow:0 3px 16px rgba(0,0,0,.18);
-    }
-    .cta-bg p { color:rgba(255,255,255,.9); font-size:1.08rem; margin-bottom:2.2rem; font-weight:600; }
+    .cta-bg h2 { font-family:'Sora',sans-serif; font-weight:800; font-size: clamp(2rem,5vw,3.1rem); color: var(--ink); margin-bottom:.9rem; }
+    .cta-bg p { color: var(--ink-soft); font-size:1.05rem; margin-bottom:2.2rem; font-weight:500; }
     .btn-wa {
-      background:#fff; color:var(--green);
+      background: var(--whatsapp); color:#fff;
       border:none; border-radius:50px;
       padding:1rem 2.6rem;
-      font-family:'Baloo 2',cursive; font-weight:900; font-size:1.08rem;
+      font-family:'Sora',sans-serif; font-weight:700; font-size:1.04rem;
       cursor:pointer; text-decoration:none;
       display:inline-flex; align-items:center; gap:.55rem;
-      box-shadow:0 7px 26px rgba(0,0,0,.22);
+      box-shadow:0 7px 26px rgba(37,211,102,.35);
       transition:transform .2s, box-shadow .2s;
     }
-    .btn-wa:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+    .btn-wa:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(37,211,102,.45); }
 
     /* ══════════════════════════════════════
        FOOTER
     ══════════════════════════════════════ */
     footer {
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(8px);
-      color: rgba(255,255,255,.55);
+      background: var(--bg-2);
+      color: var(--ink-faint);
       text-align: center; padding: 2rem 1.5rem; font-size: .86rem;
+      border-top: 1px solid var(--glass-border);
     }
-    footer a { color: var(--yellow); text-decoration: none; }
+    footer a { color: var(--cyan); text-decoration: none; }
 
     /* ══════════════════════════════════════
        WHATSAPP FLOAT
     ══════════════════════════════════════ */
     .wa-float {
       position:fixed; bottom:1.4rem; right:1.4rem; z-index:400;
-      background:#25D366; border-radius:50%;
+      background:var(--whatsapp); border-radius:50%;
       width:60px; height:60px;
       display:flex; align-items:center; justify-content:center;
-      font-size:1.85rem; text-decoration:none;
-      box-shadow:0 5px 22px rgba(37,211,102,.55);
+      font-size:1.8rem; text-decoration:none;
+      box-shadow:0 5px 24px rgba(37,211,102,.5);
       animation:waPulse 2.5s ease-in-out infinite;
       transition:transform .2s;
     }
     .wa-float:hover { transform:scale(1.15); animation:none; }
     @keyframes waPulse {
-      0%,100%{ box-shadow:0 5px 22px rgba(37,211,102,.55); }
-      50%    { box-shadow:0 5px 44px rgba(37,211,102,.88); }
+      0%,100%{ box-shadow:0 5px 22px rgba(37,211,102,.5); }
+      50%    { box-shadow:0 5px 44px rgba(37,211,102,.8); }
     }
 
     /* ══════════════════════════════════════
-       SCROLL-REVEAL — clase base para
-       cualquier elemento que quieras animar
+       SCROLL-REVEAL genérico
     ══════════════════════════════════════ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity .7s cubic-bezier(.22,1,.36,1),
-                  transform .7s cubic-bezier(.22,1,.36,1);
-    }
-    .reveal.from-left  { transform: translateX(-50px); }
-    .reveal.from-right { transform: translateX(50px); }
-    .reveal.zoom-in    { transform: scale(.88); }
-    .reveal.visible    { opacity:1; transform:none; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    .reveal.zoom-in { transform: scale(.92); }
+    .reveal.visible { opacity:1; transform:none; }
 
     /* ══════════════════════════════════════
        RESPONSIVE
@@ -506,38 +528,120 @@
 <!-- ── NAV ── -->
 <nav id="navbar">
   <a href="#" class="nav-logo">JUEGOS <span>DIDÁCTICOS</span> TP</a>
-  <a href="https://wa.me/573163399222" class="nav-cta" target="_blank" rel="noopener">📲 Pedir ya</a>
+  <a href="https://wa.me/573163399222" class="nav-cta" target="_blank" rel="noopener">Pedir ya</a>
 </nav>
 
 <!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-deco" aria-hidden="true">
-    <div class="deco-c"></div><div class="deco-c"></div>
-    <div class="deco-c"></div><div class="deco-c"></div>
-  </div>
+  <div class="bg-grid"></div>
   <div class="floaters" aria-hidden="true">
-    <span class="floater">🧸</span>
-    <span class="floater">🌈</span>
-    <span class="floater">🎲</span>
-    <span class="floater">⭐</span>
-    <span class="floater">🔤</span>
-    <span class="floater">🐄</span>
+    <span class="floater f-violet">🧸</span>
+    <span class="floater f-cyan">🌈</span>
+    <span class="floater f-gold">🎲</span>
+    <span class="floater f-coral">⭐</span>
+    <span class="floater f-violet">🔤</span>
+    <span class="floater f-mint">🐄</span>
   </div>
 
-  <div class="hero-badge">🌟 Colección educativa para niños</div>
+  <div class="hero-badge">✦ Colección educativa premium</div>
   <h1>Aprende jugando<br>con <em>Juegos TP</em></h1>
   <p>Cubos didácticos de alta calidad diseñados para estimular el aprendizaje, la creatividad y el desarrollo sensorial de los más pequeños.</p>
   <div class="hero-btns">
-    <a href="#productos" class="btn-yellow">🧸 Ver colección</a>
-    <a href="https://wa.me/573163399222" class="btn-white-outline" target="_blank" rel="noopener">💬 Escríbenos</a>
+    <a href="#productos" class="btn-primary">Ver colección</a>
+    <a href="https://wa.me/573163399222" class="btn-outline" target="_blank" rel="noopener">Escríbenos</a>
+  </div>
+</section>
+
+<!-- ── SCROLL STORY: cubos 3D ── -->
+<section class="scroll-story">
+
+  <div class="story-scene">
+    <div class="story-glow glow-violet"></div>
+    <div class="bg-grid"></div>
+    <div class="story-content">
+      <div class="cube-stage">
+        <div class="cube-spin">
+          <div class="cube3d cube-violet">
+            <div class="face front">🔤</div>
+            <div class="face back">🔤</div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="story-info left reveal">
+        <span class="story-tag tag-violet">⭐ Más vendido</span>
+        <h2>Abecedario</h2>
+        <p>Cubos de letras acolchados para que los pequeños aprendan el alfabeto jugando con colores y texturas.</p>
+        <ul>
+          <li>26 letras completas</li>
+          <li>Material suave y seguro</li>
+          <li>Ideal desde recién nacido</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <div class="hero-wave">
-    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,50 C200,90 400,20 600,55 C800,90 1100,10 1440,45 L1440,80 L0,80 Z"
-            fill="rgba(255,255,255,.08)"/>
-    </svg>
+  <div class="story-scene">
+    <div class="story-glow glow-cyan"></div>
+    <div class="bg-grid"></div>
+    <div class="story-content reverse">
+      <div class="cube-stage">
+        <div class="cube-spin">
+          <div class="cube3d cube-cyan">
+            <div class="face front">🔢</div>
+            <div class="face back">🔢</div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="story-info right reveal">
+        <span class="story-tag tag-cyan">🔢 Nuevo</span>
+        <h2>Los Números</h2>
+        <p>Aprende a contar del 1 al 10 con cubos coloridos que hacen del aprendizaje numérico una aventura divertida.</p>
+        <ul>
+          <li>Del 1 al 10</li>
+          <li>Colores vivos y contrastantes</li>
+          <li>Recomendado 2+ años</li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <div class="story-scene">
+    <div class="story-glow glow-mint"></div>
+    <div class="bg-grid"></div>
+    <div class="story-content">
+      <div class="cube-stage">
+        <div class="cube-spin">
+          <div class="cube3d cube-mint">
+            <div class="face front">🦁</div>
+            <div class="face back">🦁</div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="story-info left reveal">
+        <span class="story-tag tag-mint">🦁 Aventura</span>
+        <h2>Animales de la Selva</h2>
+        <p>Leones, monos, jirafas y elefantes para despertar el espíritu explorador de los más pequeños.</p>
+        <ul>
+          <li>6 animales exóticos</li>
+          <li>Datos curiosos incluidos</li>
+          <li>Recomendado 3+ años</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ── STATS ── -->
@@ -552,124 +656,118 @@
 <section class="section-wrap products-bg" id="productos">
   <div class="section-head reveal zoom-in">
     <span class="section-pill">Colección completa</span>
-    <h2 class="section-title">Nuestros Juegos Didácticos 🎁</h2>
+    <h2 class="section-title">Nuestros Juegos Didácticos</h2>
     <p class="section-sub">Cubos educativos para cada etapa del aprendizaje</p>
   </div>
 
   <div class="tabs reveal">
     <button class="tab active" onclick="filterCards('all',this)">Todos</button>
-    <button class="tab" onclick="filterCards('letras',this)">🔤 Letras</button>
-    <button class="tab" onclick="filterCards('numeros',this)">🔢 Números</button>
-    <button class="tab" onclick="filterCards('animales',this)">🐾 Animales</button>
+    <button class="tab" onclick="filterCards('letras',this)">Letras</button>
+    <button class="tab" onclick="filterCards('numeros',this)">Números</button>
+    <button class="tab" onclick="filterCards('animales',this)">Animales</button>
   </div>
 
   <div class="products-grid">
 
-    <!-- 1. ABECEDARIO -->
     <div class="product-card" data-cat="letras">
-      <div class="card-img-box bg-abc">
+      <div class="card-img-box acc-violet">
         <img src="https://juegosdidacticostp.com/abecedario.png" alt="Abecedario" loading="lazy" />
-        <span class="card-badge">⭐ Más vendido</span>
+        <span class="card-badge badge-violet">⭐ Más vendido</span>
       </div>
       <div class="card-body">
         <h3>Abecedario</h3>
         <p>Cubos de letras acolchados para que los pequeños aprendan el alfabeto jugando con colores y texturas.</p>
         <div class="tag-row">
-          <span class="tag">🔤 Letras</span>
-          <span class="tag">👶 0+ años</span>
-          <span class="tag">🧶 Suave</span>
+          <span class="pill-tag">Letras</span>
+          <span class="pill-tag">0+ años</span>
+          <span class="pill-tag">Suave</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20el%20Abecedario" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20el%20Abecedario" class="card-btn btn-violet" target="_blank">Pedir por WhatsApp</a>
       </div>
     </div>
 
-    <!-- 2. LOS NÚMEROS -->
     <div class="product-card" data-cat="numeros">
-      <div class="card-img-box bg-num">
+      <div class="card-img-box acc-cyan">
         <img src="https://juegosdidacticostp.com/numeros.png" alt="Los Números" loading="lazy" />
-        <span class="card-badge">🔢 Nuevo</span>
+        <span class="card-badge badge-cyan">Nuevo</span>
       </div>
       <div class="card-body">
         <h3>Los Números</h3>
         <p>Aprende a contar del 1 al 10 con cubos coloridos que hacen del aprendizaje numérico una aventura divertida.</p>
         <div class="tag-row">
-          <span class="tag">🔢 Números</span>
-          <span class="tag">👧 2+ años</span>
-          <span class="tag">🎨 Colores</span>
+          <span class="pill-tag">Números</span>
+          <span class="pill-tag">2+ años</span>
+          <span class="pill-tag">Colores</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Los%20N%C3%BAmeros" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Los%20N%C3%BAmeros" class="card-btn btn-cyan" target="_blank">Pedir por WhatsApp</a>
       </div>
     </div>
 
-    <!-- 3. ANIMALES DOMÉSTICOS -->
     <div class="product-card" data-cat="animales">
-      <div class="card-img-box bg-dom">
+      <div class="card-img-box acc-gold">
         <img src="https://juegosdidacticostp.com/animales%20domesticos.png" alt="Animales Domésticos" loading="lazy" />
-        <span class="card-badge">🐶 Popular</span>
+        <span class="card-badge badge-gold">Popular</span>
       </div>
       <div class="card-body">
         <h3>Animales Domésticos</h3>
         <p>Descubre a los amigos del hogar: perros, gatos, conejos y más. Ideal para aprender con amor por los animales.</p>
         <div class="tag-row">
-          <span class="tag">🐶 Mascotas</span>
-          <span class="tag">👧 2+ años</span>
-          <span class="tag">🏠 Hogar</span>
+          <span class="pill-tag">Mascotas</span>
+          <span class="pill-tag">2+ años</span>
+          <span class="pill-tag">Hogar</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20Dom%C3%A9sticos" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20Dom%C3%A9sticos" class="card-btn btn-gold" target="_blank">Pedir por WhatsApp</a>
       </div>
     </div>
 
-    <!-- 4. ANIMALES DE LA GRANJA -->
     <div class="product-card" data-cat="animales">
-      <div class="card-img-box bg-granja">
+      <div class="card-img-box acc-coral">
         <img src="https://juegosdidacticostp.com/animales de la granja.png" alt="Animales de la Granja" loading="lazy" />
-        <span class="card-badge">🐄 Clásico</span>
+        <span class="card-badge badge-coral">Clásico</span>
       </div>
       <div class="card-body">
         <h3>Animales de la Granja</h3>
         <p>Vacas, gallinas, cerdos y caballos en vibrantes cubos didácticos. ¡El campo en las manos de tu peque!</p>
         <div class="tag-row">
-          <span class="tag">🐄 Granja</span>
-          <span class="tag">👧 2+ años</span>
-          <span class="tag">🌾 Naturaleza</span>
+          <span class="pill-tag">Granja</span>
+          <span class="pill-tag">2+ años</span>
+          <span class="pill-tag">Naturaleza</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Granja" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Granja" class="card-btn btn-coral" target="_blank">Pedir por WhatsApp</a>
       </div>
     </div>
 
-    <!-- 5. ANIMALES DE LA SELVA -->
     <div class="product-card" data-cat="animales">
-      <div class="card-img-box bg-selva">
+      <div class="card-img-box acc-mint">
         <img src="https://juegosdidacticostp.com/animales de la selva.png" alt="Animales de la Selva" loading="lazy" />
-        <span class="card-badge">🦁 Aventura</span>
+        <span class="card-badge badge-mint">Aventura</span>
       </div>
       <div class="card-body">
         <h3>Animales de la Selva</h3>
         <p>Leones, monos, jirafas y elefantes para despertar el espíritu explorador de los más pequeños.</p>
         <div class="tag-row">
-          <span class="tag">🦁 Selva</span>
-          <span class="tag">👦 3+ años</span>
-          <span class="tag">🌿 Exótico</span>
+          <span class="pill-tag">Selva</span>
+          <span class="pill-tag">3+ años</span>
+          <span class="pill-tag">Exótico</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Selva" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Selva" class="card-btn btn-mint" target="_blank">Pedir por WhatsApp</a>
       </div>
     </div>
 
-    <!-- 6. ANIMALES DEL MAR -->
     <div class="product-card" data-cat="animales">
-      <div class="card-img-box bg-mar">
+      <div class="card-img-box acc-ocean">
         <img src="https://juegosdidacticostp.com/animales del mar.png" alt="Animales del Mar" loading="lazy" />
-        <span class="card-badge">🐠 Especial</span>
+        <span class="card-badge badge-ocean">Especial</span>
       </div>
       <div class="card-body">
         <h3>Animales del Mar</h3>
         <p>Ballenas, pulpos, peces y delfines en cubos llenos de color. ¡Sumérgete en el océano del aprendizaje!</p>
         <div class="tag-row">
-          <span class="tag">🐠 Mar</span>
-          <span class="tag">👦 3+ años</span>
-          <span class="tag">🌊 Océano</span>
+          <span class="pill-tag">Mar</span>
+          <span class="pill-tag">3+ años</span>
+          <span class="pill-tag">Océano</span>
         </div>
-        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20del%20Mar" class="card-btn" target="_blank">💬 Pedir por WhatsApp</a>
+        <a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20del%20Mar" class="card-btn btn-ocean" target="_blank">Pedir por WhatsApp</a>
       </div>
     </div>
 
@@ -680,7 +778,7 @@
 <section class="section-wrap why-bg">
   <div class="section-head reveal zoom-in">
     <span class="section-pill">Nuestro compromiso</span>
-    <h2 class="section-title">¿Por qué Juegos TP? 💛</h2>
+    <h2 class="section-title">¿Por qué Juegos TP?</h2>
     <p class="section-sub">Más que juguetes, herramientas de desarrollo</p>
   </div>
   <div class="why-grid">
@@ -710,7 +808,7 @@
 <!-- ── CTA ── -->
 <section class="cta-bg">
   <div class="reveal zoom-in">
-    <h2>¿Listo para regalar<br>aprendizaje? 🎉</h2>
+    <h2>¿Listo para regalar<br>aprendizaje?</h2>
     <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
     <a href="https://wa.me/573163399222" class="btn-wa" target="_blank" rel="noopener">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -724,7 +822,7 @@
 
 <!-- ── FOOTER ── -->
 <footer>
-  <p>© 2025 Juegos Didácticos TP &nbsp;·&nbsp; <a href="https://wa.me/573163399222">+57 316 339 9222</a> &nbsp;·&nbsp; Hecho con 💛 en Colombia 🇨🇴</p>
+  <p>© 2025 Juegos Didácticos TP &nbsp;·&nbsp; <a href="https://wa.me/573163399222">+57 316 339 9222</a> &nbsp;·&nbsp; Hecho en Colombia 🇨🇴</p>
 </footer>
 
 <!-- ── WA BUBBLE ── -->
@@ -737,7 +835,7 @@
     navbar.classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  /* ── IntersectionObserver único para TODOS los elementos animados ── */
+  /* ── IntersectionObserver único para elementos animados ── */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -747,8 +845,7 @@
     });
   }, { threshold: 0.1 });
 
-  // Tarjetas de producto, why-cards, stats, y cualquier .reveal
-  document.querySelectorAll('.product-card, .why-card, .stat, .reveal').forEach(el => io.observe(el));
+  document.querySelectorAll('.product-card, .why-card, .stat, .reveal, .story-info, .cube-stage').forEach(el => io.observe(el));
 
   /* ── Smooth scroll botón hero ── */
   const heroBtn = document.querySelector('a[href="#productos"]');
@@ -757,7 +854,7 @@
     document.getElementById('productos').scrollIntoView({ behavior:'smooth' });
   });
 
-  /* ── Parallax suave en emojis flotantes ── */
+  /* ── Parallax suave en emojis flotantes del hero ── */
   window.addEventListener('mousemove', e => {
     const cx = innerWidth / 2, cy = innerHeight / 2;
     const dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
@@ -800,6 +897,10 @@
       card.style.display = show ? '' : 'none';
     });
   }
+
+  /* Los cubos 3D ahora son estáticos: solo giran (CSS) y aparecen
+     una vez con fade-in vía el IntersectionObserver general de arriba.
+     Ya no dependen de la posición de scroll. */
 </script>
 </body>
 </html>
