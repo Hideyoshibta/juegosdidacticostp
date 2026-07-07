@@ -743,12 +743,26 @@
     .intro-sub { color: var(--ink-soft); font-size: 1.05rem; font-weight: 500; max-width: 380px; margin: 0 auto; line-height: 1.6; }
     .intro-sub strong { color: var(--violet); }
 
-    .intro-swipe-icon { font-size: 2.6rem; display: block; margin-bottom: .9rem; animation: swipeBounce 1.5s ease-in-out infinite; }
-    @keyframes swipeBounce {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50%      { transform: translateY(16px); opacity: .45; }
+    .intro-swipe-icon {
+      font-size: 2.8rem; display: block; margin-bottom: .9rem;
+      animation: swipeBounce 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 8px 10px rgba(139,124,246,.5)) drop-shadow(0 2px 0 rgba(255,255,255,.6));
     }
-    .intro-swipe-text { font-family: 'Sora', sans-serif; font-weight: 700; color: var(--ink); font-size: 1rem; letter-spacing: .02em; }
+    @keyframes swipeBounce {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      50%      { transform: translateY(16px) scale(1.08); opacity: .6; }
+    }
+    .intro-swipe-text {
+      font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: .02em;
+      background: linear-gradient(120deg, var(--violet), var(--cyan), var(--coral));
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: swipeGradient 3s linear infinite;
+    }
+    @keyframes swipeGradient {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .intro-emoji, .intro-swipe-icon { animation: none !important; }
@@ -799,7 +813,7 @@
     <p class="intro-sub">Gracias por ser parte de <strong>TP lovers</strong> ✨</p>
   </div>
   <div class="intro-panel" id="introSwipe">
-    <span class="intro-swipe-icon">👇</span>
+    <span class="intro-swipe-icon">🌈👇🎈</span>
     <p class="intro-swipe-text">Desliza para descubrir</p>
   </div>
 </div>
@@ -1267,7 +1281,7 @@
 <a href="https://wa.me/573163399222" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 
 <script>
-  /* ── Intro de bienvenida: 5s de mensaje, luego pide deslizar ── */
+  /* ── Intro de bienvenida: 3s de mensaje, luego pide deslizar ── */
   (function () {
     const overlay = document.getElementById('introOverlay');
     const welcome = document.getElementById('introWelcome');
@@ -1305,7 +1319,7 @@
         armDismissListeners();
         setTimeout(dismissIntro, 4000); // por si el usuario no interactúa
       }, 650);
-    }, 5000);
+    }, 3000);
   })();
 
   /* ── Nav: aparece con color sólo al hacer scroll ── */
