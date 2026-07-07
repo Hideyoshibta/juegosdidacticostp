@@ -1568,8 +1568,10 @@
 
     const STORAGE_KEY = 'tpExitPopupShown';
     const TOTAL_SECONDS = 30;
-    const ARM_DELAY_MS = 8000; // espera a que la intro termine antes de armar el gatillo
-    let armed = false;
+    const MOUSE_ARM_DELAY_MS = 4000;  // evita falsos positivos al mover el mouse justo al cargar
+    const BACK_ARM_DELAY_MS = 400;    // un "atrás" siempre es intencional: se arma casi de inmediato
+    let mouseArmed = false;
+    let backArmed = false;
     let shown = false;
     let countdownId = null;
 
@@ -1612,13 +1614,19 @@
       window.removeEventListener('popstate', onPopState);
     }
 
-    function arm() {
-      if (armed || sessionStorage.getItem(STORAGE_KEY)) return;
-      armed = true;
+    function armMouse() {
+      if (mouseArmed || shown || sessionStorage.getItem(STORAGE_KEY)) return;
+      mouseArmed = true;
       window.addEventListener('mouseout', onMouseLeave);
+    }
+
+    function armBack() {
+      if (backArmed || shown || sessionStorage.getItem(STORAGE_KEY)) return;
+      backArmed = true;
       window.addEventListener('popstate', onPopState);
       // Sin esta entrada extra, el gesto de "atrás" en iOS/Android Safari
-      // sale del sitio directamente sin disparar 'popstate' en la página.
+      // (o el botón atrás en desktop) sale del sitio directamente sin
+      // disparar 'popstate' en la página, porque no hay nada que "consumir".
       try { history.pushState({ tpExitGuard: true }, '', location.href); } catch (e) {}
     }
 
@@ -1626,7 +1634,8 @@
     overlay.addEventListener('click', (e) => { if (e.target === overlay) hidePopup(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') hidePopup(); });
 
-    setTimeout(arm, ARM_DELAY_MS);
+    setTimeout(armBack, BACK_ARM_DELAY_MS);
+    setTimeout(armMouse, MOUSE_ARM_DELAY_MS);
   })();
 
   /* ── Intro de bienvenida: 3s de mensaje, luego pide deslizar ── */
