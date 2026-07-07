@@ -209,6 +209,9 @@
       align-items: center; justify-content: center;
       gap: 2rem;
     }
+    /* Primera sección de la página: como el nav es fixed, necesita
+       aire extra arriba para no verse pegada al logo */
+    #animalesScene { padding-top: 6rem; }
 
     .assembly-caption { position: relative; z-index: 2; text-align: center; max-width: 480px; }
     .assembly-caption h2 { font-size: clamp(22px, 3.2vw, 30px); margin-bottom: 10px; font-weight: 700; color: var(--ink); }
@@ -395,6 +398,7 @@
 
     @media (max-width: 640px) {
       .assembly-scene { padding: 1.75rem 1.5rem; gap: 1.5rem; }
+      #animalesScene { padding-top: 4.5rem; }
       .mosaic-inner { width: 200px; height: 200px; }
       .mosaic-tile { width: 99px; height: 99px; }
       .cluster3-frame { width: 220px; height: 300px; transform: scale(0.85); transform-origin: top center; }
@@ -836,7 +840,7 @@
 ══════════════════════════════════════ -->
 
 <!-- SET ANIMALES — 4 cubos en mosaico 2×2, forman UNA imagen -->
-<section class="assembly-scene">
+<section class="assembly-scene" id="animalesScene">
   <div style="position:absolute;inset:0;z-index:0;background:radial-gradient(circle at 50% 40%, rgba(242,96,122,0.3), transparent 60%);"></div>
   <div class="bg-grid"></div>
 
@@ -976,7 +980,7 @@
 
   <div class="assembly-caption reveal zoom-in">
     <span class="story-tag tag-violet">Set Abecedario</span>
-    <h2>4 cubos, muchas palabras
+    <h2>Sus primeras palabras
       <span class="set-count-badge">
         <span class="mini-cube-spin"><span class="mini-cube3d mini-cube-violet">
           <span class="mini-face front"></span><span class="mini-face back"></span>
@@ -986,7 +990,7 @@
         x9
       </span>
     </h2>
-    <p>Los 4 cubos giran juntos — en cada cuarto de vuelta arman una palabra distinta de 4 letras.</p>
+    <p>Convierte el aprendizaje de las letras en una experiencia divertida e interactiva. Este set de cubos didácticos ayuda a los niños a reconocer el abecedario, formar palabras y fortalecer sus habilidades de lectura y escritura desde temprana edad.</p>
   </div>
 
   <div class="word-row">
