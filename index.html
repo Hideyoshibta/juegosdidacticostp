@@ -189,103 +189,12 @@
     }
     .btn-outline:hover { background: var(--glass); border-color: var(--ink-soft); transform:translateY(-4px); }
 
-    /* ══════════════════════════════════════
-       SCROLL STORY — cubos 3D reales
-    ══════════════════════════════════════ */
-    .scroll-story { position: relative; background: var(--bg); }
-
-    .story-scene {
-      position: relative;
-      min-height: 90vh;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      padding: 4rem 1.5rem;
-    }
-
-    .story-glow { position: absolute; inset: 0; z-index: 0; }
-    .glow-violet { background: radial-gradient(circle at 35% 45%, rgba(139,124,246,0.35), transparent 60%); }
-    .glow-cyan   { background: radial-gradient(circle at 65% 45%, rgba(52,184,196,0.32), transparent 60%); }
-    .glow-mint   { background: radial-gradient(circle at 35% 45%, rgba(47,191,143,0.32), transparent 60%); }
-
-    /* cubo 3D — animación de entrada (zoom desde el fondo) una sola vez,
-       luego queda estático en su lugar, solo girando */
-    .cube-stage {
-      position: relative; z-index: 2; perspective: 900px;
-      opacity: 0;
-      transform: scale(0.4) translateZ(-700px);
-      filter: blur(10px);
-      transition: opacity 1s cubic-bezier(.22,1,.36,1),
-                  transform 1.1s cubic-bezier(.22,1,.36,1),
-                  filter 1.1s ease-out;
-    }
-    .cube-stage.visible {
-      opacity: 1;
-      transform: scale(1) translateZ(0);
-      filter: blur(0px);
-    }
-    .cube-spin { width: 180px; height: 180px; transform-style: preserve-3d; animation: spinCube 14s linear infinite; }
     @keyframes spinCube { from { transform: rotateY(0deg) rotateX(-12deg); } to { transform: rotateY(360deg) rotateX(-12deg); } }
-    .cube3d { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
-    .face {
-      position: absolute; width: 180px; height: 180px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 64px; backface-visibility: hidden; border-radius: 18px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 0 40px rgba(0,0,0,0.4);
-      overflow: hidden;
-      background: var(--bg-3); /* respaldo visible mientras carga o si falta la foto */
-    }
-    .face img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .face.front  { transform: translateZ(90px); }
-    .face.back   { transform: rotateY(180deg) translateZ(90px); }
-    .face.right  { transform: rotateY(90deg) translateZ(90px); }
-    .face.left   { transform: rotateY(-90deg) translateZ(90px); }
-    .face.top    { transform: rotateX(90deg) translateZ(90px); }
-    .face.bottom { transform: rotateX(-90deg) translateZ(90px); }
-
-    /* Borde de acento por categoría alrededor de la foto real, en vez de color de fondo sólido */
-    .cube-violet .face { box-shadow: inset 0 0 0 3px var(--violet), 0 0 50px var(--violet-glow); }
-    .cube-cyan .face   { box-shadow: inset 0 0 0 3px var(--cyan), 0 0 50px var(--cyan-glow); }
-    .cube-mint .face   { box-shadow: inset 0 0 0 3px var(--mint), 0 0 50px var(--mint-glow); }
-
-
-    .story-content {
-      position: relative; z-index: 2;
-      display: flex; align-items: center; justify-content: center;
-      gap: 4rem; max-width: 1100px; margin: 0 auto;
-      flex-wrap: wrap;
-    }
-    .story-content.reverse { flex-direction: row-reverse; }
-
-    .story-info { max-width: 380px; opacity: 0; transform: translateY(30px); transition: opacity .7s cubic-bezier(.22,1,.36,1) .3s, transform .7s cubic-bezier(.22,1,.36,1) .3s; }
-    .story-info.visible { opacity: 1; transform: none; }
-    .story-info.left  { text-align: left; }
-    .story-info.right { text-align: right; }
 
     .story-tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 16px; border: 1px solid; }
     .tag-violet { color: var(--violet); border-color: rgba(123,97,255,.4); background: rgba(123,97,255,.1); }
     .tag-cyan   { color: var(--cyan);   border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.1); }
     .tag-mint   { color: var(--mint);   border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.1); }
-
-    .story-info h2 { font-size: clamp(22px, 3.2vw, 30px); margin-bottom: 12px; font-weight: 700; }
-    .story-info p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 14px; }
-    .story-info ul { list-style: none; font-size: 13px; color: var(--ink-soft); }
-    .story-info li { padding: 4px 0; }
-    .story-info.right li { text-align: right; }
-
-    @media (max-width: 880px) {
-      .story-content, .story-content.reverse { flex-direction: column; text-align: center !important; }
-      .story-info { max-width: 90%; text-align: center !important; }
-      .story-info li { text-align: center !important; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .cube-spin { animation: none !important; }
-      .cube-stage { transition: none !important; opacity: 1; transform: none; filter: none; }
-      .story-info { transition: none !important; }
-    }
 
     /* ══════════════════════════════════════
        ENSAMBLAJE DE MÚLTIPLES CUBOS
@@ -803,123 +712,12 @@
   <a href="https://wa.me/573163399222" class="nav-cta" target="_blank" rel="noopener">Pedir ya</a>
 </nav>
 
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="bg-grid"></div>
-  <div class="floaters" aria-hidden="true">
-    <span class="floater f-violet">🧸</span>
-    <span class="floater f-cyan">🌈</span>
-    <span class="floater f-gold">🎲</span>
-    <span class="floater f-coral">⭐</span>
-    <span class="floater f-violet">🔤</span>
-    <span class="floater f-mint">🐄</span>
-  </div>
-
-  <div class="hero-badge">✦ Colección educativa premium</div>
-  <h1>Aprende jugando<br>con <em>Juegos TP</em></h1>
-  <p>Cubos didácticos de alta calidad diseñados para estimular el aprendizaje, la creatividad y el desarrollo sensorial de los más pequeños.</p>
-  <div class="hero-btns">
-    <a href="#productos" class="btn-primary">Ver colección</a>
-    <a href="https://wa.me/573163399222" class="btn-outline" target="_blank" rel="noopener">Escríbenos</a>
-  </div>
-</section>
-
-<!-- ── SCROLL STORY: cubos 3D ── -->
-<section class="scroll-story">
-
-  <div class="story-scene">
-    <div class="story-glow glow-violet"></div>
-    <div class="bg-grid"></div>
-    <div class="story-content">
-      <div class="cube-stage">
-        <div class="cube-spin">
-          <div class="cube3d cube-violet">
-            <div class="face front"><img src="https://juegosdidacticostp.com/cubos-3d/abecedario-frente.jpg" alt="Cubo Abecedario - frente"></div>
-            <div class="face back"><img src="https://juegosdidacticostp.com/cubos-3d/abecedario-frente.jpg" alt="Cubo Abecedario"></div>
-            <div class="face right"><img src="https://juegosdidacticostp.com/cubos-3d/abecedario-lado.jpg" alt="Cubo Abecedario - lado"></div>
-            <div class="face left"><img src="https://juegosdidacticostp.com/cubos-3d/abecedario-lado.jpg" alt="Cubo Abecedario"></div>
-            <div class="face top"><img src="https://juegosdidacticostp.com/cubos-3d/abecedario-arriba.jpg" alt="Cubo Abecedario - arriba"></div>
-            <div class="face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/abecedario-arriba.jpg" alt="Cubo Abecedario"></div>
-          </div>
-        </div>
-      </div>
-      <div class="story-info left reveal">
-        <span class="story-tag tag-violet">⭐ Más vendido</span>
-        <h2>Abecedario</h2>
-        <p>Cubos de letras acolchados para que los pequeños aprendan el alfabeto jugando con colores y texturas.</p>
-        <ul>
-          <li>26 letras completas</li>
-          <li>Material suave y seguro</li>
-          <li>Ideal desde recién nacido</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="story-scene">
-    <div class="story-glow glow-cyan"></div>
-    <div class="bg-grid"></div>
-    <div class="story-content reverse">
-      <div class="cube-stage">
-        <div class="cube-spin">
-          <div class="cube3d cube-cyan">
-            <div class="face front"><img src="https://juegosdidacticostp.com/cubos-3d/numeros-frente.jpg" alt="Cubo Números - frente"></div>
-            <div class="face back"><img src="https://juegosdidacticostp.com/cubos-3d/numeros-frente.jpg" alt="Cubo Números"></div>
-            <div class="face right"><img src="https://juegosdidacticostp.com/cubos-3d/numeros-lado.jpg" alt="Cubo Números - lado"></div>
-            <div class="face left"><img src="https://juegosdidacticostp.com/cubos-3d/numeros-lado.jpg" alt="Cubo Números"></div>
-            <div class="face top"><img src="https://juegosdidacticostp.com/cubos-3d/numeros-arriba.jpg" alt="Cubo Números - arriba"></div>
-            <div class="face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numeros-arriba.jpg" alt="Cubo Números"></div>
-          </div>
-        </div>
-      </div>
-      <div class="story-info right reveal">
-        <span class="story-tag tag-cyan">🔢 Nuevo</span>
-        <h2>Los Números</h2>
-        <p>Aprende a contar del 1 al 10 con cubos coloridos que hacen del aprendizaje numérico una aventura divertida.</p>
-        <ul>
-          <li>Del 1 al 10</li>
-          <li>Colores vivos y contrastantes</li>
-          <li>Recomendado 2+ años</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="story-scene">
-    <div class="story-glow glow-mint"></div>
-    <div class="bg-grid"></div>
-    <div class="story-content">
-      <div class="cube-stage">
-        <div class="cube-spin">
-          <div class="cube3d cube-mint">
-            <div class="face front"><img src="https://juegosdidacticostp.com/cubos-3d/selva-frente.jpg" alt="Cubo Selva - frente"></div>
-            <div class="face back"><img src="https://juegosdidacticostp.com/cubos-3d/selva-frente.jpg" alt="Cubo Selva"></div>
-            <div class="face right"><img src="https://juegosdidacticostp.com/cubos-3d/selva-lado.jpg" alt="Cubo Selva - lado"></div>
-            <div class="face left"><img src="https://juegosdidacticostp.com/cubos-3d/selva-lado.jpg" alt="Cubo Selva"></div>
-            <div class="face top"><img src="https://juegosdidacticostp.com/cubos-3d/selva-arriba.jpg" alt="Cubo Selva - arriba"></div>
-            <div class="face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/selva-arriba.jpg" alt="Cubo Selva"></div>
-          </div>
-        </div>
-      </div>
-      <div class="story-info left reveal">
-        <span class="story-tag tag-mint">🦁 Aventura</span>
-        <h2>Animales de la Selva</h2>
-        <p>Leones, monos, jirafas y elefantes para despertar el espíritu explorador de los más pequeños.</p>
-        <ul>
-          <li>6 animales exóticos</li>
-          <li>Datos curiosos incluidos</li>
-          <li>Recomendado 3+ años</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-</section>
-
 <!-- ══════════════════════════════════════
-     FORMACIONES REALES DE CADA SET, según
-     fotos del producto físico. Reemplaza los
-     src="..." por tus fotos; el resto ya funciona.
+     CUBOS — FORMACIONES REALES DE CADA SET,
+     según fotos del producto físico. Reemplaza
+     los src="..." por tus fotos; el resto ya
+     funciona. Esta es la primera sección de la
+     página.
 ══════════════════════════════════════ -->
 
 <!-- SET ANIMALES — 4 cubos en mosaico 2×2, forman UNA imagen -->
@@ -1080,7 +878,99 @@
   <div class="stat"><strong>⭐5.0</strong><span>Satisfacción</span></div>
 </div>
 
-<!-- ── PRODUCTS ── -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,20 C400,70 1040,0 1440,40 L1440,70 L0,70 Z" fill="#FAF8FF"/></svg>
+</div>
+
+<!-- ── CTA ── -->
+<section class="cta-bg">
+  <div class="reveal zoom-in">
+    <h2>¿Listo para regalar<br>aprendizaje?</h2>
+    <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
+    <a href="https://wa.me/573163399222" class="btn-wa" target="_blank" rel="noopener">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/>
+      </svg>
+      Escríbenos en WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ── RESEÑAS ── -->
+<section class="section-wrap reviews-bg">
+  <div class="section-head reveal zoom-in">
+    <span class="section-pill">Reseñas reales</span>
+    <h2 class="section-title">Lo que dicen las familias</h2>
+    <p class="section-sub">Opiniones de mamás y papás que ya tienen sus cubos en casa</p>
+  </div>
+
+  <div class="reviews-summary reveal">
+    <span class="review-stars">★★★★★</span>
+    <span>5.0 de 5 — basado en pedidos reales por WhatsApp</span>
+  </div>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-quote">Le compré el set de Abecedario a mi hija de 2 años y no lo suelta. Pensé que iba a durar una semana de moda y ya lleva dos meses jugando casi a diario.</p>
+      <div class="review-person">
+        <div class="review-avatar avatar-violet">DR</div>
+        <div>
+          <div class="review-name">Daniela R.</div>
+          <div class="review-meta">Bogotá · Set Abecedario</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-quote">Lo que más me gustó es la calidad de la tela, se nota que aguanta el uso diario de un niño de 3 años. Llegó rápido y el vendedor respondió todas mis dudas por WhatsApp.</p>
+      <div class="review-person">
+        <div class="review-avatar avatar-cyan">AM</div>
+        <div>
+          <div class="review-name">Andrés M.</div>
+          <div class="review-meta">Medellín · Set Números</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-quote">Compré dos sets para mis mellizos y ha sido la mejor inversión en juguetes educativos que he hecho. Son suaves, coloridos y realmente los mantiene entretenidos.</p>
+      <div class="review-person">
+        <div class="review-avatar avatar-coral">CV</div>
+        <div>
+          <div class="review-name">Camila V.</div>
+          <div class="review-meta">Cali · Set Animales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TÍTULO (HERO) ── -->
+<section class="hero">
+  <div class="bg-grid"></div>
+  <div class="floaters" aria-hidden="true">
+    <span class="floater f-violet">🧸</span>
+    <span class="floater f-cyan">🌈</span>
+    <span class="floater f-gold">🎲</span>
+    <span class="floater f-coral">⭐</span>
+    <span class="floater f-violet">🔤</span>
+    <span class="floater f-mint">🐄</span>
+  </div>
+
+  <div class="hero-badge">✦ Colección educativa premium</div>
+  <h1>Aprende jugando<br>con <em>Juegos TP</em></h1>
+  <p>Cubos didácticos de alta calidad diseñados para estimular el aprendizaje, la creatividad y el desarrollo sensorial de los más pequeños.</p>
+  <div class="hero-btns">
+    <a href="#productos" class="btn-primary">Ver colección</a>
+    <a href="https://wa.me/573163399222" class="btn-outline" target="_blank" rel="noopener">Escríbenos</a>
+  </div>
+</section>
+
+<!-- ── PRODUCTS / COLECCIÓN ── -->
 <section class="section-wrap products-bg" id="productos">
   <div class="section-head reveal zoom-in">
     <span class="section-pill">Colección completa</span>
@@ -1237,81 +1127,6 @@
   </div>
 </section>
 
-<div class="wave-divider">
-  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,20 C400,70 1040,0 1440,40 L1440,70 L0,70 Z" fill="#FAF8FF"/></svg>
-</div>
-
-<!-- ── RESEÑAS ── -->
-<section class="section-wrap reviews-bg">
-  <div class="section-head reveal zoom-in">
-    <span class="section-pill">Reseñas reales</span>
-    <h2 class="section-title">Lo que dicen las familias</h2>
-    <p class="section-sub">Opiniones de mamás y papás que ya tienen sus cubos en casa</p>
-  </div>
-
-  <div class="reviews-summary reveal">
-    <span class="review-stars">★★★★★</span>
-    <span>5.0 de 5 — basado en pedidos reales por WhatsApp</span>
-  </div>
-
-  <div class="reviews-grid">
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-quote">Le compré el set de Abecedario a mi hija de 2 años y no lo suelta. Pensé que iba a durar una semana de moda y ya lleva dos meses jugando casi a diario.</p>
-      <div class="review-person">
-        <div class="review-avatar avatar-violet">DR</div>
-        <div>
-          <div class="review-name">Daniela R.</div>
-          <div class="review-meta">Bogotá · Set Abecedario</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-quote">Lo que más me gustó es la calidad de la tela, se nota que aguanta el uso diario de un niño de 3 años. Llegó rápido y el vendedor respondió todas mis dudas por WhatsApp.</p>
-      <div class="review-person">
-        <div class="review-avatar avatar-cyan">AM</div>
-        <div>
-          <div class="review-name">Andrés M.</div>
-          <div class="review-meta">Medellín · Set Números</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-quote">Compré dos sets para mis mellizos y ha sido la mejor inversión en juguetes educativos que he hecho. Son suaves, coloridos y realmente los mantiene entretenidos.</p>
-      <div class="review-person">
-        <div class="review-avatar avatar-coral">CV</div>
-        <div>
-          <div class="review-name">Camila V.</div>
-          <div class="review-meta">Cali · Set Animales</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CTA ── -->
-<section class="cta-bg">
-  <div class="reveal zoom-in">
-    <h2>¿Listo para regalar<br>aprendizaje?</h2>
-    <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
-    <a href="https://wa.me/573163399222" class="btn-wa" target="_blank" rel="noopener">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-        <path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/>
-      </svg>
-      Escríbenos en WhatsApp
-    </a>
-  </div>
-</section>
-
-<div class="wave-divider">
-  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,30 C400,0 1040,70 1440,20 L1440,70 L0,70 Z" fill="#F2EEFC"/></svg>
-</div>
-
 <!-- ── FOOTER ── -->
 <footer>
   <p>© 2025 Juegos Didácticos TP &nbsp;·&nbsp; <a href="https://wa.me/573163399222">+57 316 339 9222</a> &nbsp;·&nbsp; Hecho en Colombia 🇨🇴</p>
@@ -1337,7 +1152,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.product-card, .why-card, .stat, .reveal, .story-info, .cube-stage, .review-card').forEach(el => io.observe(el));
+  document.querySelectorAll('.product-card, .why-card, .stat, .reveal, .review-card').forEach(el => io.observe(el));
 
   /* ── Observer para formaciones de varias piezas (mosaico Animales,
      cluster Números, fila Abecedario). Estas piezas arrancan
