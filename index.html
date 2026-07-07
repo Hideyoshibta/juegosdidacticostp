@@ -702,9 +702,69 @@
     @media(max-width:440px){
       .why-grid { grid-template-columns:1fr; }
     }
+
+    /* ══════════════════════════════════════
+       INTRO DE BIENVENIDA
+    ══════════════════════════════════════ */
+    .intro-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle at 50% 40%, var(--bg-3), var(--bg) 70%);
+      transition: opacity .8s cubic-bezier(.22,1,.36,1), visibility .8s;
+    }
+    .intro-overlay.intro-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .intro-panel {
+      position: absolute;
+      text-align: center; padding: 2rem; max-width: 90vw;
+      opacity: 0; transform: translateY(26px) scale(.94);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+      pointer-events: none;
+    }
+    .intro-panel.intro-visible { opacity: 1; transform: translateY(0) scale(1); }
+    .intro-panel.intro-leaving {
+      opacity: 0; transform: translateY(-26px) scale(.96);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .intro-emoji { font-size: 3.4rem; display: block; margin-bottom: 1.1rem; animation: floatY 3s ease-in-out infinite; }
+    .intro-title {
+      font-family: 'Sora', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 6vw, 3rem); line-height: 1.15;
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin-bottom: .7rem;
+    }
+    .intro-sub { color: var(--ink-soft); font-size: 1.05rem; font-weight: 500; max-width: 380px; margin: 0 auto; line-height: 1.6; }
+    .intro-sub strong { color: var(--violet); }
+
+    .intro-swipe-icon { font-size: 2.6rem; display: block; margin-bottom: .9rem; animation: swipeBounce 1.5s ease-in-out infinite; }
+    @keyframes swipeBounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50%      { transform: translateY(16px); opacity: .45; }
+    }
+    .intro-swipe-text { font-family: 'Sora', sans-serif; font-weight: 700; color: var(--ink); font-size: 1rem; letter-spacing: .02em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro-emoji, .intro-swipe-icon { animation: none !important; }
+      .intro-overlay, .intro-panel { transition: none !important; }
+    }
   </style>
 </head>
 <body>
+
+<!-- ── INTRO DE BIENVENIDA ── -->
+<div class="intro-overlay" id="introOverlay">
+  <div class="intro-panel" id="introWelcome">
+    <span class="intro-emoji">🎉</span>
+    <h1 class="intro-title">Bienvenido</h1>
+    <p class="intro-sub">Gracias por ser parte de <strong>TP lovers</strong> ✨</p>
+  </div>
+  <div class="intro-panel" id="introSwipe">
+    <span class="intro-swipe-icon">👇</span>
+    <p class="intro-swipe-text">Desliza para descubrir</p>
+  </div>
+</div>
 
 <!-- ── NAV ── -->
 <nav id="navbar">
@@ -1136,6 +1196,47 @@
 <a href="https://wa.me/573163399222" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 
 <script>
+  /* ── Intro de bienvenida: 5s de mensaje, luego pide deslizar ── */
+  (function () {
+    const overlay = document.getElementById('introOverlay');
+    const welcome = document.getElementById('introWelcome');
+    const swipePrompt = document.getElementById('introSwipe');
+    if (!overlay || !welcome || !swipePrompt) return;
+
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => welcome.classList.add('intro-visible'));
+
+    function dismissIntro() {
+      overlay.classList.add('intro-hidden');
+      document.body.style.overflow = '';
+      window.removeEventListener('wheel', dismissIntro);
+      window.removeEventListener('touchmove', dismissIntro);
+      window.removeEventListener('keydown', onKeyDismiss);
+      window.removeEventListener('click', dismissIntro);
+    }
+    function onKeyDismiss(e) {
+      if (['ArrowDown', 'PageDown', ' '].includes(e.key)) dismissIntro();
+    }
+    function armDismissListeners() {
+      window.addEventListener('wheel', dismissIntro, { passive: true });
+      window.addEventListener('touchmove', dismissIntro, { passive: true });
+      window.addEventListener('keydown', onKeyDismiss);
+      window.addEventListener('click', dismissIntro);
+    }
+
+    setTimeout(() => {
+      welcome.classList.remove('intro-visible');
+      welcome.classList.add('intro-leaving');
+      setTimeout(() => {
+        welcome.style.display = 'none';
+        swipePrompt.style.display = 'block';
+        requestAnimationFrame(() => swipePrompt.classList.add('intro-visible'));
+        armDismissListeners();
+        setTimeout(dismissIntro, 4000); // por si el usuario no interactúa
+      }, 650);
+    }, 5000);
+  })();
+
   /* ── Nav: aparece con color sólo al hacer scroll ── */
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
