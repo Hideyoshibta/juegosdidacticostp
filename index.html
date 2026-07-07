@@ -750,6 +750,60 @@
       .intro-emoji, .intro-swipe-icon { animation: none !important; }
       .intro-overlay, .intro-panel { transition: none !important; }
     }
+
+    /* ══════════════════════════════════════
+       INSIGNIA DE CANTIDAD DE CUBOS
+       (mini cubo 3D girando + "xN" dentro de un
+       recuadro con brillo arcoíris permanente)
+    ══════════════════════════════════════ */
+    .set-count-badge {
+      display: inline-flex; align-items: center; gap: .45rem;
+      position: relative; z-index: 0;
+      vertical-align: middle;
+      margin-left: .55rem;
+      padding: .3rem .95rem .3rem .4rem;
+      border-radius: 999px;
+      background: var(--bg-2);
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: .8rem;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .set-count-badge::before {
+      content: ""; position: absolute; inset: -3px; z-index: -2;
+      border-radius: 999px;
+      background: conic-gradient(from 0deg, #ff3b3b, #ff9d3b, #ffe93b, #4bdc6b, #3bc6ff, #6b5bff, #ff3bd6, #ff3b3b);
+      animation: rainbowSpin 3.5s linear infinite;
+    }
+    .set-count-badge::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      border-radius: 999px; background: var(--bg-2);
+    }
+    @keyframes rainbowSpin { to { transform: rotate(360deg); } }
+
+    .mini-cube-spin {
+      width: 22px; height: 22px; flex-shrink: 0;
+      perspective: 120px;
+      animation: spinCube 5s linear infinite;
+    }
+    .mini-cube3d { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+    .mini-face {
+      position: absolute; width: 22px; height: 22px; border-radius: 5px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .mini-face.front  { transform: translateZ(11px); }
+    .mini-face.back   { transform: rotateY(180deg) translateZ(11px); }
+    .mini-face.right  { transform: rotateY(90deg) translateZ(11px); }
+    .mini-face.left   { transform: rotateY(-90deg) translateZ(11px); }
+    .mini-face.top    { transform: rotateX(90deg) translateZ(11px); }
+    .mini-face.bottom { transform: rotateX(-90deg) translateZ(11px); }
+
+    .mini-cube-coral .mini-face  { background: var(--coral); }
+    .mini-cube-cyan .mini-face   { background: var(--cyan); }
+    .mini-cube-violet .mini-face { background: var(--violet); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .set-count-badge::before, .mini-cube-spin { animation: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -788,7 +842,16 @@
 
   <div class="assembly-caption reveal zoom-in">
     <span class="story-tag tag-coral" style="color:var(--coral);border-color:rgba(242,96,122,.4);background:rgba(242,96,122,.1);">Set Animales</span>
-    <h2>El regalo que inspira a aprender</h2>
+    <h2>El regalo que inspira a aprender
+      <span class="set-count-badge">
+        <span class="mini-cube-spin"><span class="mini-cube3d mini-cube-coral">
+          <span class="mini-face front"></span><span class="mini-face back"></span>
+          <span class="mini-face right"></span><span class="mini-face left"></span>
+          <span class="mini-face top"></span><span class="mini-face bottom"></span>
+        </span></span>
+        x4
+      </span>
+    </h2>
     <p>Explora el fascinante mundo de los animales mientras juegas. Este set de cubos didácticos ayuda a los niños a reconocer diferentes especies, desarrollar el vocabulario, fortalecer la memoria y estimular la curiosidad.</p>
   </div>
 
@@ -821,7 +884,16 @@
 
   <div class="assembly-caption reveal zoom-in">
     <span class="story-tag tag-cyan">Set Números</span>
-    <h2>Los números cobran vida mientras aprendes</h2>
+    <h2>Los números cobran vida mientras aprendes
+      <span class="set-count-badge">
+        <span class="mini-cube-spin"><span class="mini-cube3d mini-cube-cyan">
+          <span class="mini-face front"></span><span class="mini-face back"></span>
+          <span class="mini-face right"></span><span class="mini-face left"></span>
+          <span class="mini-face top"></span><span class="mini-face bottom"></span>
+        </span></span>
+        x6
+      </span>
+    </h2>
     <p>Aprender matemáticas nunca fue tan divertido. Este set de cubos didácticos permite a los niños reconocer los números, realizar operaciones básicas de suma, resta, multiplicación y división, mientras desarrollan el pensamiento lógico y las habilidades matemáticas.</p>
   </div>
 
@@ -904,7 +976,16 @@
 
   <div class="assembly-caption reveal zoom-in">
     <span class="story-tag tag-violet">Set Abecedario</span>
-    <h2>4 cubos, muchas palabras</h2>
+    <h2>4 cubos, muchas palabras
+      <span class="set-count-badge">
+        <span class="mini-cube-spin"><span class="mini-cube3d mini-cube-violet">
+          <span class="mini-face front"></span><span class="mini-face back"></span>
+          <span class="mini-face right"></span><span class="mini-face left"></span>
+          <span class="mini-face top"></span><span class="mini-face bottom"></span>
+        </span></span>
+        x9
+      </span>
+    </h2>
     <p>Los 4 cubos giran juntos — en cada cuarto de vuelta arman una palabra distinta de 4 letras.</p>
   </div>
 
