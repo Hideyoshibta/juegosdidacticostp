@@ -1615,6 +1615,9 @@
       armed = true;
       window.addEventListener('mouseout', onMouseLeave);
       window.addEventListener('popstate', onPopState);
+      // Sin esta entrada extra, el gesto de "atrás" en iOS/Android Safari
+      // sale del sitio directamente sin disparar 'popstate' en la página.
+      try { history.pushState({ tpExitGuard: true }, '', location.href); } catch (e) {}
     }
 
     closeBtn.addEventListener('click', hidePopup);
