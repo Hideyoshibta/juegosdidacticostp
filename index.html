@@ -213,9 +213,63 @@
        aire extra arriba para no verse pegada al logo */
     #animalesScene { padding-top: 6rem; }
 
-    .assembly-caption { position: relative; z-index: 2; text-align: center; max-width: 480px; }
+    /* Tarjeta premium del mensaje descriptivo — estilo Apple/LEGO Education:
+       fondo blanco, esquinas redondeadas, sombra sutil que crece al hover,
+       y una fila de 3 beneficios que se revela con una animación suave. */
+    .assembly-caption {
+      position: relative; z-index: 2; text-align: center; max-width: 480px;
+      background: #fff;
+      border-radius: 28px;
+      padding: 2.3rem 2rem;
+      border: 1px solid rgba(43,38,64,.05);
+      box-shadow: 0 2px 8px rgba(43,38,64,.05), 0 10px 26px rgba(43,38,64,.06);
+      transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s cubic-bezier(.22,1,.36,1);
+    }
+    .assembly-caption:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 46px rgba(43,38,64,.14), 0 6px 16px rgba(43,38,64,.08);
+    }
     .assembly-caption h2 { font-size: clamp(22px, 3.2vw, 30px); margin-bottom: 10px; font-weight: 700; color: var(--ink); }
     .assembly-caption p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+
+    .benefit-row {
+      display: flex; justify-content: center; gap: 1.4rem;
+      max-height: 0; opacity: 0; margin-top: 0;
+      overflow: hidden;
+      transition: max-height .5s cubic-bezier(.22,1,.36,1), opacity .35s ease, margin-top .5s cubic-bezier(.22,1,.36,1);
+    }
+    .assembly-caption:hover .benefit-row,
+    .assembly-caption:focus-within .benefit-row {
+      max-height: 160px; opacity: 1; margin-top: 1.8rem;
+    }
+    .benefit-item { display: flex; flex-direction: column; align-items: center; gap: .5rem; flex: 1; min-width: 0; }
+    .benefit-icon {
+      width: 58px; height: 58px; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; line-height: 1;
+      transform: scale(.7) translateY(10px); opacity: 0;
+      transition: transform .5s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
+    }
+    .assembly-caption:hover .benefit-icon,
+    .assembly-caption:focus-within .benefit-icon { transform: scale(1) translateY(0); opacity: 1; }
+    .benefit-item:nth-child(2) .benefit-icon { transition-delay: .08s; }
+    .benefit-item:nth-child(3) .benefit-icon { transition-delay: .16s; }
+    .benefit-icon.icon-explora     { background: linear-gradient(145deg, rgba(52,184,196,.2), rgba(52,184,196,.06)); }
+    .benefit-icon.icon-diviertete  { background: linear-gradient(145deg, rgba(242,96,122,.2), rgba(242,96,122,.06)); }
+    .benefit-icon.icon-aprende     { background: linear-gradient(145deg, rgba(139,124,246,.2), rgba(139,124,246,.06)); }
+    .benefit-label {
+      font-family: 'Sora', sans-serif; font-size: .72rem; font-weight: 800;
+      letter-spacing: .03em; text-transform: uppercase; color: var(--ink-soft);
+    }
+    /* En dispositivos táctiles no hay hover: mostramos los beneficios siempre */
+    @media (hover: none) {
+      .benefit-row { max-height: none; opacity: 1; margin-top: 1.8rem; }
+      .benefit-icon { opacity: 1; transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .assembly-caption, .assembly-caption:hover { transform: none; transition: none; }
+      .benefit-row, .benefit-icon { transition: none; }
+    }
 
     .assembly-grid {
       position: relative; z-index: 2;
@@ -882,6 +936,20 @@
     </div>
     <h2>El regalo que inspira a aprender</h2>
     <p>Explora el fascinante mundo de los animales mientras juegas. Este set de cubos didácticos ayuda a los niños a reconocer diferentes especies, desarrollar el vocabulario, fortalecer la memoria y estimular la curiosidad.</p>
+    <div class="benefit-row">
+      <div class="benefit-item">
+        <span class="benefit-icon icon-explora">🧭</span>
+        <span class="benefit-label">Explora</span>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon icon-diviertete">🎉</span>
+        <span class="benefit-label">Diviértete</span>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon icon-aprende">📚</span>
+        <span class="benefit-label">Aprende</span>
+      </div>
+    </div>
   </div>
 
   <div class="mosaic-frame">
@@ -918,6 +986,20 @@
     </div>
     <h2>Los números cobran vida mientras aprendes</h2>
     <p>Aprender matemáticas nunca fue tan divertido. Este set de cubos didácticos permite a los niños reconocer los números, realizar operaciones básicas de suma, resta, multiplicación y división, mientras desarrollan el pensamiento lógico y las habilidades matemáticas.</p>
+    <div class="benefit-row">
+      <div class="benefit-item">
+        <span class="benefit-icon icon-explora">🧭</span>
+        <span class="benefit-label">Explora</span>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon icon-diviertete">🎉</span>
+        <span class="benefit-label">Diviértete</span>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon icon-aprende">📚</span>
+        <span class="benefit-label">Aprende</span>
+      </div>
+    </div>
   </div>
 
   <div class="cluster3-frame">
@@ -1004,6 +1086,20 @@
     </div>
     <h2>Sus primeras palabras</h2>
     <p>Convierte el aprendizaje de las letras en una experiencia divertida e interactiva. Este set de cubos didácticos ayuda a los niños a reconocer el abecedario, formar palabras y fortalecer sus habilidades de lectura y escritura desde temprana edad.</p>
+    <div class="benefit-row">
+      <div class="benefit-item">
+        <span class="benefit-icon icon-explora">🧭</span>
+        <span class="benefit-label">Explora</span>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon icon-diviertete">🎉</span>
+        <span class="benefit-label">Diviértete</span>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon icon-aprende">📚</span>
+        <span class="benefit-label">Aprende</span>
+      </div>
+    </div>
   </div>
 
   <div class="word-row">
