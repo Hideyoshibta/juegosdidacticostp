@@ -645,7 +645,32 @@
       text-align: center; padding: 3rem 1.5rem 6rem;
     }
     .cta-bg h2 { font-family:'Sora',sans-serif; font-weight:800; font-size: clamp(2rem,5vw,3.1rem); color: var(--ink); margin-bottom:.9rem; }
-    .cta-bg p { color: var(--ink-soft); font-size:1.05rem; margin-bottom:2.2rem; font-weight:500; }
+    .cta-bg p { color: var(--ink-soft); font-size:1.05rem; margin-bottom:1.6rem; font-weight:500; }
+
+    .wa-status-badge {
+      display: inline-flex; align-items: center; gap: .55rem;
+      margin-bottom: 1.6rem;
+      padding: .55rem 1.3rem;
+      border-radius: 999px;
+      background: rgba(37,211,102,0.1);
+      border: 1px solid rgba(37,211,102,0.35);
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: .95rem;
+      letter-spacing: .01em;
+      background-image: linear-gradient(120deg, var(--whatsapp), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .wa-status-dot {
+      position: relative;
+      width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+      background: var(--whatsapp);
+      animation: waPulseDot 1.8s ease-in-out infinite;
+    }
+    @keyframes waPulseDot {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.55); }
+      70%  { box-shadow: 0 0 0 9px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+
     .btn-wa {
       background: var(--whatsapp); color:#fff;
       border:none; border-radius:50px;
@@ -655,8 +680,23 @@
       display:inline-flex; align-items:center; gap:.55rem;
       box-shadow:0 7px 26px rgba(37,211,102,.35);
       transition:transform .2s, box-shadow .2s;
+      animation: waShake 3.2s ease-in-out infinite;
     }
-    .btn-wa:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(37,211,102,.45); }
+    .btn-wa:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(37,211,102,.45); animation-play-state: paused; }
+    @keyframes waShake {
+      0%, 85%, 100% { transform: rotate(0deg) translateY(0); }
+      87%  { transform: rotate(-9deg) translateY(-2px); }
+      89%  { transform: rotate(8deg) translateY(-2px); }
+      91%  { transform: rotate(-7deg) translateY(-1px); }
+      93%  { transform: rotate(6deg) translateY(-1px); }
+      95%  { transform: rotate(-3deg) translateY(0); }
+      97%  { transform: rotate(2deg) translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-wa { animation: none !important; }
+      .wa-status-dot { animation: none !important; }
+    }
 
     /* ══════════════════════════════════════
        FOOTER
@@ -1036,6 +1076,11 @@
   <div class="reveal zoom-in">
     <h2>¡Resolvamos tus dudas!</h2>
     <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
+    <div class="wa-status-badge">
+      <span class="wa-status-dot"></span>
+      Estamos para ti 24/7
+    </div>
+    <br>
     <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="btn-wa" target="_blank" rel="noopener">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
