@@ -1697,7 +1697,7 @@
 
   /* ── Mosaico de Animales: cambia de animal cada 3s ── */
   (function () {
-    const ANIMALS = ['perro', 'loro', 'oveja', 'camaleon', 'hipopotamo', 'caballo', 'oso', 'cerdo', 'hamster', 'pez'];
+    const ANIMALS = ['perro', 'loro', 'oveja', 'camaleon', 'hipopotamo', 'oso', 'ardilla', 'hamster', 'pez'];
     const BASE = 'https://juegosdidacticostp.com/cubos-3d/animal-mosaico-';
     const SUFFIXES = ['arriba-izq', 'arriba-der', 'abajo-izq', 'abajo-der'];
     const tl = document.getElementById('mosaicTL');
@@ -1735,7 +1735,6 @@
     const num = document.getElementById('exitNum');
     if (!overlay || !card || !closeBtn || !ring || !num) return;
 
-    const STORAGE_KEY = 'tpExitPopupShown';
     const TOTAL_SECONDS = 30;
     const SHOW_AFTER_MS = 30000; // el bono aparece tras 30s navegando el sitio
     let shown = false;
@@ -1757,9 +1756,8 @@
     }
 
     function showPopup() {
-      if (shown || sessionStorage.getItem(STORAGE_KEY)) return;
+      if (shown) return;
       shown = true;
-      sessionStorage.setItem(STORAGE_KEY, '1');
       overlay.classList.add('exit-visible');
       startCountdown();
     }
