@@ -287,6 +287,18 @@
       50%      { transform: translateY(-3px) rotate(6deg); }
     }
 
+    /* Al abrir la caja: el osito salta suave y cae hasta desaparecer */
+    .info-toggle-walker.jump-away {
+      animation: walkerJumpFall .9s cubic-bezier(.34,1.2,.64,1) forwards;
+    }
+    .info-toggle-walker.jump-away span { animation: none; transform: none; }
+    @keyframes walkerJumpFall {
+      0%   { transform: translate(-50%, -50%) translateY(0) scale(1) rotate(0deg); opacity: 1; }
+      28%  { transform: translate(-50%, -50%) translateY(-24px) scale(1.15) rotate(-10deg); opacity: 1; }
+      55%  { transform: translate(-50%, -50%) translateY(6px) scale(.98) rotate(6deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) translateY(90px) scale(.35) rotate(18deg); opacity: 0; }
+    }
+
     .info-panel {
       max-height: 0; opacity: 0; overflow: hidden;
       transition: max-height .55s cubic-bezier(.22,1,.36,1), opacity .4s ease, margin-top .55s cubic-bezier(.22,1,.36,1);
@@ -1659,6 +1671,26 @@
     panel.classList.toggle('open', willOpen);
     const label = btn.querySelector('.info-toggle-text');
     if (label) label.textContent = willOpen ? 'Toca para ver menos' : 'Toca para descubrir más';
+
+    const walker = btn.querySelector('.info-toggle-walker');
+    if (walker) {
+      if (willOpen) {
+        // Congela al osito en su posición actual antes de que salte y caiga,
+        // para que no "salte" primero de vuelta a la esquina inicial.
+        const walkerRect = walker.getBoundingClientRect();
+        const boxRect = btn.getBoundingClientRect();
+        walker.style.left = ((walkerRect.left + walkerRect.width / 2 - boxRect.left) / boxRect.width * 100) + '%';
+        walker.style.top = ((walkerRect.top + walkerRect.height / 2 - boxRect.top) / boxRect.height * 100) + '%';
+        walker.classList.add('jump-away');
+        if (navigator.vibrate) navigator.vibrate(35);
+        setTimeout(() => { walker.style.visibility = 'hidden'; }, 900);
+      } else {
+        walker.classList.remove('jump-away');
+        walker.style.visibility = '';
+        walker.style.left = '';
+        walker.style.top = '';
+      }
+    }
   }
 
   /* ── Popup de bono por navegar 30s: aparece solo, con su propio contador de 30s para reclamarlo ── */
