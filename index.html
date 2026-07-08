@@ -454,15 +454,17 @@
     }
     .cluster3-frame .cube-piece { position: absolute; }
 
-    /* Efecto "atracción": los cubos llegan grandes y cerca de la
-       cámara desde direcciones variadas, y se alejan/encogen hasta
-       su tamaño final — al revés del efecto de acercamiento normal */
+    /* Efecto "atracción": los cubos llegan desde direcciones variadas
+       (algunos grandes y cerca de la cámara, otros diminutos como si
+       vinieran del fondo de la pantalla) y se acomodan lentamente en
+       su lugar final. --scale/--blur por defecto = llegada "de cerca";
+       una pieza puede sobreescribirlos para llegar "desde el fondo". */
     .cube-piece.attract {
-      transform: translate(var(--dx,0), var(--dy,0)) rotate(var(--drot,0deg)) scale(2.6);
-      filter: blur(8px);
-      transition: opacity .9s cubic-bezier(.22,1,.36,1),
-                  transform 1.3s cubic-bezier(.22,1,.36,1),
-                  filter 1.3s ease-out;
+      transform: translate(var(--dx,0), var(--dy,0)) rotate(var(--drot,0deg)) scale(var(--scale, 2.6));
+      filter: blur(var(--blur, 8px));
+      transition: opacity 1.6s cubic-bezier(.22,1,.36,1),
+                  transform 2.2s cubic-bezier(.22,1,.36,1),
+                  filter 2.2s ease-out;
     }
     .cube-piece.attract.visible {
       transform: translate(0,0) rotate(0deg) scale(1);
@@ -1207,7 +1209,7 @@
   </div>
 
   <div class="cluster3-frame">
-    <div class="cube-piece attract" style="left:20px; top:0px; --dx:-380px; --dy:-320px; --drot:-45deg; --delay:0s;">
+    <div class="cube-piece attract" style="left:20px; top:0px; --dx:-460px; --dy:-380px; --drot:-60deg; --delay:0s;">
       <div class="piece-spin"><div class="piece3d piece-cyan2">
         <div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt="Número 1"></div>
         <div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt="Número 2"></div>
@@ -1217,7 +1219,7 @@
         <div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div>
       </div></div>
     </div>
-    <div class="cube-piece attract" style="left:20px; top:135px; --dx:400px; --dy:-260px; --drot:40deg; --delay:0.15s;">
+    <div class="cube-piece attract" style="left:20px; top:135px; --dx:480px; --dy:-360px; --drot:55deg; --delay:0.25s;">
       <div class="piece-spin"><div class="piece3d piece-cyan2">
         <div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt="Número 4"></div>
         <div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-5-cinco-v2.jpg" alt="Número 5"></div>
@@ -1227,7 +1229,7 @@
         <div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt=""></div>
       </div></div>
     </div>
-    <div class="cube-piece attract" style="left:150px; top:135px; --dx:-60px; --dy:420px; --drot:-30deg; --delay:0.3s;">
+    <div class="cube-piece attract" style="left:150px; top:135px; --dx:-620px; --dy:20px; --drot:-25deg; --delay:0.5s;">
       <div class="piece-spin"><div class="piece3d piece-cyan2">
         <div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-7-siete-v2.jpg" alt="Número 7"></div>
         <div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-8-white-v2.jpg" alt="Número 8"></div>
@@ -1237,7 +1239,7 @@
         <div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-7-siete-v2.jpg" alt=""></div>
       </div></div>
     </div>
-    <div class="cube-piece attract" style="left:150px; top:0px; --dx:360px; --dy:-300px; --drot:35deg; --delay:0.45s;">
+    <div class="cube-piece attract" style="left:150px; top:0px; --dx:620px; --dy:-20px; --drot:25deg; --delay:0.75s;">
       <div class="piece-spin"><div class="piece3d piece-cyan2">
         <div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt="Número 2"></div>
         <div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-5-cinco-v2.jpg" alt="Número 5"></div>
@@ -1247,7 +1249,7 @@
         <div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt=""></div>
       </div></div>
     </div>
-    <div class="cube-piece attract" style="left:20px; top:270px; --dx:-320px; --dy:380px; --drot:-35deg; --delay:0.6s;">
+    <div class="cube-piece attract" style="left:20px; top:270px; --dx:30px; --dy:520px; --drot:-20deg; --delay:1s;">
       <div class="piece-spin"><div class="piece3d piece-cyan2">
         <div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt="Número 1"></div>
         <div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt="Número 4"></div>
@@ -1257,7 +1259,7 @@
         <div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div>
       </div></div>
     </div>
-    <div class="cube-piece attract" style="left:150px; top:270px; --dx:320px; --dy:380px; --drot:35deg; --delay:0.75s;">
+    <div class="cube-piece attract" style="left:150px; top:270px; --dx:10px; --dy:40px; --drot:12deg; --delay:1.3s; --scale:0.1; --blur:20px;">
       <div class="piece-spin"><div class="piece3d piece-cyan2">
         <div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-3-three.jpg" alt="Número 3"></div>
         <div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-6-red-v2.jpg" alt="Número 6"></div>
