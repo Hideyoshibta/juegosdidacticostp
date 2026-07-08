@@ -216,8 +216,7 @@
     #animalesScene { padding-top: 6rem; }
 
     /* Tarjeta premium del mensaje descriptivo — estilo Apple/LEGO Education:
-       fondo blanco, esquinas redondeadas, sombra sutil que crece al hover,
-       y una fila de 3 beneficios que se revela con una animación suave. */
+       fondo blanco, esquinas redondeadas, sombra sutil que crece al hover. */
     .assembly-caption {
       position: relative; z-index: 2; text-align: center; max-width: 480px;
       background: #fff;
@@ -234,16 +233,69 @@
     .assembly-caption h2 { font-size: clamp(22px, 3.2vw, 30px); margin-bottom: 10px; font-weight: 700; color: var(--ink); }
     .assembly-caption p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
 
-    .benefit-row {
-      display: flex; justify-content: center; gap: 1.4rem;
-      max-height: 0; opacity: 0; margin-top: 0;
-      overflow: hidden;
-      transition: max-height .5s cubic-bezier(.22,1,.36,1), opacity .35s ease, margin-top .5s cubic-bezier(.22,1,.36,1);
+    /* ══════════════════════════════════════
+       CAJA DESLIZABLE ESTILO INFANTIL
+       (botón-caja con muñeco tierno caminando
+       por el borde; al tocarla, se desliza hacia
+       abajo el mensaje + los iconos del set)
+    ══════════════════════════════════════ */
+    .info-toggle {
+      position: relative;
+      display: inline-flex; align-items: center; gap: .5rem;
+      margin: 4px 0 0;
+      padding: .6rem 1.4rem;
+      border-radius: 18px;
+      border: 3px dashed var(--violet);
+      background: linear-gradient(145deg, rgba(139,124,246,.08), rgba(52,184,196,.06));
+      font-family: 'Sora', sans-serif; font-weight: 800; font-size: .85rem;
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform .2s ease, background .25s ease;
     }
-    .assembly-caption:hover .benefit-row,
-    .assembly-caption:focus-within .benefit-row {
-      max-height: 160px; opacity: 1; margin-top: 1.8rem;
+    .info-toggle:hover { transform: translateY(-2px); }
+    .info-toggle:active { transform: translateY(0) scale(.97); }
+    .info-toggle-coral  { border-color: var(--coral); }
+    .info-toggle-cyan   { border-color: var(--cyan); }
+    .info-toggle-violet { border-color: var(--violet); }
+
+    .info-toggle-icon { font-size: 1.15rem; transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+    .info-toggle[aria-expanded="true"] .info-toggle-icon { transform: rotate(-16deg) scale(1.1); }
+    .info-toggle-chevron { font-size: .75rem; color: var(--ink-soft); transition: transform .3s ease; }
+    .info-toggle[aria-expanded="true"] .info-toggle-chevron { transform: rotate(180deg); }
+
+    .info-toggle-walker {
+      position: absolute; z-index: 4;
+      left: 0; top: 0;
+      font-size: 1.05rem; line-height: 1;
+      transform: translate(-50%, -50%);
+      animation: walkBorder 7s linear infinite;
+      pointer-events: none;
     }
+    .info-toggle-walker span {
+      display: inline-block;
+      animation: walkBounce .35s ease-in-out infinite;
+    }
+    @keyframes walkBorder {
+      0%   { left: 2%;  top: 0%; }
+      25%  { left: 98%; top: 0%; }
+      50%  { left: 98%; top: 100%; }
+      75%  { left: 2%;  top: 100%; }
+      100% { left: 2%;  top: 0%; }
+    }
+    @keyframes walkBounce {
+      0%, 100% { transform: translateY(0) rotate(-6deg); }
+      50%      { transform: translateY(-3px) rotate(6deg); }
+    }
+
+    .info-panel {
+      max-height: 0; opacity: 0; overflow: hidden;
+      transition: max-height .55s cubic-bezier(.22,1,.36,1), opacity .4s ease, margin-top .55s cubic-bezier(.22,1,.36,1);
+      margin-top: 0;
+    }
+    .info-panel.open { max-height: 480px; opacity: 1; margin-top: 1.5rem; }
+    .info-panel p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 1.4rem; }
+
+    .benefit-row { display: flex; justify-content: center; gap: 1.4rem; }
     .benefit-item { display: flex; flex-direction: column; align-items: center; gap: .5rem; flex: 1; min-width: 0; }
     .benefit-icon {
       width: 58px; height: 58px; border-radius: 18px;
@@ -252,8 +304,7 @@
       transform: scale(.7) translateY(10px); opacity: 0;
       transition: transform .5s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
     }
-    .assembly-caption:hover .benefit-icon,
-    .assembly-caption:focus-within .benefit-icon { transform: scale(1) translateY(0); opacity: 1; }
+    .info-panel.open .benefit-icon { transform: scale(1) translateY(0); opacity: 1; }
     .benefit-item:nth-child(2) .benefit-icon { transition-delay: .08s; }
     .benefit-item:nth-child(3) .benefit-icon { transition-delay: .16s; }
     .benefit-icon.icon-explora     { background: linear-gradient(145deg, rgba(52,184,196,.2), rgba(52,184,196,.06)); }
@@ -263,14 +314,10 @@
       font-family: 'Sora', sans-serif; font-size: .72rem; font-weight: 800;
       letter-spacing: .03em; text-transform: uppercase; color: var(--ink-soft);
     }
-    /* En dispositivos táctiles no hay hover: mostramos los beneficios siempre */
-    @media (hover: none) {
-      .benefit-row { max-height: none; opacity: 1; margin-top: 1.8rem; }
-      .benefit-icon { opacity: 1; transform: none; }
-    }
     @media (prefers-reduced-motion: reduce) {
       .assembly-caption, .assembly-caption:hover { transform: none; transition: none; }
-      .benefit-row, .benefit-icon { transition: none; }
+      .info-panel, .benefit-icon, .info-toggle-icon, .info-toggle-chevron { transition: none; }
+      .info-toggle-walker, .info-toggle-walker span { animation: none !important; }
     }
 
     .assembly-grid {
@@ -1042,19 +1089,27 @@
       <span class="set-count-pill">🐾 x4</span>
     </div>
     <h2>El regalo que inspira a aprender</h2>
-    <p>Explora el fascinante mundo de los animales mientras juegas. Este set de cubos didácticos ayuda a los niños a reconocer diferentes especies, desarrollar el vocabulario, fortalecer la memoria y estimular la curiosidad.</p>
-    <div class="benefit-row">
-      <div class="benefit-item">
-        <span class="benefit-icon icon-explora">🧭</span>
-        <span class="benefit-label">Explora</span>
-      </div>
-      <div class="benefit-item">
-        <span class="benefit-icon icon-diviertete">🎉</span>
-        <span class="benefit-label">Diviértete</span>
-      </div>
-      <div class="benefit-item">
-        <span class="benefit-icon icon-aprende">📚</span>
-        <span class="benefit-label">Aprende</span>
+    <button type="button" class="info-toggle info-toggle-coral" aria-expanded="false" aria-controls="infoPanelAnimales" onclick="toggleInfoBox(this)">
+      <span class="info-toggle-walker"><span>🧸</span></span>
+      <span class="info-toggle-icon">🎁</span>
+      <span class="info-toggle-text">Toca para descubrir más</span>
+      <span class="info-toggle-chevron">▾</span>
+    </button>
+    <div class="info-panel" id="infoPanelAnimales">
+      <p>Explora el fascinante mundo de los animales mientras juegas. Este set de cubos didácticos ayuda a los niños a reconocer diferentes especies, desarrollar el vocabulario, fortalecer la memoria y estimular la curiosidad.</p>
+      <div class="benefit-row">
+        <div class="benefit-item">
+          <span class="benefit-icon icon-explora">🧭</span>
+          <span class="benefit-label">Explora</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon icon-diviertete">🎉</span>
+          <span class="benefit-label">Diviértete</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon icon-aprende">📚</span>
+          <span class="benefit-label">Aprende</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1092,19 +1147,27 @@
       <span class="set-count-pill">🔢 x6</span>
     </div>
     <h2>Los números cobran vida mientras aprendes</h2>
-    <p>Aprender matemáticas nunca fue tan divertido. Este set de cubos didácticos permite a los niños reconocer los números, realizar operaciones básicas de suma, resta, multiplicación y división, mientras desarrollan el pensamiento lógico y las habilidades matemáticas.</p>
-    <div class="benefit-row">
-      <div class="benefit-item">
-        <span class="benefit-icon icon-explora">🧭</span>
-        <span class="benefit-label">Explora</span>
-      </div>
-      <div class="benefit-item">
-        <span class="benefit-icon icon-diviertete">🎉</span>
-        <span class="benefit-label">Diviértete</span>
-      </div>
-      <div class="benefit-item">
-        <span class="benefit-icon icon-aprende">📚</span>
-        <span class="benefit-label">Aprende</span>
+    <button type="button" class="info-toggle info-toggle-cyan" aria-expanded="false" aria-controls="infoPanelNumeros" onclick="toggleInfoBox(this)">
+      <span class="info-toggle-walker"><span>🧸</span></span>
+      <span class="info-toggle-icon">🎁</span>
+      <span class="info-toggle-text">Toca para descubrir más</span>
+      <span class="info-toggle-chevron">▾</span>
+    </button>
+    <div class="info-panel" id="infoPanelNumeros">
+      <p>Aprender matemáticas nunca fue tan divertido. Este set de cubos didácticos permite a los niños reconocer los números, realizar operaciones básicas de suma, resta, multiplicación y división, mientras desarrollan el pensamiento lógico y las habilidades matemáticas.</p>
+      <div class="benefit-row">
+        <div class="benefit-item">
+          <span class="benefit-icon icon-explora">🧭</span>
+          <span class="benefit-label">Explora</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon icon-diviertete">🎉</span>
+          <span class="benefit-label">Diviértete</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon icon-aprende">📚</span>
+          <span class="benefit-label">Aprende</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1192,19 +1255,27 @@
       <span class="set-count-pill">🔤 x9</span>
     </div>
     <h2>Sus primeras palabras</h2>
-    <p>Convierte el aprendizaje de las letras en una experiencia divertida e interactiva. Este set de cubos didácticos ayuda a los niños a reconocer el abecedario, formar palabras y fortalecer sus habilidades de lectura y escritura desde temprana edad.</p>
-    <div class="benefit-row">
-      <div class="benefit-item">
-        <span class="benefit-icon icon-explora">🧭</span>
-        <span class="benefit-label">Explora</span>
-      </div>
-      <div class="benefit-item">
-        <span class="benefit-icon icon-diviertete">🎉</span>
-        <span class="benefit-label">Diviértete</span>
-      </div>
-      <div class="benefit-item">
-        <span class="benefit-icon icon-aprende">📚</span>
-        <span class="benefit-label">Aprende</span>
+    <button type="button" class="info-toggle info-toggle-violet" aria-expanded="false" aria-controls="infoPanelAbecedario" onclick="toggleInfoBox(this)">
+      <span class="info-toggle-walker"><span>🧸</span></span>
+      <span class="info-toggle-icon">🎁</span>
+      <span class="info-toggle-text">Toca para descubrir más</span>
+      <span class="info-toggle-chevron">▾</span>
+    </button>
+    <div class="info-panel" id="infoPanelAbecedario">
+      <p>Convierte el aprendizaje de las letras en una experiencia divertida e interactiva. Este set de cubos didácticos ayuda a los niños a reconocer el abecedario, formar palabras y fortalecer sus habilidades de lectura y escritura desde temprana edad.</p>
+      <div class="benefit-row">
+        <div class="benefit-item">
+          <span class="benefit-icon icon-explora">🧭</span>
+          <span class="benefit-label">Explora</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon icon-diviertete">🎉</span>
+          <span class="benefit-label">Diviértete</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon icon-aprende">📚</span>
+          <span class="benefit-label">Aprende</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1557,6 +1628,17 @@
 </div>
 
 <script>
+  /* ── Caja deslizable de cada set: toca el botón para revelar el mensaje + iconos ── */
+  function toggleInfoBox(btn) {
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!panel) return;
+    const willOpen = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(willOpen));
+    panel.classList.toggle('open', willOpen);
+    const label = btn.querySelector('.info-toggle-text');
+    if (label) label.textContent = willOpen ? 'Toca para ver menos' : 'Toca para descubrir más';
+  }
+
   /* ── Popup de salida (exit-intent): 10% OFF con contador de 30s ── */
   (function () {
     const overlay = document.getElementById('exitOverlay');
