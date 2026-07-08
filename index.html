@@ -1710,6 +1710,7 @@
   (function () {
     const ANIMALS = ['perro', 'loro', 'oveja', 'camaleon', 'hipopotamo', 'oso', 'ardilla', 'hamster', 'pez'];
     const BASE = 'https://juegosdidacticostp.com/cubos-3d/animal-mosaico-';
+    const CACHE_BUST = '?v=20260708'; // evita que el navegador/CDN sirvan fotos viejas en caché
     const SUFFIXES = ['arriba-izq', 'arriba-der', 'abajo-izq', 'abajo-der'];
     const tl = document.getElementById('mosaicTL');
     const tr = document.getElementById('mosaicTR');
@@ -1720,14 +1721,14 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Precarga todas las fotos para que el cambio se vea instantáneo
-    ANIMALS.forEach((animal) => SUFFIXES.forEach((suf) => { new Image().src = `${BASE}${animal}-${suf}.jpg`; }));
+    ANIMALS.forEach((animal) => SUFFIXES.forEach((suf) => { new Image().src = `${BASE}${animal}-${suf}.jpg${CACHE_BUST}`; }));
 
     let index = 0;
     setInterval(() => {
       if (document.hidden) return;
       index = (index + 1) % ANIMALS.length;
       const animal = ANIMALS[index];
-      const apply = () => imgs.forEach((img, i) => { img.src = `${BASE}${animal}-${SUFFIXES[i]}.jpg`; });
+      const apply = () => imgs.forEach((img, i) => { img.src = `${BASE}${animal}-${SUFFIXES[i]}.jpg${CACHE_BUST}`; });
       if (reduceMotion) { apply(); return; }
       imgs.forEach((img) => { img.style.opacity = 0; });
       setTimeout(() => {
