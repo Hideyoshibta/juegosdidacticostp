@@ -1,1 +1,959 @@
-UPLOAD_CONTENT_FROM_FILE
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juegos Didácticos TP</title>
+  <meta name="description" content="Cubos didácticos de alta calidad para aprender jugando: Abecedario, Números y Animales. Envíos a toda Colombia." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://juegosdidacticostp.com/" />
+  <meta property="og:title" content="Juegos Didácticos TP" />
+  <meta property="og:description" content="Cubos didácticos de alta calidad para aprender jugando: Abecedario, Números y Animales. Envíos a toda Colombia." />
+  <meta property="og:image" content="https://juegosdidacticostp.com/imagen_2026-07-31_094718518.png" />
+  <meta property="og:image:width" content="1254" />
+  <meta property="og:image:height" content="1254" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Juegos Didácticos TP" />
+  <meta name="twitter:description" content="Cubos didácticos de alta calidad para aprender jugando: Abecedario, Números y Animales. Envíos a toda Colombia." />
+  <meta name="twitter:image" content="https://juegosdidacticostp.com/imagen_2026-07-31_094718518.png" />
+  <link rel="icon" type="image/png" href="https://juegosdidacticostp.com/Gemini_Generated_Image_5czjkw5czjkw5czj__1_-removebg-preview.png" />
+  <link rel="apple-touch-icon" href="https://juegosdidacticostp.com/Gemini_Generated_Image_5czjkw5czjkw5czj__1_-removebg-preview.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#FAF8FF; --bg-2:#F2EEFC; --bg-3:#EAE1FA;
+      --ink:#2B2640; --ink-soft:#6E668C; --ink-faint:#A79ECB;
+      --violet:#8B7CF6; --violet-glow:rgba(139,124,246,0.3);
+      --cyan:#34B8C4; --cyan-glow:rgba(52,184,196,0.28);
+      --gold:#F0A93E; --gold-glow:rgba(240,169,62,0.28);
+      --coral:#F2607A; --coral-glow:rgba(242,96,122,0.28);
+      --mint:#2FBF8F; --mint-glow:rgba(47,191,143,0.28);
+      --ocean:#4F8FE0; --ocean-glow:rgba(79,143,224,0.28);
+      --whatsapp:#25D366;
+      --glass:rgba(139,124,246,0.06);
+      --glass-border:rgba(43,38,64,0.1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;}
+    h1,h2,h3,.display{font-family:'Sora',sans-serif;}
+    .bg-grid{position:absolute;inset:0;z-index:0;pointer-events:none;
+      background-image:linear-gradient(rgba(43,38,64,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,38,64,0.05) 1px,transparent 1px);
+      background-size:48px 48px;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:.9rem 2rem;background:rgba(250,248,255,0);backdrop-filter:blur(0px);border-bottom:1px solid transparent;transition:background .4s,border-color .4s,backdrop-filter .4s;}
+    nav.scrolled{background:rgba(250,248,255,.85);backdrop-filter:blur(16px);border-bottom-color:var(--glass-border);}
+    .nav-logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.15rem;color:var(--ink);text-decoration:none;line-height:1.1;}
+    .nav-logo span{background:linear-gradient(120deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .nav-cta{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;border:none;border-radius:50px;padding:.55rem 1.5rem;font-family:'Sora',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px var(--violet-glow);transition:transform .2s,box-shadow .2s;}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 26px var(--violet-glow);}
+
+    /* HERO */
+    .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem 7rem;overflow:hidden;background:radial-gradient(circle at 50% 25%,var(--bg-3),var(--bg) 65%);}
+    .floaters{position:absolute;inset:0;pointer-events:none;z-index:1;}
+    .floater{position:absolute;font-size:2.1rem;animation:floatY 6s ease-in-out infinite;}
+    .floater.f-violet{filter:drop-shadow(0 0 16px var(--violet-glow));}
+    .floater.f-cyan{filter:drop-shadow(0 0 16px var(--cyan-glow));}
+    .floater.f-gold{filter:drop-shadow(0 0 16px var(--gold-glow));}
+    .floater.f-coral{filter:drop-shadow(0 0 16px var(--coral-glow));}
+    .floater:nth-child(1){top:14%;left:7%;animation-delay:0s;}
+    .floater:nth-child(2){top:18%;right:8%;animation-delay:1.3s;font-size:1.8rem;}
+    .floater:nth-child(3){top:60%;left:5%;animation-delay:2.2s;font-size:2.4rem;}
+    .floater:nth-child(4){top:64%;right:6%;animation-delay:.9s;}
+    .floater:nth-child(5){top:38%;left:3%;animation-delay:3.1s;font-size:1.7rem;}
+    .floater:nth-child(6){top:42%;right:3%;animation-delay:1.7s;font-size:1.9rem;}
+    @keyframes floatY{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-18px) rotate(4deg);}}
+    .hero-badge{position:relative;z-index:2;display:inline-flex;align-items:center;gap:.4rem;background:rgba(123,97,255,0.1);border:1px solid rgba(123,97,255,0.35);color:var(--violet);border-radius:50px;padding:.35rem 1.1rem;font-weight:600;font-size:.82rem;margin-bottom:1.6rem;}
+    .hero h1{position:relative;z-index:2;font-size:clamp(2.5rem,7vw,4.6rem);font-weight:800;line-height:1.08;margin-bottom:1.1rem;background:linear-gradient(120deg,var(--ink),var(--ink-soft));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .hero p{position:relative;z-index:2;max-width:540px;font-size:clamp(.98rem,2.2vw,1.14rem);color:var(--ink-soft);line-height:1.72;margin-bottom:2.4rem;}
+    .hero-btns{position:relative;z-index:2;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+    .btn-primary{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;border:none;border-radius:50px;padding:.9rem 2.2rem;font-family:'Sora',sans-serif;font-weight:700;font-size:.98rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 6px 26px var(--violet-glow);transition:transform .22s,box-shadow .22s;}
+    .btn-primary:hover{transform:translateY(-4px);box-shadow:0 10px 34px var(--violet-glow);}
+    .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--glass-border);border-radius:50px;padding:.9rem 2.2rem;font-family:'Sora',sans-serif;font-weight:700;font-size:.98rem;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s,transform .2s;}
+    .btn-outline:hover{background:var(--glass);border-color:var(--ink-soft);transform:translateY(-4px);}
+    @keyframes spinCube{from{transform:rotateY(0deg) rotateX(-12deg);}to{transform:rotateY(360deg) rotateX(-12deg);}}
+    .story-tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:16px;border:1px solid;}
+    .tag-violet{color:var(--violet);border-color:rgba(123,97,255,.4);background:rgba(123,97,255,.1);}
+    .tag-cyan{color:var(--cyan);border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.1);}
+
+    /* ASSEMBLY SCENE */
+    .assembly-scene{position:relative;padding:3rem 1.5rem;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+    #animalesScene{padding-top:6rem;}
+    .assembly-caption{position:relative;z-index:2;text-align:center;max-width:480px;background:#fff;border-radius:28px;padding:2.3rem 2rem;border:1px solid rgba(43,38,64,.05);box-shadow:0 2px 8px rgba(43,38,64,.05),0 10px 26px rgba(43,38,64,.06);transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s cubic-bezier(.22,1,.36,1);}
+    .assembly-caption:hover{transform:translateY(-6px);box-shadow:0 22px 46px rgba(43,38,64,.14),0 6px 16px rgba(43,38,64,.08);}
+    .assembly-caption h2{font-size:clamp(22px,3.2vw,30px);margin-bottom:10px;font-weight:700;color:var(--ink);}
+    .info-toggle{position:relative;display:inline-flex;align-items:center;gap:.5rem;margin:4px 0 0;padding:.6rem 1.4rem;border-radius:18px;border:3px dashed var(--violet);background:linear-gradient(145deg,rgba(139,124,246,.08),rgba(52,184,196,.06));font-family:'Sora',sans-serif;font-weight:800;font-size:.85rem;color:var(--ink);cursor:pointer;transition:transform .2s ease;}
+    .info-toggle:hover{transform:translateY(-2px);}
+    .info-toggle-coral{border-color:var(--coral);}
+    .info-toggle-cyan{border-color:var(--cyan);}
+    .info-toggle-violet{border-color:var(--violet);}
+    .info-toggle-icon{font-size:1.15rem;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+    .info-toggle[aria-expanded="true"] .info-toggle-icon{transform:rotate(-16deg) scale(1.1);}
+    .info-toggle-chevron{font-size:.75rem;color:var(--ink-soft);transition:transform .3s ease;}
+    .info-toggle[aria-expanded="true"] .info-toggle-chevron{transform:rotate(180deg);}
+    .info-toggle-walker{position:absolute;z-index:4;left:0;top:0;font-size:1.05rem;line-height:1;transform:translate(-50%,-50%);animation:walkBorder 7s linear infinite;pointer-events:none;}
+    .info-toggle-walker span{display:inline-block;animation:walkBounce .35s ease-in-out infinite;}
+    @keyframes walkBorder{0%{left:2%;top:0%;}25%{left:98%;top:0%;}50%{left:98%;top:100%;}75%{left:2%;top:100%;}100%{left:2%;top:0%;}}
+    @keyframes walkBounce{0%,100%{transform:translateY(0) rotate(-6deg);}50%{transform:translateY(-3px) rotate(6deg);}}
+    .info-toggle-walker.jump-away{animation:walkerJumpFall .9s cubic-bezier(.34,1.2,.64,1) forwards;}
+    .info-toggle-walker.jump-away span{animation:none;transform:none;}
+    @keyframes walkerJumpFall{0%{transform:translate(-50%,-50%) translateY(0) scale(1) rotate(0deg);opacity:1;}28%{transform:translate(-50%,-50%) translateY(-24px) scale(1.15) rotate(-10deg);opacity:1;}55%{transform:translate(-50%,-50%) translateY(6px) scale(.98) rotate(6deg);opacity:1;}100%{transform:translate(-50%,-50%) translateY(90px) scale(.35) rotate(18deg);opacity:0;}}
+    .info-panel{max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.22,1,.36,1),opacity .4s ease,margin-top .55s cubic-bezier(.22,1,.36,1);margin-top:0;}
+    .info-panel.open{max-height:480px;opacity:1;margin-top:1.5rem;}
+    .info-panel p{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:1.4rem;}
+    .benefit-row{display:flex;justify-content:center;gap:1.4rem;}
+    .benefit-item{display:flex;flex-direction:column;align-items:center;gap:.5rem;flex:1;min-width:0;}
+    .benefit-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;line-height:1;transform:scale(.7) translateY(10px);opacity:0;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s ease;}
+    .info-panel.open .benefit-icon{transform:scale(1) translateY(0);opacity:1;}
+    .benefit-item:nth-child(2) .benefit-icon{transition-delay:.08s;}
+    .benefit-item:nth-child(3) .benefit-icon{transition-delay:.16s;}
+    .benefit-icon.icon-explora{background:linear-gradient(145deg,rgba(52,184,196,.2),rgba(52,184,196,.06));}
+    .benefit-icon.icon-diviertete{background:linear-gradient(145deg,rgba(242,96,122,.2),rgba(242,96,122,.06));}
+    .benefit-icon.icon-aprende{background:linear-gradient(145deg,rgba(139,124,246,.2),rgba(139,124,246,.06));}
+    .benefit-label{font-family:'Sora',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);}
+
+    /* CUBE 3D */
+    .cube-piece{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) rotate(var(--drot,0deg)) scale(0.35);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1.1s cubic-bezier(.22,1,.36,1);transition-delay:var(--delay,0s);perspective:700px;}
+    .cube-piece.visible{opacity:1;transform:translate(0,0) rotate(0deg) scale(1);}
+    .piece-spin{width:110px;height:110px;transform-style:preserve-3d;animation:spinCube 16s linear infinite;}
+    .piece3d{position:relative;width:100%;height:100%;transform-style:preserve-3d;}
+    .piece-face{position:absolute;width:110px;height:110px;border-radius:14px;overflow:hidden;background:var(--bg-3);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.12),0 0 24px rgba(0,0,0,0.25);}
+    .piece-face img{width:100%;height:100%;object-fit:cover;display:block;}
+    .piece-face.front{transform:translateZ(55px);}
+    .piece-face.back{transform:rotateY(180deg) translateZ(55px);}
+    .piece-face.right{transform:rotateY(90deg) translateZ(55px);}
+    .piece-face.left{transform:rotateY(-90deg) translateZ(55px);}
+    .piece-face.top{transform:rotateX(90deg) translateZ(55px);}
+    .piece-face.bottom{transform:rotateX(-90deg) translateZ(55px);}
+    .piece-cyan2 .piece-face{box-shadow:inset 0 0 0 2px var(--cyan),0 0 30px var(--cyan-glow);}
+    .piece-violet2 .piece-face{box-shadow:inset 0 0 0 2px var(--violet),0 0 30px var(--violet-glow);}
+    @media(max-width:640px){
+      .piece-spin,.piece-face{width:78px;height:78px;}
+      .piece-face.front{transform:translateZ(39px);}
+      .piece-face.back{transform:rotateY(180deg) translateZ(39px);}
+      .piece-face.right{transform:rotateY(90deg) translateZ(39px);}
+      .piece-face.left{transform:rotateY(-90deg) translateZ(39px);}
+      .piece-face.top{transform:rotateX(90deg) translateZ(39px);}
+      .piece-face.bottom{transform:rotateX(-90deg) translateZ(39px);}
+    }
+
+    /* MOSAIC */
+    .mosaic-frame{perspective:1000px;}
+    .mosaic-inner{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);width:280px;height:280px;gap:2px;transform-style:preserve-3d;animation:mosaicSway 7s ease-in-out infinite;filter:drop-shadow(0 20px 30px rgba(0,0,0,0.15));}
+    @keyframes mosaicSway{0%,100%{transform:rotateY(-5deg) rotateX(2deg);}50%{transform:rotateY(5deg) rotateX(-2deg);}}
+    .mosaic-tile{width:139px;height:139px;opacity:0;overflow:hidden;background:var(--bg-3);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);transition-delay:var(--delay,0s);transform:translate(var(--dx,0),var(--dy,0)) scale(.3) rotate(var(--drot,0deg));box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5);}
+    .mosaic-tile.visible{opacity:1;transform:translate(0,0) scale(1) rotate(0deg);}
+    .mosaic-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .35s ease;}
+    .mosaic-tile.tl{border-radius:24px 6px 6px 6px;}
+    .mosaic-tile.tr{border-radius:6px 24px 6px 6px;}
+    .mosaic-tile.bl{border-radius:6px 6px 6px 24px;}
+    .mosaic-tile.br{border-radius:6px 6px 24px 6px;}
+
+    /* CLUSTER */
+    .cluster3-frame{position:relative;width:280px;height:380px;}
+    .cluster3-frame .cube-piece{position:absolute;}
+    .cube-piece.attract{transform:translate(var(--dx,0),var(--dy,0)) rotate(var(--drot,0deg)) scale(var(--scale,2.6));filter:blur(var(--blur,8px));transition:opacity 1.6s cubic-bezier(.22,1,.36,1),transform 2.2s cubic-bezier(.22,1,.36,1),filter 2.2s ease-out;}
+    .cube-piece.attract.visible{transform:translate(0,0) rotate(0deg) scale(1);filter:blur(0px);}
+    .cursor-caption{position:fixed;top:0;left:0;transform:translate(-9999px,-9999px);max-width:220px;background:var(--bg-2);border:1px solid var(--glass-border);border-radius:14px;padding:10px 16px;font-size:13px;font-weight:600;line-height:1.45;color:var(--ink);pointer-events:none;opacity:0;transition:opacity .3s ease;z-index:50;box-shadow:0 10px 26px rgba(0,0,0,0.12);}
+    .cursor-caption.active{opacity:1;}
+    @media(max-width:900px){.cursor-caption{display:none;}}
+
+    /* WORD ROW */
+    .word-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+    .abc-baby{display:block;width:44%;max-width:230px;height:auto;margin:.4rem auto 0;filter:drop-shadow(0 18px 26px rgba(43,38,64,.22));}
+
+    @media(max-width:640px){
+      .assembly-scene{padding:1.75rem 1.5rem;gap:1.5rem;}
+      #animalesScene{padding-top:4.5rem;}
+      .mosaic-inner{width:200px;height:200px;}
+      .mosaic-tile{width:99px;height:99px;}
+      .cluster3-frame{width:220px;height:300px;transform:scale(0.85);transform-origin:top center;}
+      .word-row{gap:8px;transform:scale(0.72);}
+      .abc-baby{width:78%;max-width:320px;}
+    }
+
+    /* WAVE */
+    .wave-divider{display:block;width:100%;height:70px;margin-bottom:-1px;}
+    .wave-divider svg{display:block;width:100%;height:100%;}
+
+    /* STATS BAR */
+    .stats-bar{position:relative;background:var(--bg-2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);padding:1.7rem 1rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem 3rem;}
+    .stat{text-align:center;opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s;}
+    .stat.visible{opacity:1;transform:translateY(0);}
+    .stat strong{font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(120deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;display:block;line-height:1;}
+    .stat span{font-size:.82rem;color:var(--ink-soft);font-weight:600;}
+
+    /* SECTIONS */
+    .section-wrap{position:relative;padding:5.5rem 1.5rem;}
+    .products-bg{background:var(--bg);}
+    .section-head{position:relative;z-index:1;text-align:center;margin-bottom:3rem;}
+    .section-pill{display:inline-block;background:var(--glass);color:var(--ink-soft);border:1px solid var(--glass-border);border-radius:50px;padding:.22rem .95rem;font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.8rem;}
+    .section-title{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.8vw,2.6rem);color:var(--ink);line-height:1.15;margin-bottom:.5rem;}
+    .section-sub{color:var(--ink-soft);font-size:1rem;font-weight:500;}
+
+    /* TABS */
+    .tabs{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;margin-bottom:2.8rem;}
+    .tab{background:var(--glass);color:var(--ink-soft);border:1px solid var(--glass-border);border-radius:50px;padding:.42rem 1.2rem;font-family:'Sora',sans-serif;font-weight:600;font-size:.86rem;cursor:pointer;transition:background .2s,color .2s,transform .2s,border-color .2s;}
+    .tab:hover,.tab.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;border-color:transparent;transform:translateY(-2px);}
+
+    /* PRODUCTS */
+    .products-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.8rem;max-width:1160px;margin:0 auto;}
+    .product-card{background:var(--bg-2);border-radius:20px;overflow:hidden;border:1px solid var(--glass-border);display:flex;flex-direction:column;opacity:0;transform:translateY(50px) scale(.97);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1),box-shadow .3s,border-color .3s;}
+    .product-card.visible{opacity:1;transform:translateY(0) scale(1);}
+    .product-card:nth-child(2){transition-delay:.1s}
+    .product-card:nth-child(3){transition-delay:.2s}
+    .product-card:nth-child(4){transition-delay:.3s}
+    .product-card:nth-child(5){transition-delay:.4s}
+    .product-card:nth-child(6){transition-delay:.5s}
+    .card-img-box{position:relative;width:100%;height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg-3);}
+    .card-img-box.acc-violet{background:radial-gradient(circle,rgba(123,97,255,0.22),var(--bg-3) 70%);}
+    .card-img-box.acc-cyan{background:radial-gradient(circle,rgba(34,211,238,0.2),var(--bg-3) 70%);}
+    .card-img-box.acc-gold{background:radial-gradient(circle,rgba(255,200,87,0.2),var(--bg-3) 70%);}
+    .card-img-box.acc-coral{background:radial-gradient(circle,rgba(255,107,129,0.2),var(--bg-3) 70%);}
+    .card-img-box.acc-mint{background:radial-gradient(circle,rgba(52,211,153,0.2),var(--bg-3) 70%);}
+    .card-img-box.acc-ocean{background:radial-gradient(circle,rgba(79,157,222,0.2),var(--bg-3) 70%);}
+    .card-img-box img{max-width:82%;max-height:82%;width:auto;height:auto;object-fit:contain;display:block;transition:transform .45s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 12px 24px rgba(0,0,0,0.4));}
+    .product-card:hover .card-img-box img{transform:scale(1.08) rotate(-1deg);}
+    .card-badge{position:absolute;top:11px;right:11px;color:var(--ink);border-radius:20px;padding:.2rem .7rem;font-weight:800;font-size:.7rem;}
+    .badge-violet{background:var(--violet);color:#fff;}
+    .badge-cyan{background:var(--cyan);}
+    .badge-gold{background:var(--gold);}
+    .badge-coral{background:var(--coral);color:#fff;}
+    .badge-mint{background:var(--mint);}
+    .badge-ocean{background:var(--ocean);color:#fff;}
+    .card-body{padding:1.3rem 1.4rem 1.4rem;border-top:1px solid var(--glass-border);display:flex;flex-direction:column;flex:1;}
+    .card-body h3{font-family:'Sora',sans-serif;font-weight:700;font-size:1.1rem;color:var(--ink);margin-bottom:.4rem;line-height:1.25;}
+    .card-body p{color:var(--ink-soft);font-size:.87rem;line-height:1.62;margin-bottom:.9rem;flex:1;}
+    .tag-row{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem;}
+    .pill-tag{background:var(--glass);color:var(--ink-soft);border:1px solid var(--glass-border);border-radius:20px;padding:.15rem .6rem;font-size:.72rem;font-weight:600;}
+    .card-btn{display:block;width:100%;color:#fff;border:none;border-radius:12px;padding:.68rem;font-family:'Sora',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;text-decoration:none;text-align:center;transition:transform .2s,box-shadow .2s,filter .2s;margin-top:auto;}
+    .btn-violet{background:var(--violet);box-shadow:0 4px 16px var(--violet-glow);}
+    .btn-cyan{background:var(--cyan);box-shadow:0 4px 16px var(--cyan-glow);}
+    .btn-gold{background:var(--gold);color:var(--ink);box-shadow:0 4px 16px var(--gold-glow);}
+    .btn-coral{background:var(--coral);box-shadow:0 4px 16px var(--coral-glow);}
+    .btn-mint{background:var(--mint);color:var(--ink);box-shadow:0 4px 16px var(--mint-glow);}
+    .btn-ocean{background:var(--ocean);box-shadow:0 4px 16px var(--ocean-glow);}
+    .card-btn:hover{transform:translateY(-2px);filter:brightness(1.1);}
+
+    /* WHY */
+    .why-bg{background:var(--bg-2);}
+    .why-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.3rem;max-width:980px;margin:0 auto;}
+    .why-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:1.9rem 1.3rem;text-align:center;opacity:0;transform:translateY(30px) scale(.96);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1),background .3s,border-color .3s;}
+    .why-card.visible{opacity:1;transform:translateY(0) scale(1);}
+    .why-card:hover{background:rgba(255,255,255,.08);border-color:var(--violet);transform:translateY(-6px) scale(1.02);}
+    .why-card:nth-child(2){transition-delay:.12s}
+    .why-card:nth-child(3){transition-delay:.24s}
+    .why-card:nth-child(4){transition-delay:.36s}
+    .why-icon{font-size:2.6rem;display:block;margin-bottom:.8rem;}
+    .why-card h4{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--ink);margin-bottom:.35rem;}
+    .why-card p{font-size:.87rem;color:var(--ink-soft);line-height:1.62;}
+
+    /* REVIEWS */
+    .reviews-bg{background:var(--bg);}
+    .reviews-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.6rem;max-width:1080px;margin:0 auto;}
+    .review-card{background:var(--bg-2);border:1px solid var(--glass-border);border-radius:20px;padding:1.8rem 1.6rem;opacity:0;transform:translateY(30px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1),border-color .3s;}
+    .review-card.visible{opacity:1;transform:translateY(0);}
+    .review-card:nth-child(2){transition-delay:.1s}
+    .review-card:nth-child(3){transition-delay:.2s}
+    .review-card:hover{border-color:var(--violet);}
+    .review-stars{color:var(--gold);font-size:1rem;letter-spacing:2px;margin-bottom:.9rem;}
+    .review-quote{font-size:.93rem;color:var(--ink);line-height:1.65;margin-bottom:1.3rem;}
+    .review-person{display:flex;align-items:center;gap:.7rem;}
+    .review-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0;}
+    .review-name{font-family:'Sora',sans-serif;font-weight:700;font-size:.88rem;color:var(--ink);}
+    .review-meta{font-size:.78rem;color:var(--ink-soft);}
+    .avatar-violet{background:var(--violet);}
+    .avatar-cyan{background:var(--cyan);}
+    .avatar-coral{background:var(--coral);}
+    .reviews-summary{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:2.5rem;font-size:.92rem;color:var(--ink-soft);font-weight:600;}
+    .reviews-summary .review-stars{margin-bottom:0;font-size:1.1rem;}
+
+    /* CTA */
+    .cta-bg{position:relative;background:var(--bg);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);text-align:center;padding:3rem 1.5rem 6rem;}
+    .cta-bg h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.1rem);color:var(--ink);margin-bottom:.9rem;}
+    .cta-bg p{color:var(--ink-soft);font-size:1.05rem;margin-bottom:1.6rem;font-weight:500;}
+    .wa-status-badge{display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1.6rem;padding:.55rem 1.3rem;border-radius:999px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.35);font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;background-image:linear-gradient(120deg,var(--whatsapp),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .wa-status-dot{position:relative;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--whatsapp);animation:waPulseDot 1.8s ease-in-out infinite;}
+    @keyframes waPulseDot{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55);}70%{box-shadow:0 0 0 9px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+    .btn-wa{background:var(--whatsapp);color:#fff;border:none;border-radius:50px;padding:1rem 2.6rem;font-family:'Sora',sans-serif;font-weight:700;font-size:1.04rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.55rem;box-shadow:0 7px 26px rgba(37,211,102,.35);transition:transform .2s,box-shadow .2s;animation:waShake 3.2s ease-in-out infinite;}
+    .btn-wa:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(37,211,102,.45);animation-play-state:paused;}
+    @keyframes waShake{0%,85%,100%{transform:rotate(0deg) translateY(0);}87%{transform:rotate(-9deg) translateY(-2px);}89%{transform:rotate(8deg) translateY(-2px);}91%{transform:rotate(-7deg) translateY(-1px);}93%{transform:rotate(6deg) translateY(-1px);}95%{transform:rotate(-3deg) translateY(0);}97%{transform:rotate(2deg) translateY(0);}}
+
+    /* FOOTER */
+    footer{background:var(--bg-2);color:var(--ink-faint);text-align:center;padding:2rem 1.5rem;font-size:.86rem;border-top:1px solid var(--glass-border);}
+    footer a{color:var(--cyan);text-decoration:none;}
+    .wa-float{position:fixed;bottom:1.4rem;right:1.4rem;z-index:400;background:var(--whatsapp);border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;text-decoration:none;box-shadow:0 5px 24px rgba(37,211,102,.5);animation:waPulse 2.5s ease-in-out infinite;transition:transform .2s;}
+    .wa-float:hover{transform:scale(1.15);animation:none;}
+    @keyframes waPulse{0%,100%{box-shadow:0 5px 22px rgba(37,211,102,.5);}50%{box-shadow:0 5px 44px rgba(37,211,102,.8);}}
+
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);}
+    .reveal.zoom-in{transform:scale(.92);}
+    .reveal.visible{opacity:1;transform:none;}
+
+    /* SET COUNT PILL */
+    .set-tag-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+    .set-tag-row .story-tag{margin-bottom:0;}
+    .set-count-pill{display:inline-flex;align-items:center;gap:.3rem;position:relative;z-index:0;font-size:12px;font-weight:700;letter-spacing:.02em;padding:6px 14px;border-radius:999px;line-height:1;color:var(--ink);background:var(--bg-2);}
+    .set-count-pill::before{content:"";position:absolute;inset:-2px;z-index:-2;border-radius:999px;background:conic-gradient(from 0deg,#ff3b3b,#ff9d3b,#ffe93b,#4bdc6b,#3bc6ff,#6b5bff,#ff3bd6,#ff3b3b);}
+    .set-count-pill::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:999px;background:var(--bg-2);}
+
+    /* EXIT POPUP */
+    .exit-overlay{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:1.2rem;background:rgba(20,16,33,0.55);backdrop-filter:blur(4px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s;}
+    .exit-overlay.exit-visible{opacity:1;visibility:visible;pointer-events:auto;}
+    .exit-card{position:relative;width:100%;max-width:380px;background:linear-gradient(165deg,#FFFDF6,#FFF6DF 60%,#FDEFC4);border:1px solid rgba(212,175,55,.4);border-radius:26px;padding:2.2rem 1.8rem 1.8rem;text-align:center;box-shadow:0 26px 60px rgba(20,16,33,.35);transform:scale(.9) translateY(16px);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+    .exit-overlay.exit-visible .exit-card{transform:scale(1) translateY(0);}
+    .exit-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(43,38,64,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--ink-soft);transition:background .2s;}
+    .exit-close:hover{background:rgba(43,38,64,.12);}
+    .exit-kicker{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#9A7B1E;background:rgba(212,175,55,.16);border:1px solid rgba(212,175,55,.4);border-radius:50px;padding:.3rem 1rem;margin-bottom:1rem;}
+    .exit-card h3{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.3rem,4.5vw,1.6rem);color:var(--ink);line-height:1.25;margin-bottom:.6rem;}
+    .exit-card .exit-pct{background:linear-gradient(120deg,#D4AF37,#B8860B);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .exit-card p.exit-sub{color:var(--ink-soft);font-size:.92rem;line-height:1.55;margin-bottom:1.4rem;}
+    .exit-timer{display:flex;flex-direction:column;align-items:center;gap:.3rem;margin:0 auto 1.5rem;}
+    .exit-timer-ring{position:relative;width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:conic-gradient(#D4AF37 calc(var(--pct,100) * 1%),rgba(212,175,55,.15) 0);transition:background 1s linear;}
+    .exit-timer-ring::before{content:"";position:absolute;inset:6px;border-radius:50%;background:#FFFDF6;}
+    .exit-timer-num{position:relative;z-index:1;font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:#8A6D1B;}
+    .exit-timer-label{font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);}
+    .exit-wa-btn{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;text-decoration:none;font-family:'Sora',sans-serif;font-weight:800;font-size:.98rem;color:#3B2B00;background:linear-gradient(120deg,#FCE7A1,#E8C158 45%,#C9971F);border:1px solid rgba(154,123,30,.5);border-radius:50px;padding:.95rem 1.4rem;box-shadow:0 10px 26px rgba(197,155,45,.45);transition:transform .2s,box-shadow .2s,filter .2s;}
+    .exit-wa-btn:hover{transform:translateY(-3px);filter:brightness(1.05);}
+    .exit-wa-btn svg{width:20px;height:20px;flex-shrink:0;}
+    .exit-card.exit-expired .exit-wa-btn{opacity:.55;pointer-events:none;filter:grayscale(.3);}
+    .exit-expired-msg{display:none;font-size:.8rem;font-weight:700;color:var(--coral);margin-top:.7rem;}
+    .exit-card.exit-expired .exit-expired-msg{display:block;}
+
+    @media(max-width:640px){nav{padding:.7rem 1rem;}.floater{display:none;}.products-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto;}.why-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:440px){.why-grid{grid-template-columns:1fr;}}
+    @media(prefers-reduced-motion:reduce){.btn-wa,.wa-status-dot,.wa-float,.mosaic-inner,.piece-spin{animation:none!important;}.cube-piece,.mosaic-tile{transition:none!important;opacity:1;transform:none;}}
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">JUEGOS <span>DIDÁCTICOS</span> TP</a>
+  <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="nav-cta" target="_blank" rel="noopener">Pedir ya</a>
+</nav>
+
+<!-- ══════════════════════════════════
+     STORY SECTION — scroll narrativo
+══════════════════════════════════ -->
+<style>
+  .story-wrap{position:relative;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);overflow:hidden;padding-top:80px;}
+
+  /* Paneles */
+  .story-panel{position:relative;max-width:720px;margin:0 auto;padding:3rem 1.5rem;text-align:center;opacity:0;transform:translateY(36px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);z-index:2;}
+  .story-panel.in-view{opacity:1;transform:none;}
+  .story-eyebrow{display:inline-block;font-family:'Sora',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);background:rgba(242,96,122,.1);border:1px solid rgba(242,96,122,.35);border-radius:999px;padding:.35rem 1rem;margin-bottom:.85rem;}
+  .story-h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.2;color:var(--ink);margin:0 0 .65rem;}
+  .story-h1 em{font-style:normal;background:linear-gradient(120deg,var(--coral),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .story-sub{font-size:1.05rem;color:var(--ink-soft);line-height:1.7;max-width:560px;margin:0 auto;}
+
+  /* Teléfono */
+  .phone-mock{width:210px;height:400px;margin:1.5rem auto 1rem;border-radius:34px;background:var(--ink);padding:10px;box-shadow:0 30px 60px -20px rgba(43,38,64,.35);position:relative;}
+  .phone-mock::before{content:'';position:absolute;top:22px;left:50%;transform:translateX(-50%);width:60px;height:6px;border-radius:4px;background:rgba(255,255,255,.25);}
+  .phone-screen{width:100%;height:100%;border-radius:24px;overflow:hidden;position:relative;}
+  .phone-screen.problem-scroll{background:linear-gradient(160deg,#2B2640,#1a1729);}
+  .phone-scroll-track{position:absolute;inset:0;display:flex;flex-direction:column;gap:14px;padding:20px 14px;animation:scrollLoop 6s linear infinite;}
+  .phone-scroll-card{height:90px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,var(--card-a,var(--coral)),var(--card-b,var(--gold)));opacity:.85;}
+  @keyframes scrollLoop{from{transform:translateY(0);}to{transform:translateY(-50%);}}
+  .phone-glaze{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:.68rem;color:rgba(255,255,255,.55);font-family:'Sora',sans-serif;}
+
+  /* ── CONTADOR 40% — número + símbolo en coral, enorme ── */
+  .story-stat{display:flex;align-items:center;justify-content:center;gap:.75rem;font-family:'Sora',sans-serif;margin-top:.85rem;}
+  .story-stat-big{display:flex;align-items:baseline;gap:.05rem;color:var(--coral);font-weight:800;line-height:1;font-size:clamp(4.5rem,18vw,7rem);}
+  .story-stat-big .story-stat-num{font-size:inherit;}
+  .story-stat-big .story-stat-pct{font-size:60%;}
+  .story-stat-big .story-stat-arrow{font-size:55%;margin-right:.1rem;}
+  .story-stat span{color:var(--ink-soft);font-size:.88rem;text-align:left;max-width:180px;line-height:1.35;}
+
+  /* Ilustraciones */
+  .story-illustration{width:100%;max-width:420px;border-radius:28px;margin:1.25rem auto 1rem;display:block;box-shadow:0 30px 60px -24px rgba(43,38,64,.4);}
+
+  /* App screens */
+  .story-screens{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-top:2rem;}
+  .story-screens img{width:140px;border-radius:20px;box-shadow:0 20px 40px -18px rgba(43,38,64,.35);border:6px solid var(--ink);}
+
+  .story-turn .story-h1 em{background:linear-gradient(120deg,var(--mint),var(--cyan));-webkit-background-clip:text;background-clip:text;}
+  .story-wordmark{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;margin-top:.75rem;}
+  .story-wordmark .tp{color:var(--mint);}
+
+  .story-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:2rem;text-align:left;}
+  .story-feature{background:#fff;border:1px solid var(--bg-3);border-radius:18px;padding:1.1rem;box-shadow:0 10px 30px -18px rgba(43,38,64,.25);}
+  .story-feature .icon{font-size:1.5rem;}
+  .story-feature h4{font-family:'Sora',sans-serif;font-size:.95rem;margin:.5rem 0 .25rem;color:var(--ink);}
+  .story-feature p{font-size:.82rem;color:var(--ink-soft);line-height:1.5;margin:0;}
+  .story-cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;}
+  .story-scrolldown{margin-top:1.5rem;font-size:.82rem;color:var(--ink-faint);display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+  .story-scrolldown .arrow{animation:bounceDown 1.6s ease-in-out infinite;}
+  @keyframes bounceDown{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+
+  /* ── PALABRAS ROMPECABEZAS ── cada palabra llega volando desde una dirección */
+  .pz-line{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem .5rem;margin:.35rem 0;}
+  .pz-word{display:inline-block;opacity:0;transform:translate(var(--wx,0),var(--wy,0)) rotate(var(--wr,0deg)) scale(.25);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .72s cubic-bezier(.34,1.4,.64,1);transition-delay:var(--wd,0s);}
+  .story-panel.in-view .pz-word{opacity:1;transform:translate(0,0) rotate(0deg) scale(1);}
+  .pz-eyebrow .pz-word{font-family:'Sora',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .9rem;border-radius:999px;border:1px solid;}
+  .pz-h1 .pz-word{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.6rem,5vw,2.5rem);line-height:1.2;color:var(--ink);}
+  .pz-h1 .em-word{background:linear-gradient(120deg,var(--coral),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .pz-sub .pz-word{font-size:1rem;color:var(--ink-soft);line-height:1.65;}
+  @media(max-width:640px){.pz-h1 .pz-word{font-size:clamp(1.35rem,6.5vw,1.8rem);}}
+
+  /* ── BLOBS DE FONDO ANIMADOS POR SECCIÓN ── */
+  .story-bg-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0;pointer-events:none;transition:opacity 1.2s ease,transform 1.4s ease;z-index:0;}
+  .story-bg-blob.active{opacity:1;}
+
+  /* ── PARTÍCULAS FLOTANTES ── */
+  @keyframes floatParticle{0%{transform:translateY(0) rotate(0deg);opacity:0;}15%{opacity:.6;}85%{opacity:.6;}100%{transform:translateY(-130px) rotate(360deg);opacity:0;}}
+  .story-particle{position:absolute;border-radius:50%;pointer-events:none;z-index:0;animation:floatParticle var(--dur,4s) var(--delay2,0s) ease-in-out infinite;}
+
+  /* ── ROMPECABEZAS ── */
+  .puzzle-section{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;padding:1.5rem 0;}
+  .puzzle-grid{display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(2,100px);gap:5px;}
+  .puzzle-piece{border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;opacity:0;transform:translate(var(--px,0),var(--py,0)) scale(.35) rotate(var(--pr,0deg));transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.34,1.4,.64,1);transition-delay:var(--pd,0s);box-shadow:0 4px 20px rgba(0,0,0,.1);}
+  .puzzle-piece.assembled{opacity:1;transform:translate(0,0) scale(1) rotate(0deg);}
+  .puzzle-piece:nth-child(1){background:linear-gradient(135deg,rgba(242,96,122,.28),rgba(139,124,246,.18));}
+  .puzzle-piece:nth-child(2){background:linear-gradient(135deg,rgba(52,184,196,.28),rgba(240,169,62,.18));}
+  .puzzle-piece:nth-child(3){background:linear-gradient(135deg,rgba(139,124,246,.28),rgba(47,191,143,.18));}
+  .puzzle-piece:nth-child(4){background:linear-gradient(135deg,rgba(240,169,62,.28),rgba(242,96,122,.18));}
+  .puzzle-piece:nth-child(5){background:linear-gradient(135deg,rgba(47,191,143,.28),rgba(52,184,196,.18));}
+  .puzzle-piece:nth-child(6){background:linear-gradient(135deg,rgba(79,143,224,.28),rgba(139,124,246,.18));}
+
+  @media(max-width:640px){
+    .story-panel{padding:2rem 1.25rem;}
+    .story-sub{font-size:.96rem;line-height:1.55;}
+    .puzzle-grid{grid-template-columns:repeat(3,78px);grid-template-rows:repeat(2,78px);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .story-panel,.story-scrolldown .arrow{transition:none!important;animation:none!important;}
+    .story-panel{opacity:1;transform:none;}
+    .puzzle-piece{transition:none!important;opacity:1;transform:none;}
+    .story-particle{animation:none!important;}
+    .phone-scroll-track{animation:none!important;}
+  }
+</style>
+
+<div class="story-wrap" id="storyWrap">
+
+  <!-- Panel 0 — Gancho -->
+  <div class="story-panel" data-story-panel>
+    <div class="pz-line pz-eyebrow" style="color:var(--coral);border-color:rgba(242,96,122,.35);background:rgba(242,96,122,.08);">
+      <span class="pz-word" style="--wx:-80px;--wy:-40px;--wr:-18deg;--wd:.0s;">Antes</span>
+      <span class="pz-word" style="--wx:60px;--wy:-60px;--wr:12deg;--wd:.08s;">de</span>
+      <span class="pz-word" style="--wx:-50px;--wy:50px;--wr:-8deg;--wd:.16s;">mostrarte</span>
+      <span class="pz-word" style="--wx:80px;--wy:40px;--wr:15deg;--wd:.24s;">nuestros</span>
+      <span class="pz-word" style="--wx:-30px;--wy:-70px;--wr:-20deg;--wd:.32s;">cubos...</span>
+    </div>
+    <div class="pz-line pz-h1" style="margin-top:.75rem;">
+      <span class="pz-word" style="--wx:-200px;--wy:-80px;--wr:-25deg;--wd:.05s;">¿Cuánto</span>
+      <span class="pz-word" style="--wx:150px;--wy:-100px;--wr:20deg;--wd:.12s;">tiempo</span>
+      <span class="pz-word" style="--wx:-120px;--wy:80px;--wr:-15deg;--wd:.18s;">pasa</span>
+      <span class="pz-word" style="--wx:100px;--wy:90px;--wr:22deg;--wd:.25s;">tu</span>
+      <span class="pz-word" style="--wx:-180px;--wy:-60px;--wr:-18deg;--wd:.32s;">hijo</span>
+    </div>
+    <div class="pz-line pz-h1">
+      <span class="pz-word" style="--wx:120px;--wy:-90px;--wr:16deg;--wd:.38s;">frente</span>
+      <span class="pz-word" style="--wx:-90px;--wy:70px;--wr:-12deg;--wd:.45s;">a</span>
+      <span class="pz-word" style="--wx:160px;--wy:60px;--wr:20deg;--wd:.52s;">una</span>
+      <span class="pz-word" style="--wx:-140px;--wy:-80px;--wr:-22deg;--wd:.58s;">pantalla</span>
+    </div>
+    <div class="pz-line pz-h1">
+      <span class="pz-word em-word" style="--wx:-100px;--wy:100px;--wr:-14deg;--wd:.65s;">que</span>
+      <span class="pz-word em-word" style="--wx:80px;--wy:-110px;--wr:18deg;--wd:.72s;">no</span>
+      <span class="pz-word em-word" style="--wx:-60px;--wy:90px;--wr:-10deg;--wd:.79s;">le</span>
+      <span class="pz-word em-word" style="--wx:120px;--wy:80px;--wr:14deg;--wd:.86s;">enseña</span>
+      <span class="pz-word em-word" style="--wx:-80px;--wy:-100px;--wr:-16deg;--wd:.93s;">nada?</span>
+    </div>
+    <img src="tp-story-problema-pantalla.jpg" alt="Niño mirando una tablet en la oscuridad" class="story-illustration" loading="lazy">
+    <div class="pz-line pz-sub" style="margin-top:.5rem;">
+      <span class="pz-word" style="--wx:-60px;--wy:40px;--wr:-8deg;--wd:1.0s;">No</span>
+      <span class="pz-word" style="--wx:50px;--wy:-50px;--wr:12deg;--wd:1.06s;">todas</span>
+      <span class="pz-word" style="--wx:-40px;--wy:60px;--wr:-6deg;--wd:1.12s;">las</span>
+      <span class="pz-word" style="--wx:70px;--wy:40px;--wr:10deg;--wd:1.18s;">pantallas</span>
+      <span class="pz-word" style="--wx:-80px;--wy:-30px;--wr:-14deg;--wd:1.24s;">son</span>
+      <span class="pz-word" style="--wx:60px;--wy:-60px;--wr:8deg;--wd:1.30s;">iguales.</span>
+    </div>
+    <div class="story-scrolldown"><span>Seguí bajando</span><span class="arrow">↓</span></div>
+  </div>
+
+  <!-- Panel 1 — Problema: scroll infinito -->
+  <div class="story-panel" data-story-panel>
+    <div class="pz-line pz-eyebrow" style="color:var(--coral);border-color:rgba(242,96,122,.35);background:rgba(242,96,122,.08);">
+      <span class="pz-word" style="--wx:-70px;--wy:-50px;--wr:-15deg;--wd:.0s;">Problema</span>
+      <span class="pz-word" style="--wx:60px;--wy:-40px;--wr:18deg;--wd:.08s;">1</span>
+      <span class="pz-word" style="--wx:-50px;--wy:60px;--wr:-10deg;--wd:.14s;">·</span>
+      <span class="pz-word" style="--wx:80px;--wy:50px;--wr:12deg;--wd:.20s;">Atención</span>
+    </div>
+    <div class="pz-line pz-h1" style="margin-top:.75rem;">
+      <span class="pz-word" style="--wx:-180px;--wy:-90px;--wr:-22deg;--wd:.06s;">El</span>
+      <span class="pz-word" style="--wx:140px;--wy:-70px;--wr:18deg;--wd:.14s;">scroll</span>
+      <span class="pz-word" style="--wx:-120px;--wy:80px;--wr:-16deg;--wd:.22s;">infinito</span>
+    </div>
+    <div class="pz-line pz-h1">
+      <span class="pz-word em-word" style="--wx:100px;--wy:-100px;--wr:20deg;--wd:.30s;">entrena</span>
+      <span class="pz-word em-word" style="--wx:-80px;--wy:90px;--wr:-14deg;--wd:.38s;">a</span>
+      <span class="pz-word em-word" style="--wx:120px;--wy:70px;--wr:16deg;--wd:.46s;">no</span>
+      <span class="pz-word em-word" style="--wx:-140px;--wy:-60px;--wr:-20deg;--wd:.54s;">terminar</span>
+      <span class="pz-word em-word" style="--wx:90px;--wy:80px;--wr:14deg;--wd:.62s;">nada.</span>
+    </div>
+    <div class="phone-mock">
+      <div class="phone-screen problem-scroll">
+        <div class="phone-scroll-track">
+          <!-- CÓMO AGREGAR TUS VIDEOS: reemplaza el src de cada <video> con la URL de tu video de YouTube o mp4 -->
+          <!-- Opción A — video mp4 directo (recomendado para control total): -->
+          <!-- <video class="scroll-vid" src="URL_DE_TU_VIDEO.mp4" muted autoplay loop playsinline></video> -->
+          <!-- Opción B — embed de YouTube como iframe (sin controles): -->
+          <!-- <iframe class="scroll-vid" src="https://www.youtube.com/embed/ID_VIDEO?autoplay=1&mute=1&loop=1&controls=0&playlist=ID_VIDEO" frameborder="0" allowfullscreen allow="autoplay"></iframe> -->
+          <div class="phone-scroll-card" style="--card-a:#F2607A;--card-b:#8B7CF6;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📵</div>
+          <div class="phone-scroll-card" style="--card-a:#34B8C4;--card-b:#F0A93E;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">⏱️</div>
+          <div class="phone-scroll-card" style="--card-a:#8B7CF6;--card-b:#2FBF8F;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">😴</div>
+          <div class="phone-scroll-card" style="--card-a:#F0A93E;--card-b:#F2607A;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📺</div>
+          <div class="phone-scroll-card" style="--card-a:#F2607A;--card-b:#34B8C4;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔄</div>
+          <div class="phone-scroll-card" style="--card-a:#2FBF8F;--card-b:#8B7CF6;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">😵</div>
+          <!-- duplicado para loop perfecto -->
+          <div class="phone-scroll-card" style="--card-a:#F2607A;--card-b:#8B7CF6;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📵</div>
+          <div class="phone-scroll-card" style="--card-a:#34B8C4;--card-b:#F0A93E;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">⏱️</div>
+          <div class="phone-scroll-card" style="--card-a:#8B7CF6;--card-b:#2FBF8F;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">😴</div>
+          <div class="phone-scroll-card" style="--card-a:#F0A93E;--card-b:#F2607A;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📺</div>
+          <div class="phone-scroll-card" style="--card-a:#F2607A;--card-b:#34B8C4;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔄</div>
+          <div class="phone-scroll-card" style="--card-a:#2FBF8F;--card-b:#8B7CF6;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">😵</div>
+        </div>
+        <div class="phone-glaze">contenido nuevo cada 3 seg — reemplaza con tus videos</div>
+      </div>
+    </div>
+    <p class="story-sub">Apps como TikTok o Reels están diseñadas para que el pulgar no pare — cada video dura segundos, nunca hay que esperar ni terminar algo.</p>
+    <div class="story-stat" data-count-to="40">
+      <div class="story-stat-big"><span class="story-stat-arrow">↓</span><span class="story-stat-num">0</span><span class="story-stat-pct">%</span></div>
+      <span>menos capacidad de sostener la atención en una sola tarea, según estudios sobre uso de video corto en la infancia.</span>
+    </div>
+    <img src="data:image/jpeg;base64,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" alt="Madre quitando el celular" class="story-illustration" loading="lazy">
+  </div>
+
+  <!-- Panel 2 — Cuerpo -->
+  <div class="story-panel" data-story-panel>
+    <div class="pz-line pz-eyebrow" style="color:var(--ocean);border-color:rgba(79,143,224,.35);background:rgba(79,143,224,.08);">
+      <span class="pz-word" style="--wx:-60px;--wy:-50px;--wr:-12deg;--wd:.0s;">Problema</span>
+      <span class="pz-word" style="--wx:50px;--wy:-40px;--wr:16deg;--wd:.08s;">2</span>
+      <span class="pz-word" style="--wx:-40px;--wy:50px;--wr:-8deg;--wd:.14s;">·</span>
+      <span class="pz-word" style="--wx:70px;--wy:40px;--wr:10deg;--wd:.20s;">Cuerpo</span>
+    </div>
+    <div class="pz-line pz-h1" style="margin-top:.75rem;">
+      <span class="pz-word" style="--wx:-160px;--wy:-80px;--wr:-20deg;--wd:.06s;">Mirar</span>
+      <span class="pz-word" style="--wx:120px;--wy:-60px;--wr:16deg;--wd:.16s;">no</span>
+      <span class="pz-word" style="--wx:-80px;--wy:70px;--wr:-12deg;--wd:.26s;">es</span>
+      <span class="pz-word em-word" style="--wx:100px;--wy:80px;--wr:18deg;--wd:.36s;">jugar.</span>
+    </div>
+    <p class="story-sub">Ver videos no pide nada del cuerpo. Las manos que deberían estar aprendiendo a recortar, dibujar o encajar piezas, están quietas.</p>
+    <div class="story-stat"><b>0</b><span>habilidades motrices finas se desarrollan mirando una pantalla en modo pasivo.</span></div>
+  </div>
+
+  <!-- Panel 3 — Comportamiento -->
+  <div class="story-panel" data-story-panel>
+    <div class="pz-line pz-eyebrow" style="color:var(--gold);border-color:rgba(240,169,62,.35);background:rgba(240,169,62,.08);">
+      <span class="pz-word" style="--wx:-70px;--wy:-40px;--wr:-14deg;--wd:.0s;">Problema</span>
+      <span class="pz-word" style="--wx:55px;--wy:-50px;--wr:12deg;--wd:.08s;">3</span>
+      <span class="pz-word" style="--wx:-45px;--wy:55px;--wr:-9deg;--wd:.14s;">·</span>
+      <span class="pz-word" style="--wx:75px;--wy:45px;--wr:11deg;--wd:.20s;">Comportamiento</span>
+    </div>
+    <div class="pz-line pz-h1" style="margin-top:.75rem;">
+      <span class="pz-word" style="--wx:-170px;--wy:-90px;--wr:-22deg;--wd:.06s;">La</span>
+      <span class="pz-word" style="--wx:130px;--wy:-70px;--wr:18deg;--wd:.16s;">sobreestimulación</span>
+    </div>
+    <div class="pz-line pz-h1">
+      <span class="pz-word em-word" style="--wx:-100px;--wy:80px;--wr:-16deg;--wd:.26s;">vuelve,</span>
+      <span class="pz-word em-word" style="--wx:90px;--wy:-80px;--wr:14deg;--wd:.35s;">después</span>
+      <span class="pz-word em-word" style="--wx:-80px;--wy:90px;--wr:-10deg;--wd:.44s;">de</span>
+      <span class="pz-word em-word" style="--wx:110px;--wy:70px;--wr:16deg;--wd:.53s;">apagar</span>
+      <span class="pz-word em-word" style="--wx:-90px;--wy:-80px;--wr:-18deg;--wd:.62s;">la</span>
+      <span class="pz-word em-word" style="--wx:100px;--wy:80px;--wr:12deg;--wd:.70s;">pantalla.</span>
+    </div>
+    <p class="story-sub">El estímulo constante hace que el mundo real se sienta aburrido. Ahí aparecen las rabietas al quitar el celular y la dificultad para calmarse solo.</p>
+  </div>
+
+  <!-- Panel 4 — Giro con rompecabezas -->
+  <div class="story-panel story-turn" data-story-panel>
+    <div class="puzzle-section">
+      <div class="puzzle-grid" data-puzzle>
+        <div class="puzzle-piece" style="--px:-160px;--py:-120px;--pr:-30deg;--pd:.0s;">🎯</div>
+        <div class="puzzle-piece" style="--px:0px;--py:-180px;--pr:20deg;--pd:.12s;">🧠</div>
+        <div class="puzzle-piece" style="--px:160px;--py:-120px;--pr:-15deg;--pd:.24s;">📚</div>
+        <div class="puzzle-piece" style="--px:-180px;--py:100px;--pr:25deg;--pd:.36s;">🎨</div>
+        <div class="puzzle-piece" style="--px:0px;--py:180px;--pr:-20deg;--pd:.48s;">⭐</div>
+        <div class="puzzle-piece" style="--px:180px;--py:100px;--pr:18deg;--pd:.60s;">🚀</div>
+      </div>
+    </div>
+    <h1 class="story-h1">¿Y si el tiempo de pantalla<br><em>sí sumara?</em></h1>
+    <p class="story-sub">No se trata de quitarle la pantalla — se trata de que lo que mire, lo haga crecer.</p>
+  </div>
+
+  <!-- Panel 5 — Solución TP Learning -->
+  <div class="story-panel" data-story-panel>
+    <span class="story-eyebrow" style="color:var(--mint);background:rgba(47,191,143,.1);border-color:rgba(47,191,143,.35);">La solución</span>
+    <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration" loading="lazy">
+    <div class="pz-line" style="margin-bottom:.5rem;">
+      <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
+      <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
+    </div>
+    <div class="pz-line pz-h1" style="margin-top:.4rem;">
+      <span class="pz-word" style="--wx:-160px;--wy:-80px;--wr:-20deg;--wd:.06s;">Cada</span>
+      <span class="pz-word" style="--wx:120px;--wy:-60px;--wr:18deg;--wd:.16s;">toque</span>
+      <span class="pz-word em-word" style="background:linear-gradient(120deg,var(--mint),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;--wx:-100px;--wy:80px;--wr:-14deg;--wd:.26s;">enseña</span>
+      <span class="pz-word em-word" style="background:linear-gradient(120deg,var(--mint),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;--wx:90px;--wy:70px;--wr:16deg;--wd:.35s;">algo.</span>
+    </div>
+    <p class="story-sub">Letras, números y animales reales — con sonido real — pensados para que jugar en pantalla también desarrolle memoria, lenguaje y motricidad.</p>
+    <div class="story-screens">
+      <img src="tp-app-screenshot-home.png" alt="App TP Learning - inicio" loading="lazy">
+      <img src="tp-app-screenshot-domesticos.png" alt="App TP Learning - animales domésticos" loading="lazy">
+    </div>
+    <div class="story-features">
+      <div class="story-feature"><span class="icon">🎯</span><h4>Sin scroll infinito</h4><p>Cada lección tiene principio y fin — se completa, no se desliza.</p></div>
+      <div class="story-feature"><span class="icon">🔊</span><h4>Sonidos reales</h4><p>Animales, letras y números con audio real.</p></div>
+      <div class="story-feature"><span class="icon">🏆</span><h4>Progreso que se ve</h4><p>El logro es aprender, no seguir mirando.</p></div>
+    </div>
+    <div class="story-cta-row">
+      <a href="https://github.com/Hideyoshibta/juegosdidacticostp/releases/download/v1.0.0-2/app-release.apk" class="btn-primary" target="_blank" rel="noopener">📱 Descargá TP Learning gratis</a>
+    </div>
+    <div class="story-scrolldown"><span>Y si preferís algo sin pantalla, conocé nuestros cubos físicos</span><span class="arrow">↓</span></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var panels=document.querySelectorAll('[data-story-panel]');
+  if(!panels.length)return;
+  var wrap=document.getElementById('storyWrap');
+  var reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ── Blobs de fondo ── */
+  var BLOB_COLORS=['rgba(242,96,122,.18)','rgba(139,124,246,.16)','rgba(52,184,196,.14)','rgba(240,169,62,.15)','rgba(47,191,143,.16)'];
+  var BLOB_SIZES=['340px','300px','280px','320px','360px'];
+  var BLOB_POS=[['8%','15%'],['58%','55%'],['25%','70%'],['65%','10%'],['15%','45%']];
+  var blobs=[];
+  if(wrap&&!reduceMotion){
+    BLOB_COLORS.forEach(function(c,i){
+      var el=document.createElement('div');
+      el.className='story-bg-blob';
+      el.style.cssText='width:'+BLOB_SIZES[i]+';height:'+BLOB_SIZES[i]+';background:'+c+';left:'+BLOB_POS[i][0]+';top:'+BLOB_POS[i][1]+';';
+      wrap.appendChild(el);blobs.push(el);
+    });
+    /* ── Partículas ── */
+    var PCOLS=['var(--coral)','var(--violet)','var(--cyan)','var(--gold)','var(--mint)'];
+    for(var i=0;i<20;i++){
+      var p=document.createElement('div');
+      p.className='story-particle';
+      var sz=(4+Math.random()*6).toFixed(1)+'px';
+      p.style.cssText='left:'+(8+Math.random()*84)+'%;bottom:'+(5+Math.random()*60)+'%;background:'+PCOLS[i%5]+';width:'+sz+';height:'+sz+';--dur:'+(3+Math.random()*4).toFixed(1)+'s;--delay2:'+(Math.random()*7).toFixed(1)+'s;';
+      wrap.appendChild(p);
+    }
+  }
+
+  var panelIdx=0;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      var el=entry.target;
+      el.classList.add('in-view');
+
+      /* Contador animado */
+      el.querySelectorAll('.story-stat[data-count-to]').forEach(function(stat){
+        if(stat.dataset.counted)return;
+        stat.dataset.counted='1';
+        var target=parseFloat(stat.dataset.countTo);
+        var numEl=stat.querySelector('.story-stat-num');
+        if(!numEl)return;
+        var n=0,steps=40;
+        var iv=setInterval(function(){
+          n+=target/steps;
+          if(n>=target){numEl.textContent=target;clearInterval(iv);return;}
+          numEl.textContent=Math.floor(n);
+        },24);
+      });
+
+      /* Rompecabezas */
+      el.querySelectorAll('[data-puzzle] .puzzle-piece').forEach(function(piece){
+        piece.classList.add('assembled');
+      });
+
+      /* Cambio de blob activo */
+      if(blobs.length){
+        blobs.forEach(function(b){b.classList.remove('active');});
+        blobs[panelIdx%blobs.length].classList.add('active');
+        panelIdx++;
+      }
+
+      io.unobserve(el);
+    });
+  },{threshold:0.22,rootMargin:'0px 0px -8% 0px'});
+  panels.forEach(function(p){io.observe(p);});
+})();
+</script>
+
+<!-- ══════════════════════════════
+     SETS DE CUBOS
+══════════════════════════════ -->
+
+<!-- SET ANIMALES -->
+<section class="assembly-scene" id="animalesScene">
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 50% 40%,rgba(242,96,122,0.3),transparent 60%);"></div>
+  <div class="bg-grid"></div>
+  <div class="assembly-caption reveal zoom-in">
+    <div class="set-tag-row">
+      <span class="story-tag" style="color:var(--coral);border-color:rgba(242,96,122,.4);background:rgba(242,96,122,.1);">Set Animales</span>
+      <span class="set-count-pill">🐾 x4</span>
+    </div>
+    <h2>El regalo que inspira a aprender</h2>
+    <button type="button" class="info-toggle info-toggle-coral" aria-expanded="false" aria-controls="infoPanelAnimales" onclick="toggleInfoBox(this)">
+      <span class="info-toggle-walker"><span>🧸</span></span>
+      <span class="info-toggle-icon">🎁</span>
+      <span class="info-toggle-text">Toca para descubrir más</span>
+      <span class="info-toggle-chevron">▾</span>
+    </button>
+    <div class="info-panel" id="infoPanelAnimales">
+      <p>Explora el fascinante mundo de los animales mientras juegas. Desarrolla vocabulario, memoria y curiosidad.</p>
+      <div class="benefit-row">
+        <div class="benefit-item"><span class="benefit-icon icon-explora">🧭</span><span class="benefit-label">Explora</span></div>
+        <div class="benefit-item"><span class="benefit-icon icon-diviertete">🎉</span><span class="benefit-label">Diviértete</span></div>
+        <div class="benefit-item"><span class="benefit-icon icon-aprende">📚</span><span class="benefit-label">Aprende</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="mosaic-frame">
+    <div class="mosaic-inner">
+      <div class="mosaic-tile tl" style="--dx:-220px;--dy:-180px;--drot:-25deg;--delay:0s;"><img id="mosaicTL" src="https://juegosdidacticostp.com/cubos-3d/animal-mosaico-perro-arriba-izq.jpg" alt=""></div>
+      <div class="mosaic-tile tr" style="--dx:220px;--dy:-180px;--drot:25deg;--delay:.12s;"><img id="mosaicTR" src="https://juegosdidacticostp.com/cubos-3d/animal-mosaico-perro-arriba-der.jpg" alt=""></div>
+      <div class="mosaic-tile bl" style="--dx:-220px;--dy:180px;--drot:20deg;--delay:.24s;"><img id="mosaicBL" src="https://juegosdidacticostp.com/cubos-3d/animal-mosaico-perro-abajo-izq.jpg" alt=""></div>
+      <div class="mosaic-tile br" style="--dx:220px;--dy:180px;--drot:-20deg;--delay:.36s;"><img id="mosaicBR" src="https://juegosdidacticostp.com/cubos-3d/animal-mosaico-perro-abajo-der.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- SET NÚMEROS -->
+<section class="assembly-scene" id="numbersScene">
+  <div style="position:absolute;inset:0;z-index:0;background:radial-gradient(circle at 50% 40%,rgba(52,184,196,0.3),transparent 60%);"></div>
+  <div class="bg-grid"></div>
+  <div class="assembly-caption reveal zoom-in">
+    <div class="set-tag-row">
+      <span class="story-tag tag-cyan">Set Números</span>
+      <span class="set-count-pill">🔢 x6</span>
+    </div>
+    <h2>Los números cobran vida mientras aprendes</h2>
+    <button type="button" class="info-toggle info-toggle-cyan" aria-expanded="false" aria-controls="infoPanelNumeros" onclick="toggleInfoBox(this)">
+      <span class="info-toggle-walker"><span>🧸</span></span>
+      <span class="info-toggle-icon">🎁</span>
+      <span class="info-toggle-text">Toca para descubrir más</span>
+      <span class="info-toggle-chevron">▾</span>
+    </button>
+    <div class="info-panel" id="infoPanelNumeros">
+      <p>Suma, resta, multiplica y divide mientras juegas. Desarrolla pensamiento lógico y habilidades matemáticas.</p>
+      <div class="benefit-row">
+        <div class="benefit-item"><span class="benefit-icon icon-explora">🧭</span><span class="benefit-label">Explora</span></div>
+        <div class="benefit-item"><span class="benefit-icon icon-diviertete">🎉</span><span class="benefit-label">Diviértete</span></div>
+        <div class="benefit-item"><span class="benefit-icon icon-aprende">📚</span><span class="benefit-label">Aprende</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="cluster3-frame">
+    <div class="cube-piece attract" style="left:20px;top:0px;--dx:-460px;--dy:-380px;--drot:-60deg;--delay:0s;"><div class="piece-spin"><div class="piece3d piece-cyan2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt="1"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt="2"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-3-three.jpg" alt="3"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-mas-v2.jpg" alt="+"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece attract" style="left:20px;top:135px;--dx:480px;--dy:-360px;--drot:55deg;--delay:.25s;"><div class="piece-spin"><div class="piece3d piece-cyan2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt="4"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-5-cinco-v2.jpg" alt="5"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-6-red-v2.jpg" alt="6"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-por-v2.jpg" alt="×"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece attract" style="left:150px;top:135px;--dx:-620px;--dy:20px;--drot:-25deg;--delay:.5s;"><div class="piece-spin"><div class="piece3d piece-cyan2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-7-siete-v2.jpg" alt="7"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-8-white-v2.jpg" alt="8"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-9-nine-v2.jpg" alt="9"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-igual-v2.jpg" alt="="></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-7-siete-v2.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-7-siete-v2.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece attract" style="left:150px;top:0px;--dx:620px;--dy:-20px;--drot:25deg;--delay:.75s;"><div class="piece-spin"><div class="piece3d piece-cyan2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt="2"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-5-cinco-v2.jpg" alt="5"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-8-white-v2.jpg" alt="8"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-menos.jpg" alt="-"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece attract" style="left:20px;top:270px;--dx:30px;--dy:520px;--drot:-20deg;--delay:1s;"><div class="piece-spin"><div class="piece3d piece-cyan2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt="1"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt="4"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-7-siete-v2.jpg" alt="7"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-dividido.jpg" alt="÷"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece attract" style="left:150px;top:270px;--dx:10px;--dy:40px;--drot:12deg;--delay:1.3s;--scale:.1;--blur:20px;"><div class="piece-spin"><div class="piece3d piece-cyan2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-3-three.jpg" alt="3"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-6-red-v2.jpg" alt="6"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-9-nine-v2.jpg" alt="9"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-mas-v2.jpg" alt="+"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-3-three.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-3-three.jpg" alt=""></div></div></div></div>
+  </div>
+  <div class="cursor-caption" id="numbersCursorCaption">Nuestros cubos fomentan el aprendizaje con este set de números y operaciones matemáticas básicas.</div>
+</section>
+
+<!-- SET ABECEDARIO -->
+<section class="assembly-scene">
+  <div style="position:absolute;inset:0;z-index:0;background:radial-gradient(circle at 50% 40%,rgba(139,124,246,0.3),transparent 60%);"></div>
+  <div class="bg-grid"></div>
+  <div class="assembly-caption reveal zoom-in">
+    <div class="set-tag-row">
+      <span class="story-tag tag-violet">Set Abecedario</span>
+      <span class="set-count-pill">🔤 x9</span>
+    </div>
+    <h2>Sus primeras palabras</h2>
+    <button type="button" class="info-toggle info-toggle-violet" aria-expanded="false" aria-controls="infoPanelAbecedario" onclick="toggleInfoBox(this)">
+      <span class="info-toggle-walker"><span>🧸</span></span>
+      <span class="info-toggle-icon">🎁</span>
+      <span class="info-toggle-text">Toca para descubrir más</span>
+      <span class="info-toggle-chevron">▾</span>
+    </button>
+    <div class="info-panel" id="infoPanelAbecedario">
+      <p>Reconoce el abecedario, forma palabras y fortalece habilidades de lectura y escritura desde temprana edad.</p>
+      <div class="benefit-row">
+        <div class="benefit-item"><span class="benefit-icon icon-explora">🧭</span><span class="benefit-label">Explora</span></div>
+        <div class="benefit-item"><span class="benefit-icon icon-diviertete">🎉</span><span class="benefit-label">Diviértete</span></div>
+        <div class="benefit-item"><span class="benefit-icon icon-aprende">📚</span><span class="benefit-label">Aprende</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="word-row">
+    <div class="cube-piece" style="--dx:0px;--dy:-260px;--drot:-15deg;--delay:0s;"><div class="piece-spin"><div class="piece3d piece-violet2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/letra-G.jpg" alt="G"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt="O"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/letra-A.jpg" alt="A"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/letra-S.jpg" alt="S"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/letra-G.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/letra-G.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece" style="--dx:0px;--dy:260px;--drot:15deg;--delay:.1s;"><div class="piece-spin"><div class="piece3d piece-violet2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/letra-A.jpg" alt="A"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/letra-S.jpg" alt="S"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/letra-M.jpg" alt="M"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt="O"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/letra-A.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/letra-A.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece" style="--dx:0px;--dy:-280px;--drot:20deg;--delay:.2s;"><div class="piece-spin"><div class="piece3d piece-violet2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/letra-T.jpg" alt="T"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt="O"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt="O"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/letra-P.jpg" alt="P"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/letra-T.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/letra-T.jpg" alt=""></div></div></div></div>
+    <div class="cube-piece" style="--dx:0px;--dy:280px;--drot:-20deg;--delay:.3s;"><div class="piece-spin"><div class="piece3d piece-violet2"><div class="piece-face front"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt="O"></div><div class="piece-face right"><img src="https://juegosdidacticostp.com/cubos-3d/letra-S.jpg" alt="S"></div><div class="piece-face back"><img src="https://juegosdidacticostp.com/cubos-3d/letra-R.jpg" alt="R"></div><div class="piece-face left"><img src="https://juegosdidacticostp.com/cubos-3d/letra-A.jpg" alt="A"></div><div class="piece-face top"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt=""></div><div class="piece-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/letra-O.jpg" alt=""></div></div></div></div>
+  </div>
+  <img src="https://juegosdidacticostp.com/baby-abecedario.png" alt="Bebé jugando con los cubos del abecedario" class="abc-baby reveal zoom-in">
+</section>
+
+<div class="wave-divider"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,30 C360,70 1080,0 1440,30 L1440,70 L0,70 Z" fill="#F2EEFC"/></svg></div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><strong>100%</strong><span>Materiales seguros</span></div>
+  <div class="stat"><strong>+500</strong><span>Familias felices</span></div>
+  <div class="stat"><strong>6</strong><span>Colecciones temáticas</span></div>
+  <div class="stat"><strong>⭐5.0</strong><span>Satisfacción</span></div>
+</div>
+
+<div class="wave-divider"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,20 C400,70 1040,0 1440,40 L1440,70 L0,70 Z" fill="#FAF8FF"/></svg></div>
+
+<!-- CTA -->
+<section class="cta-bg">
+  <div class="reveal zoom-in">
+    <h2>¡Resolvamos tus dudas!</h2>
+    <p>Escríbenos y te asesoramos. Envíos rápidos a toda Colombia 🇨🇴</p>
+    <div class="wa-status-badge"><span class="wa-status-dot"></span>Estamos para ti 24/7</div><br>
+    <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="btn-wa" target="_blank" rel="noopener">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/></svg>
+      Escríbenos en WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="section-wrap reviews-bg">
+  <div class="section-head reveal zoom-in">
+    <span class="section-pill">Reseñas reales</span>
+    <h2 class="section-title">Lo que dicen las familias</h2>
+    <p class="section-sub">Opiniones de mamás y papás que ya tienen sus cubos en casa</p>
+  </div>
+  <div class="reviews-summary reveal"><span class="review-stars">★★★★★</span><span>5.0 de 5 — basado en pedidos reales por WhatsApp</span></div>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-quote">Le compré el set de Abecedario a mi hija de 2 años y no lo suelta. Ya lleva dos meses jugando casi a diario.</p><div class="review-person"><div class="review-avatar avatar-violet">DR</div><div><div class="review-name">Daniela R.</div><div class="review-meta">Bogotá · Set Abecedario</div></div></div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-quote">La calidad de la tela aguanta el uso diario de un niño de 3 años. Llegó rápido y el vendedor respondió todas mis dudas.</p><div class="review-person"><div class="review-avatar avatar-cyan">AM</div><div><div class="review-name">Andrés M.</div><div class="review-meta">Medellín · Set Números</div></div></div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-quote">Compré dos sets para mis mellizos — la mejor inversión en juguetes educativos que he hecho.</p><div class="review-person"><div class="review-avatar avatar-coral">CV</div><div><div class="review-name">Camila V.</div><div class="review-meta">Cali · Set Animales</div></div></div></div>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bg-grid"></div>
+  <div class="floaters" aria-hidden="true">
+    <span class="floater f-violet">🧸</span><span class="floater f-cyan">🌈</span>
+    <span class="floater f-gold">🎲</span><span class="floater f-coral">⭐</span>
+    <span class="floater f-violet">🔤</span><span class="floater f-mint">🐄</span>
+  </div>
+  <div class="hero-badge">✦ Colección educativa premium</div>
+  <h1>Aprende jugando<br>con <em>Juegos TP</em></h1>
+  <p>Cubos didácticos de alta calidad diseñados para estimular el aprendizaje, la creatividad y el desarrollo sensorial.</p>
+  <div class="hero-btns">
+    <a href="#productos" class="btn-primary">Ver colección</a>
+    <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="btn-outline" target="_blank" rel="noopener">Escríbenos</a>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="section-wrap products-bg" id="productos">
+  <div class="section-head reveal zoom-in">
+    <span class="section-pill">Colección completa</span>
+    <h2 class="section-title">Nuestros Juegos Didácticos</h2>
+    <p class="section-sub">Cubos educativos para cada etapa del aprendizaje</p>
+  </div>
+  <div class="tabs reveal">
+    <button class="tab active" onclick="filterCards('all',this)">Todos</button>
+    <button class="tab" onclick="filterCards('letras',this)">Letras</button>
+    <button class="tab" onclick="filterCards('numeros',this)">Números</button>
+    <button class="tab" onclick="filterCards('animales',this)">Animales</button>
+  </div>
+  <div class="products-grid">
+    <div class="product-card" data-cat="letras"><div class="card-img-box acc-violet"><img src="https://juegosdidacticostp.com/abecedario.png" alt="Abecedario" loading="lazy"/><span class="card-badge badge-violet">⭐ Más vendido</span></div><div class="card-body"><h3>Abecedario</h3><p>Cubos de letras acolchados para que los pequeños aprendan el alfabeto jugando.</p><div class="tag-row"><span class="pill-tag">Letras</span><span class="pill-tag">0+ años</span><span class="pill-tag">Suave</span></div><a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20el%20Abecedario" class="card-btn btn-violet" target="_blank">Pedir por WhatsApp</a></div></div>
+    <div class="product-card" data-cat="numeros"><div class="card-img-box acc-cyan"><img src="https://juegosdidacticostp.com/numeros.png" alt="Los Números" loading="lazy"/><span class="card-badge badge-cyan">Nuevo</span></div><div class="card-body"><h3>Los Números</h3><p>Aprende a contar del 1 al 10 con cubos coloridos para una aventura numérica.</p><div class="tag-row"><span class="pill-tag">Números</span><span class="pill-tag">2+ años</span><span class="pill-tag">Colores</span></div><a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Los%20N%C3%BAmeros" class="card-btn btn-cyan" target="_blank">Pedir por WhatsApp</a></div></div>
+    <div class="product-card" data-cat="animales"><div class="card-img-box acc-gold"><img src="https://juegosdidacticostp.com/animales%20domesticos.png" alt="Animales Domésticos" loading="lazy"/><span class="card-badge badge-gold">Popular</span></div><div class="card-body"><h3>Animales Domésticos</h3><p>Perros, gatos, conejos y más. Ideal para aprender con amor por los animales.</p><div class="tag-row"><span class="pill-tag">Mascotas</span><span class="pill-tag">2+ años</span><span class="pill-tag">Hogar</span></div><a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20Dom%C3%A9sticos" class="card-btn btn-gold" target="_blank">Pedir por WhatsApp</a></div></div>
+    <div class="product-card" data-cat="animales"><div class="card-img-box acc-coral"><img src="https://juegosdidacticostp.com/animales de la granja.png" alt="Animales de la Granja" loading="lazy"/><span class="card-badge badge-coral">Clásico</span></div><div class="card-body"><h3>Animales de la Granja</h3><p>Vacas, gallinas, cerdos y caballos en vibrantes cubos didácticos.</p><div class="tag-row"><span class="pill-tag">Granja</span><span class="pill-tag">2+ años</span><span class="pill-tag">Naturaleza</span></div><a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Granja" class="card-btn btn-coral" target="_blank">Pedir por WhatsApp</a></div></div>
+    <div class="product-card" data-cat="animales"><div class="card-img-box acc-mint"><img src="https://juegosdidacticostp.com/animales de la selva.png" alt="Animales de la Selva" loading="lazy"/><span class="card-badge badge-mint">Aventura</span></div><div class="card-body"><h3>Animales de la Selva</h3><p>Leones, monos, jirafas y elefantes para despertar el espíritu explorador.</p><div class="tag-row"><span class="pill-tag">Selva</span><span class="pill-tag">3+ años</span><span class="pill-tag">Exótico</span></div><a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20de%20la%20Selva" class="card-btn btn-mint" target="_blank">Pedir por WhatsApp</a></div></div>
+    <div class="product-card" data-cat="animales"><div class="card-img-box acc-ocean"><img src="https://juegosdidacticostp.com/animales del mar.png" alt="Animales del Mar" loading="lazy"/><span class="card-badge badge-ocean">Especial</span></div><div class="card-body"><h3>Animales del Mar</h3><p>Ballenas, pulpos, peces y delfines en cubos llenos de color.</p><div class="tag-row"><span class="pill-tag">Mar</span><span class="pill-tag">3+ años</span><span class="pill-tag">Océano</span></div><a href="https://wa.me/573163399222?text=Hola!%20Me%20interesa%20Animales%20del%20Mar" class="card-btn btn-ocean" target="_blank">Pedir por WhatsApp</a></div></div>
+  </div>
+</section>
+
+<div class="wave-divider"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,40 C400,0 1040,70 1440,20 L1440,70 L0,70 Z" fill="#F2EEFC"/></svg></div>
+
+<!-- WHY US -->
+<section class="section-wrap why-bg">
+  <div class="section-head reveal zoom-in">
+    <span class="section-pill">Nuestro compromiso</span>
+    <h2 class="section-title">¿Por qué Juegos TP?</h2>
+    <p class="section-sub">Más que juguetes, herramientas de desarrollo</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><span class="why-icon">🛡️</span><h4>100% Seguros</h4><p>Materiales no tóxicos con bordes suaves, verificados para bebés y niños.</p></div>
+    <div class="why-card"><span class="why-icon">🧠</span><h4>Aprendizaje activo</h4><p>Cada cubo estimula habilidades cognitivas, motricidad y creatividad real.</p></div>
+    <div class="why-card"><span class="why-icon">🚀</span><h4>Envío a toda Colombia</h4><p>Despachamos rápido para que tu peque reciba su sorpresa sin esperas.</p></div>
+    <div class="why-card"><span class="why-icon">💬</span><h4>Atención personalizada</h4><p>Te asesoramos por WhatsApp para encontrar el juego ideal para tu niño.</p></div>
+  </div>
+</section>
+
+<footer><p>© 2025 Juegos Didácticos TP &nbsp;·&nbsp; <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos.">+57 316 339 9222</a> &nbsp;·&nbsp; Hecho en Colombia 🇨🇴</p></footer>
+
+<a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<!-- EXIT POPUP -->
+<div class="exit-overlay" id="exitOverlay" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
+  <div class="exit-card" id="exitCard">
+    <button class="exit-close" id="exitClose" aria-label="Cerrar">✕</button>
+    <span class="exit-kicker">🎁 Oferta exclusiva</span>
+    <h3 id="exitTitle">No dejes pasar esta oportunidad<br><span class="exit-pct">10% OFF ahora mismo</span></h3>
+    <p class="exit-sub">Escríbenos ya por WhatsApp y te lo aplicamos antes de que se acabe el tiempo.</p>
+    <div class="exit-timer"><div class="exit-timer-ring" id="exitRing" style="--pct:100"><span class="exit-timer-num" id="exitNum">30</span></div><span class="exit-timer-label">segundos</span></div>
+    <a href="https://wa.me/573163399222?text=Hola!%20quiero%20aprovechar%20el%2010%25%20de%20descuento." class="exit-wa-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/></svg>
+      Reclamar 10% por WhatsApp
+    </a>
+    <p class="exit-expired-msg">La oferta de esta ventana expiró — ¡escríbenos igual! 😉</p>
+  </div>
+</div>
+
+<script>
+  /* Caja deslizable */
+  function toggleInfoBox(btn){const panel=document.getElementById(btn.getAttribute('aria-controls'));if(!panel)return;const willOpen=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(willOpen));panel.classList.toggle('open',willOpen);const label=btn.querySelector('.info-toggle-text');if(label)label.textContent=willOpen?'Toca para ver menos':'Toca para descubrir más';const walker=btn.querySelector('.info-toggle-walker');if(walker){if(willOpen){const wr=walker.getBoundingClientRect(),br=btn.getBoundingClientRect();walker.style.left=((wr.left+wr.width/2-br.left)/br.width*100)+'%';walker.style.top=((wr.top+wr.height/2-br.top)/br.height*100)+'%';walker.classList.add('jump-away');if(navigator.vibrate)navigator.vibrate(35);setTimeout(()=>{walker.style.visibility='hidden';},900);}else{walker.classList.remove('jump-away');walker.style.visibility='';walker.style.left='';walker.style.top='';}}}
+
+  /* Mosaico animales — cambia cada 3s */
+  (function(){const ANIMALS=['perro','loro','oveja','camaleon','hipopotamo','oso','ardilla','hamster','pez'];const BASE='https://juegosdidacticostp.com/cubos-3d/animal-mosaico-';const CB='?v=20260710';const SUFX=['arriba-izq','arriba-der','abajo-izq','abajo-der'];const imgs=[document.getElementById('mosaicTL'),document.getElementById('mosaicTR'),document.getElementById('mosaicBL'),document.getElementById('mosaicBR')];if(!imgs[0])return;const rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;ANIMALS.forEach(a=>SUFX.forEach(s=>{new Image().src=BASE+a+'-'+s+'.jpg'+CB;}));let idx=0;setInterval(()=>{if(document.hidden)return;idx=(idx+1)%ANIMALS.length;const a=ANIMALS[idx];const apply=()=>imgs.forEach((img,i)=>{img.src=BASE+a+'-'+SUFX[i]+'.jpg'+CB;});if(rm){apply();return;}imgs.forEach(img=>{img.style.opacity=0;});setTimeout(()=>{apply();imgs.forEach(img=>{img.style.opacity=1;});},350);},3000);})();
+
+  /* Exit popup */
+  (function(){const overlay=document.getElementById('exitOverlay'),card=document.getElementById('exitCard'),closeBtn=document.getElementById('exitClose'),ring=document.getElementById('exitRing'),num=document.getElementById('exitNum');if(!overlay)return;const TOTAL=30;let shown=false,tid=null;function start(){let r=TOTAL;num.textContent=r;ring.style.setProperty('--pct',100);tid=setInterval(()=>{r--;num.textContent=Math.max(r,0);ring.style.setProperty('--pct',Math.max(r/TOTAL*100,0));if(r<=0){clearInterval(tid);card.classList.add('exit-expired');}},1000);}function show(){if(shown)return;shown=true;overlay.classList.add('exit-visible');start();}function hide(){overlay.classList.remove('exit-visible');if(tid)clearInterval(tid);}closeBtn.addEventListener('click',hide);overlay.addEventListener('click',e=>{if(e.target===overlay)hide();});window.addEventListener('keydown',e=>{if(e.key==='Escape')hide();});setTimeout(show,30000);})();
+
+  /* Nav scroll */
+  const navbar=document.getElementById('navbar');window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>60);});
+
+  /* IntersectionObserver general */
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('.product-card,.why-card,.stat,.reveal,.review-card').forEach(el=>io.observe(el));
+
+  /* Grupos (mosaico, cluster, abecedario) */
+  const groupIo=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.cube-piece,.mosaic-tile').forEach(el=>el.classList.add('visible'));groupIo.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('.mosaic-frame,.cluster3-frame,.word-row').forEach(el=>groupIo.observe(el));
+
+  /* Cursor caption números */
+  const ns=document.getElementById('numbersScene'),cc=document.getElementById('numbersCursorCaption');
+  if(ns&&cc){let tx=0,ty=0,cx=0,cy=0,active=false;ns.addEventListener('mouseenter',e=>{active=true;tx=cx=e.clientX+24;ty=cy=e.clientY+24;cc.classList.add('active');});ns.addEventListener('mouseleave',()=>{active=false;cc.classList.remove('active');});ns.addEventListener('mousemove',e=>{tx=e.clientX+24;ty=e.clientY+24;});(function loop(){cx+=(tx-cx)*.15;cy+=(ty-cy)*.15;if(active)cc.style.transform='translate('+cx+'px,'+cy+'px)';requestAnimationFrame(loop);})();}
+
+  /* Smooth scroll */
+  const heroBtn=document.querySelector('a[href="#productos"]');if(heroBtn)heroBtn.addEventListener('click',e=>{e.preventDefault();document.getElementById('productos').scrollIntoView({behavior:'smooth'});});
+
+  /* Parallax floaters */
+  window.addEventListener('mousemove',e=>{const cx=innerWidth/2,cy=innerHeight/2,dx=(e.clientX-cx)/cx,dy=(e.clientY-cy)/cy;document.querySelectorAll('.floater').forEach((f,i)=>{const d=(i%3+1)*7;f.style.transform='translate('+(dx*d)+'px,'+(dy*d)+'px) rotate('+(dx*5)+'deg)';});});
+
+  /* Contador stats bar */
+  const statsIO=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;e.target.querySelectorAll('.stat strong').forEach(s=>{const t=s.textContent;if(t.includes('100'))tick(s,100,'%');else if(t.includes('500'))tick(s,500,'+');else if(t==='6')tick(s,6,'');});statsIO.unobserve(e.target);});},{threshold:.5});
+  statsIO.observe(document.querySelector('.stats-bar'));
+  function tick(el,target,suffix){let n=0;const iv=setInterval(()=>{n+=target/42;if(n>=target){el.textContent=target+suffix;clearInterval(iv);return;}el.textContent=Math.floor(n)+suffix;},26);}
+
+  /* Filtro categorías */
+  function filterCards(cat,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.product-card').forEach(card=>{card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';});}
+</script>
+</body>
+</html>
