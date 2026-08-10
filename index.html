@@ -1057,7 +1057,7 @@
     position: relative;
     max-width: 720px;
     margin: 0 auto;
-    padding: 5rem 1.5rem;
+    padding: 3rem 1.5rem;
     text-align: center;
     opacity: 0;
     transform: translateY(36px);
@@ -1077,7 +1077,7 @@
     border: 1px solid rgba(242,96,122,.35);
     border-radius: 999px;
     padding: .35rem 1rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: .85rem;
   }
   .story-h1 {
     font-family: 'Sora', sans-serif;
@@ -1085,7 +1085,7 @@
     font-size: clamp(1.7rem, 5vw, 2.6rem);
     line-height: 1.2;
     color: var(--ink);
-    margin: 0 0 1rem;
+    margin: 0 0 .65rem;
   }
   .story-h1 em {
     font-style: normal;
@@ -1106,7 +1106,7 @@
   .phone-mock {
     width: 210px;
     height: 400px;
-    margin: 2.5rem auto 1.5rem;
+    margin: 1.5rem auto 1rem;
     border-radius: 34px;
     background: var(--ink);
     padding: 10px;
@@ -1155,14 +1155,18 @@
   }
 
   .story-stat {
-    display: inline-flex; align-items: baseline; gap: .4rem;
+    display: inline-flex; align-items: center; gap: .6rem;
     font-family: 'Sora', sans-serif;
-    margin-top: 1.5rem;
+    margin-top: .85rem;
   }
   .story-stat b {
-    font-size: 2.1rem; font-weight: 800; color: var(--coral);
+    font-size: 3.4rem; font-weight: 800; color: var(--coral); line-height: 1;
   }
-  .story-stat span { color: var(--ink-soft); font-size: .92rem; text-align: left; max-width: 220px; }
+  .story-stat span { color: var(--ink-soft); font-size: .88rem; text-align: left; max-width: 200px; line-height: 1.35; }
+
+  @media (max-width: 640px) {
+    .story-stat b { font-size: 4.2rem; }
+  }
 
   .story-divider {
     width: 2px; height: 60px; margin: 0 auto;
@@ -1174,7 +1178,7 @@
   .story-illustration {
     width: 100%; max-width: 420px;
     border-radius: 28px;
-    margin: 2rem auto 1.5rem;
+    margin: 1.25rem auto 1rem;
     display: block;
     box-shadow: 0 30px 60px -24px rgba(43,38,64,.4);
   }
@@ -1250,11 +1254,16 @@
     margin-top: 2rem;
   }
   .story-scrolldown {
-    margin-top: 3rem; font-size: .82rem; color: var(--ink-faint);
+    margin-top: 1.5rem; font-size: .82rem; color: var(--ink-faint);
     display: flex; flex-direction: column; align-items: center; gap: .4rem;
   }
   .story-scrolldown .arrow { animation: bounceDown 1.6s ease-in-out infinite; }
   @keyframes bounceDown { 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+
+  @media (max-width: 640px) {
+    .story-panel { padding: 2rem 1.25rem; }
+    .story-sub { font-size: .96rem; line-height: 1.55; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .story-panel, .build-tile, .story-scrolldown .arrow { transition: none !important; animation: none !important; }
