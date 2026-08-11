@@ -600,6 +600,33 @@
   .puzzle-piece:nth-child(5){background:linear-gradient(135deg,rgba(47,191,143,.28),rgba(52,184,196,.18));}
   .puzzle-piece:nth-child(6){background:linear-gradient(135deg,rgba(79,143,224,.28),rgba(139,124,246,.18));}
 
+
+  /* ══ MASKED HEADING — "Ofrecemos Educación Real" con imagen dentro del texto ══ */
+  .masked-heading {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    margin: 1.5rem auto .5rem;
+    aspect-ratio: 16 / 7;
+    text-align: center;
+  }
+  .masked-heading svg { width: 100%; height: 100%; display: block; }
+  .masked-heading-fill {
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 1s cubic-bezier(.22,1,.36,1), transform 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .masked-heading.mh-in-view .masked-heading-fill {
+    opacity: 1;
+    transform: scale(1);
+  }
+  @media (max-width: 640px) {
+    .masked-heading { aspect-ratio: 16 / 8.5; max-width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .masked-heading-fill { transition: none; opacity: 1; transform: none; }
+  }
+
   @media(max-width:640px){
     .story-panel{padding:2rem 1.25rem;}
     .story-sub{font-size:.96rem;line-height:1.55;}
@@ -793,6 +820,22 @@
   <!-- Panel 5 — Solución TP Learning -->
   <div class="story-panel" data-story-panel>
     <span class="story-eyebrow" style="color:var(--mint);background:rgba(47,191,143,.1);border-color:rgba(47,191,143,.35);">La solución</span>
+
+    <!-- Título con imagen recortada dentro del texto (mismo espíritu que MaskedHeading) -->
+    <div class="masked-heading" data-masked-heading>
+      <svg viewBox="0 0 800 350" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <clipPath id="mhClip" clipPathUnits="userSpaceOnUse">
+            <text x="400" y="140" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="76">Ofrecemos</text>
+            <text x="400" y="240" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="76">Educación Real</text>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#mhClip)" class="masked-heading-fill">
+          <image href="tp-story-solucion-aprende.jpg" x="-60" y="-40" width="920" height="430" preserveAspectRatio="xMidYMid slice"></image>
+        </g>
+      </svg>
+    </div>
+
     <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration" loading="lazy">
     <div class="pz-line" style="margin-bottom:.5rem;">
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
