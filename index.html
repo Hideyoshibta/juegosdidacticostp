@@ -627,6 +627,105 @@
     .masked-heading-fill { transition: none; opacity: 1; transform: none; }
   }
 
+
+  /* ══ CARRUSEL DE PROBLEMAS — swipe horizontal en vez de 3 scrolls verticales ══ */
+  .problem-carousel-wrap {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 0 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .problem-carousel-wrap.in-view { opacity: 1; transform: none; }
+
+  .problem-carousel-head {
+    text-align: center;
+    padding: 0 1.5rem 1rem;
+  }
+
+  .problem-track-outer {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 1.5rem;
+  }
+  .problem-track-outer::-webkit-scrollbar { display: none; }
+
+  .problem-track {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .problem-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    max-width: 100%;
+    text-align: center;
+    padding: 0 .25rem;
+  }
+
+  .problem-dots {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1.5rem;
+  }
+  .problem-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--glass-border);
+    cursor: pointer;
+    transition: background .25s ease, transform .25s ease, width .25s ease;
+    border: none; padding: 0;
+  }
+  .problem-dot.active {
+    background: var(--coral);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .swipe-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1.25rem;
+    font-size: .82rem;
+    color: var(--ink-faint);
+    opacity: 0;
+    animation: swipeHintFade .6s ease .8s forwards, swipeHintNudge 1.8s ease-in-out 1.4s 3;
+  }
+  .swipe-hint .swipe-icon {
+    display: inline-block;
+    animation: swipeIconMove 1.8s ease-in-out 1.4s 3;
+  }
+  @keyframes swipeHintFade { to { opacity: 1; } }
+  @keyframes swipeHintNudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+  @keyframes swipeIconMove {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(10px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(-6px); }
+  }
+  .swipe-hint.hint-dismissed { display: none; }
+
+  @media (max-width: 640px) {
+    .problem-carousel-wrap { padding: 1.75rem 0 1.5rem; }
+    .problem-track-outer { padding: 0 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .swipe-hint, .swipe-hint .swipe-icon { animation: none; opacity: 1; }
+    .problem-carousel-wrap { transition: none; }
+  }
+
   @media(max-width:640px){
     .story-panel{padding:2rem 1.25rem;}
     .story-sub{font-size:.96rem;line-height:1.55;}
@@ -688,117 +787,87 @@
     <div class="story-scrolldown"><span>Seguí bajando</span><span class="arrow">↓</span></div>
   </div>
 
-  <!-- Panel 1 — Problema: scroll infinito -->
-  <div class="story-panel" data-story-panel>
-    <div class="pz-line pz-eyebrow" style="color:var(--coral);border-color:rgba(242,96,122,.35);background:rgba(242,96,122,.08);">
-      <span class="pz-word" style="--wx:-70px;--wy:-50px;--wr:-15deg;--wd:.0s;">Problema</span>
-      <span class="pz-word" style="--wx:60px;--wy:-40px;--wr:18deg;--wd:.08s;">1</span>
-      <span class="pz-word" style="--wx:-50px;--wy:60px;--wr:-10deg;--wd:.14s;">·</span>
-      <span class="pz-word" style="--wx:80px;--wy:50px;--wr:12deg;--wd:.20s;">Atención</span>
-    </div>
-    <div class="pz-line pz-h1" style="margin-top:.75rem;">
-      <span class="pz-word" style="--wx:-180px;--wy:-90px;--wr:-22deg;--wd:.06s;">El</span>
-      <span class="pz-word" style="--wx:140px;--wy:-70px;--wr:18deg;--wd:.14s;">scroll</span>
-      <span class="pz-word" style="--wx:-120px;--wy:80px;--wr:-16deg;--wd:.22s;">infinito</span>
-    </div>
-    <div class="pz-line pz-h1">
-      <span class="pz-word em-word" style="--wx:100px;--wy:-100px;--wr:20deg;--wd:.30s;">entrena</span>
-      <span class="pz-word em-word" style="--wx:-80px;--wy:90px;--wr:-14deg;--wd:.38s;">a</span>
-      <span class="pz-word em-word" style="--wx:120px;--wy:70px;--wr:16deg;--wd:.46s;">no</span>
-      <span class="pz-word em-word" style="--wx:-140px;--wy:-60px;--wr:-20deg;--wd:.54s;">terminar</span>
-      <span class="pz-word em-word" style="--wx:90px;--wy:80px;--wr:14deg;--wd:.62s;">nada.</span>
-    </div>
-    <div class="phone-mock">
-      <div class="phone-screen problem-scroll">
-        <div class="phone-scroll-track">
-          <div class="phone-scroll-card has-video">
-            <video src="v1.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v2.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v3.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v4.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v5.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v6.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <!-- duplicado para loop perfecto -->
-          <div class="phone-scroll-card has-video">
-            <video src="v1.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v2.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v3.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v4.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v5.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-          <div class="phone-scroll-card has-video">
-            <video src="v6.mp4" muted autoplay loop playsinline preload="none"></video>
-          </div>
-        </div>
-        <div class="phone-glaze">contenido que no sirve para niños 📵</div>
+  <!-- ══ PROBLEMAS 1-2-3 UNIFICADOS EN UN CARRUSEL SWIPE ══ -->
+  <div class="problem-carousel-wrap" data-story-panel>
+    <div class="problem-carousel-head">
+      <div class="pz-line pz-eyebrow" style="color:var(--coral);border-color:rgba(242,96,122,.35);background:rgba(242,96,122,.08);">
+        <span class="pz-word" style="--wx:-70px;--wy:-50px;--wr:-15deg;--wd:.0s;">Por</span>
+        <span class="pz-word" style="--wx:60px;--wy:-40px;--wr:18deg;--wd:.08s;">qué</span>
+        <span class="pz-word" style="--wx:-50px;--wy:60px;--wr:-10deg;--wd:.14s;">preocupa</span>
+      </div>
+      <div class="pz-line pz-h1" style="margin-top:.5rem;">
+        <span class="pz-word" style="--wx:-180px;--wy:-90px;--wr:-22deg;--wd:.06s;">Lo</span>
+        <span class="pz-word" style="--wx:140px;--wy:-70px;--wr:18deg;--wd:.14s;">que</span>
+        <span class="pz-word em-word" style="--wx:-120px;--wy:80px;--wr:-16deg;--wd:.22s;">el</span>
+        <span class="pz-word em-word" style="--wx:100px;--wy:80px;--wr:20deg;--wd:.30s;">scroll</span>
+        <span class="pz-word em-word" style="--wx:-90px;--wy:-60px;--wr:-14deg;--wd:.38s;">le</span>
+        <span class="pz-word em-word" style="--wx:100px;--wy:70px;--wr:16deg;--wd:.46s;">hace.</span>
       </div>
     </div>
-    <p class="story-sub">Apps como TikTok o Reels están diseñadas para que el pulgar no pare — cada video dura segundos, nunca hay que esperar ni terminar algo.</p>
-    <div class="story-stat" data-count-to="40">
-      <div class="story-stat-big"><span class="story-stat-arrow">↓</span><span class="story-stat-num">0</span><span class="story-stat-pct">%</span></div>
-      <span>menos capacidad de sostener la atención en una sola tarea, según estudios sobre uso de video corto en la infancia.</span>
-    </div>
-    <img src="data:image/jpeg;base64,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" alt="Madre quitando el celular" class="story-illustration" loading="lazy">
-  </div>
 
-  <!-- Panel 2 — Cuerpo -->
-  <div class="story-panel" data-story-panel>
-    <div class="pz-line pz-eyebrow" style="color:var(--ocean);border-color:rgba(79,143,224,.35);background:rgba(79,143,224,.08);">
-      <span class="pz-word" style="--wx:-60px;--wy:-50px;--wr:-12deg;--wd:.0s;">Problema</span>
-      <span class="pz-word" style="--wx:50px;--wy:-40px;--wr:16deg;--wd:.08s;">2</span>
-      <span class="pz-word" style="--wx:-40px;--wy:50px;--wr:-8deg;--wd:.14s;">·</span>
-      <span class="pz-word" style="--wx:70px;--wy:40px;--wr:10deg;--wd:.20s;">Cuerpo</span>
-    </div>
-    <div class="pz-line pz-h1" style="margin-top:.75rem;">
-      <span class="pz-word" style="--wx:-160px;--wy:-80px;--wr:-20deg;--wd:.06s;">Mirar</span>
-      <span class="pz-word" style="--wx:120px;--wy:-60px;--wr:16deg;--wd:.16s;">no</span>
-      <span class="pz-word" style="--wx:-80px;--wy:70px;--wr:-12deg;--wd:.26s;">es</span>
-      <span class="pz-word em-word" style="--wx:100px;--wy:80px;--wr:18deg;--wd:.36s;">jugar.</span>
-    </div>
-    <p class="story-sub">Ver videos no pide nada del cuerpo. Las manos que deberían estar aprendiendo a recortar, dibujar o encajar piezas, están quietas.</p>
-    <div class="story-stat"><b>0</b><span>habilidades motrices finas se desarrollan mirando una pantalla en modo pasivo.</span></div>
-  </div>
+    <div class="problem-track-outer" id="problemTrack">
+      <div class="problem-track">
 
-  <!-- Panel 3 — Comportamiento -->
-  <div class="story-panel" data-story-panel>
-    <div class="pz-line pz-eyebrow" style="color:var(--gold);border-color:rgba(240,169,62,.35);background:rgba(240,169,62,.08);">
-      <span class="pz-word" style="--wx:-70px;--wy:-40px;--wr:-14deg;--wd:.0s;">Problema</span>
-      <span class="pz-word" style="--wx:55px;--wy:-50px;--wr:12deg;--wd:.08s;">3</span>
-      <span class="pz-word" style="--wx:-45px;--wy:55px;--wr:-9deg;--wd:.14s;">·</span>
-      <span class="pz-word" style="--wx:75px;--wy:45px;--wr:11deg;--wd:.20s;">Comportamiento</span>
+        <!-- Slide 1 · Atención -->
+        <div class="problem-slide">
+          <span class="story-eyebrow" style="color:var(--coral);">Problema 1 · Atención</span>
+          <h3 class="story-h1" style="font-size:clamp(1.4rem,4.2vw,1.9rem);">El scroll infinito<br><em>entrena a no terminar nada.</em></h3>
+          <div class="phone-mock">
+            <div class="phone-screen problem-scroll">
+              <div class="phone-scroll-track">
+                <div class="phone-scroll-card has-video"><video src="v1.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v2.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v3.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v4.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v5.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v6.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <!-- duplicado para loop perfecto -->
+                <div class="phone-scroll-card has-video"><video src="v1.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v2.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v3.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v4.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v5.mp4" muted autoplay loop playsinline preload="none"></video></div>
+                <div class="phone-scroll-card has-video"><video src="v6.mp4" muted autoplay loop playsinline preload="none"></video></div>
+              </div>
+              <div class="phone-glaze">contenido que no sirve para niños 📵</div>
+            </div>
+          </div>
+          <p class="story-sub" style="font-size:.95rem;">Apps como TikTok o Reels están diseñadas para que el pulgar no pare — cada video dura segundos, nunca hay que esperar ni terminar algo.</p>
+          <div class="story-stat" data-count-to="40">
+            <div class="story-stat-big"><span class="story-stat-arrow">↓</span><span class="story-stat-num">0</span><span class="story-stat-pct">%</span></div>
+            <span>menos capacidad de sostener la atención en una sola tarea.</span>
+          </div>
+        </div>
+
+        <!-- Slide 2 · Cuerpo -->
+        <div class="problem-slide">
+          <span class="story-eyebrow" style="color:var(--ocean);">Problema 2 · Cuerpo</span>
+          <h3 class="story-h1" style="font-size:clamp(1.4rem,4.2vw,1.9rem);">Mirar no es <em>jugar.</em></h3>
+          <img src="data:image/jpeg;base64,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" alt="Madre quitando el celular" class="story-illustration" style="max-width:280px;margin:1rem auto;" loading="lazy">
+          <p class="story-sub" style="font-size:.95rem;">Ver videos no pide nada del cuerpo. Las manos que deberían estar aprendiendo a recortar, dibujar o encajar piezas, están quietas.</p>
+          <div class="story-stat"><b>0</b><span>habilidades motrices finas se desarrollan mirando pantalla pasiva.</span></div>
+        </div>
+
+        <!-- Slide 3 · Comportamiento -->
+        <div class="problem-slide">
+          <span class="story-eyebrow" style="color:var(--gold);">Problema 3 · Comportamiento</span>
+          <h3 class="story-h1" style="font-size:clamp(1.4rem,4.2vw,1.9rem);">La sobreestimulación<br><em>vuelve, después de apagar la pantalla.</em></h3>
+          <p class="story-sub" style="font-size:.95rem;margin-top:1rem;">El estímulo constante hace que el mundo real se sienta aburrido. Ahí aparecen las rabietas al quitar el celular y la dificultad para calmarse solo.</p>
+        </div>
+
+      </div>
     </div>
-    <div class="pz-line pz-h1" style="margin-top:.75rem;">
-      <span class="pz-word" style="--wx:-170px;--wy:-90px;--wr:-22deg;--wd:.06s;">La</span>
-      <span class="pz-word" style="--wx:130px;--wy:-70px;--wr:18deg;--wd:.16s;">sobreestimulación</span>
+
+    <div class="problem-dots" id="problemDots">
+      <button class="problem-dot active" data-slide="0" aria-label="Problema 1"></button>
+      <button class="problem-dot" data-slide="1" aria-label="Problema 2"></button>
+      <button class="problem-dot" data-slide="2" aria-label="Problema 3"></button>
     </div>
-    <div class="pz-line pz-h1">
-      <span class="pz-word em-word" style="--wx:-100px;--wy:80px;--wr:-16deg;--wd:.26s;">vuelve,</span>
-      <span class="pz-word em-word" style="--wx:90px;--wy:-80px;--wr:14deg;--wd:.35s;">después</span>
-      <span class="pz-word em-word" style="--wx:-80px;--wy:90px;--wr:-10deg;--wd:.44s;">de</span>
-      <span class="pz-word em-word" style="--wx:110px;--wy:70px;--wr:16deg;--wd:.53s;">apagar</span>
-      <span class="pz-word em-word" style="--wx:-90px;--wy:-80px;--wr:-18deg;--wd:.62s;">la</span>
-      <span class="pz-word em-word" style="--wx:100px;--wy:80px;--wr:12deg;--wd:.70s;">pantalla.</span>
+
+    <div class="swipe-hint" id="swipeHint">
+      <span class="swipe-icon">👉</span>
+      <span>Deslizá para ver más</span>
     </div>
-    <p class="story-sub">El estímulo constante hace que el mundo real se sienta aburrido. Ahí aparecen las rabietas al quitar el celular y la dificultad para calmarse solo.</p>
   </div>
 
   <!-- Panel 4 — Giro con rompecabezas -->
@@ -1417,6 +1486,61 @@ void main(){
     var target = document.getElementById('storyWrap');
     if(target) target.scrollIntoView({behavior:'smooth'});
   });
+})();
+</script>
+
+<script>
+(function(){
+  var track = document.getElementById('problemTrack');
+  var dotsWrap = document.getElementById('problemDots');
+  var hint = document.getElementById('swipeHint');
+  if(!track || !dotsWrap) return;
+
+  var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.problem-dot'));
+  var slides = Array.prototype.slice.call(track.querySelectorAll('.problem-slide'));
+
+  function setActive(idx){
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  }
+
+  function dismissHint(){
+    if(hint) hint.classList.add('hint-dismissed');
+  }
+
+  // Click en los dots -> scroll al slide correspondiente
+  dots.forEach(function(dot){
+    dot.addEventListener('click', function(){
+      var idx = parseInt(dot.dataset.slide, 10);
+      var target = slides[idx];
+      if(target){
+        track.scrollTo({ left: target.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      }
+      dismissHint();
+    });
+  });
+
+  // Detectar slide visible mientras el usuario hace scroll/swipe
+  var scrollTimeout;
+  track.addEventListener('scroll', function(){
+    dismissHint();
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function(){
+      var trackRect = track.getBoundingClientRect();
+      var center = trackRect.left + trackRect.width / 2;
+      var closest = 0, closestDist = Infinity;
+      slides.forEach(function(slide, i){
+        var r = slide.getBoundingClientRect();
+        var slideCenter = r.left + r.width / 2;
+        var dist = Math.abs(slideCenter - center);
+        if(dist < closestDist){ closestDist = dist; closest = i; }
+      });
+      setActive(closest);
+    }, 80);
+  }, { passive: true });
+
+  // Primer touch/click en el track también oculta la pista
+  track.addEventListener('touchstart', dismissHint, { passive: true, once: true });
+  track.addEventListener('pointerdown', dismissHint, { once: true });
 })();
 </script>
 </body>
