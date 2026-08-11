@@ -410,11 +410,59 @@
   }
   .scanner-btn-wa:hover { transform: translateY(-3px); }
   .scanner-scroll-hint {
-    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    position: absolute; bottom: 4.2rem; left: 50%; transform: translateX(-50%);
     z-index: 2; color: rgba(255,255,255,.5); font-size: .8rem;
     display: flex; flex-direction: column; align-items: center; gap: .3rem;
     animation: bounceDown 1.8s ease-in-out infinite;
   }
+
+  /* ══ BARRA DE ANUNCIO EN MOVIMIENTO — pegada abajo del hero oscuro ══ */
+  .marquee-bar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 3;
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(90deg, rgba(108,92,231,0.28), rgba(79,209,197,0.28), rgba(240,98,138,0.28));
+    background-size: 200% 100%;
+    animation: marqueeGradient 8s ease-in-out infinite;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(6px);
+    padding: .65rem 0;
+  }
+  @keyframes marqueeGradient {
+    0%,100% { background-position: 0% 50%; }
+    50%     { background-position: 100% 50%; }
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 18s linear infinite;
+  }
+  .marquee-track span {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: .9rem;
+    color: #fff;
+    padding: 0 2.5rem;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-bar:hover .marquee-track { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-bar { animation: none; }
+    .marquee-track { animation: none; }
+  }
+  @media(max-width:640px){
+    .marquee-track span { font-size: .78rem; padding: 0 1.4rem; }
+  }
+
   @media(max-width:640px){
     #scanner-hero { height: 100svh; }
     .scanner-content { padding: 1.5rem 1.2rem; }
@@ -448,6 +496,23 @@
     </div>
   </div>
   <div class="scanner-scroll-hint"><span>Seguí bajando</span><span>↓</span></div>
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <!-- duplicado para loop infinito perfecto -->
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+      <span>🚀 ¡Envío hoy mismo en Bogotá! Compra antes de las 2:00 p.m</span>
+    </div>
+  </div>
 </section>
 
 
