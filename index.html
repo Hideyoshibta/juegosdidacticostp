@@ -324,6 +324,101 @@
     .exit-expired-msg{display:none;font-size:.8rem;font-weight:700;color:var(--coral);margin-top:.7rem;}
     .exit-card.exit-expired .exit-expired-msg{display:block;}
 
+
+  /* ══ SCANNER WEBGL HERO ══ */
+  #scanner-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 500px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  #scanner-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .scanner-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem 1.5rem;
+    max-width: 700px;
+  }
+  .scanner-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(108,92,231,0.18);
+    border: 1px solid rgba(108,92,231,0.5);
+    color: #c4b5fd;
+    border-radius: 50px;
+    padding: .4rem 1.2rem;
+    font-weight: 700; font-size: .82rem;
+    margin-bottom: 1.4rem;
+    backdrop-filter: blur(8px);
+  }
+  .scanner-h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.2rem, 7vw, 4.2rem);
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 30px rgba(108,92,231,0.4);
+  }
+  .scanner-h1 em {
+    font-style: normal;
+    background: linear-gradient(120deg, #a78bfa, #4fd1c5);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .scanner-sub {
+    font-size: clamp(.95rem, 2.2vw, 1.1rem);
+    color: rgba(255,255,255,.75);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 520px;
+    margin-left: auto; margin-right: auto;
+  }
+  .scanner-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+  .scanner-btn-primary {
+    background: linear-gradient(120deg, #6C5ce7, #4fd1c5);
+    color: #fff; border: none; border-radius: 50px;
+    padding: .9rem 2.2rem;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: .98rem;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 6px 26px rgba(108,92,231,0.45);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .scanner-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 34px rgba(108,92,231,0.55); }
+  .scanner-btn-wa {
+    background: var(--whatsapp); color: #fff;
+    border: none; border-radius: 50px;
+    padding: .9rem 2.2rem;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: .98rem;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 6px 26px rgba(37,211,102,0.4);
+    transition: transform .2s;
+    display: inline-flex; align-items: center; gap: .5rem;
+  }
+  .scanner-btn-wa:hover { transform: translateY(-3px); }
+  .scanner-scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; color: rgba(255,255,255,.5); font-size: .8rem;
+    display: flex; flex-direction: column; align-items: center; gap: .3rem;
+    animation: bounceDown 1.8s ease-in-out infinite;
+  }
+  @media(max-width:640px){
+    #scanner-hero { height: 100svh; }
+    .scanner-content { padding: 1.5rem 1.2rem; }
+  }
+
     @media(max-width:640px){nav{padding:.7rem 1rem;}.floater{display:none;}.products-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto;}.why-grid{grid-template-columns:1fr 1fr;}}
     @media(max-width:440px){.why-grid{grid-template-columns:1fr;}}
     @media(prefers-reduced-motion:reduce){.btn-wa,.wa-status-dot,.wa-float,.mosaic-inner,.piece-spin{animation:none!important;}.cube-piece,.mosaic-tile{transition:none!important;opacity:1;transform:none;}}
@@ -335,6 +430,25 @@
   <a href="#" class="nav-logo">JUEGOS <span>DIDÁCTICOS</span> TP</a>
   <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="nav-cta" target="_blank" rel="noopener">Pedir ya</a>
 </nav>
+
+<!-- ══ SCANNER WEBGL HERO ══ -->
+<section id="scanner-hero">
+  <canvas id="scanner-canvas"></canvas>
+  <div class="scanner-content">
+    <div class="scanner-badge">✦ Juguetes educativos premium · Colombia 🇨🇴</div>
+    <h1 class="scanner-h1">Aprende jugando<br>con <em>Juegos TP</em></h1>
+    <p class="scanner-sub">Cubos didácticos de tela, suaves y seguros, diseñados para estimular el aprendizaje de letras, números y animales desde los primeros meses.</p>
+    <div class="scanner-btns">
+      <a href="#storyWrap" class="scanner-btn-primary" id="scannerScrollBtn">Descubrir más ↓</a>
+      <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="scanner-btn-wa" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.374 0 0 5.373 0 11.99c0 2.117.553 4.103 1.522 5.829L0 24l6.335-1.493A11.936 11.936 0 0 0 11.99 24C18.626 24 24 18.627 24 12.01 24 5.374 18.626 0 11.99 0zm.01 21.785a9.783 9.783 0 0 1-4.989-1.361l-.358-.213-3.712.975.992-3.626-.234-.373a9.784 9.784 0 0 1-1.501-5.187c0-5.407 4.4-9.806 9.802-9.806 5.407 0 9.807 4.4 9.807 9.807 0 5.406-4.4 9.784-9.807 9.784z"/></svg>
+        Pedir ahora
+      </a>
+    </div>
+  </div>
+  <div class="scanner-scroll-hint"><span>Seguí bajando</span><span>↓</span></div>
+</section>
+
 
 <!-- ══════════════════════════════════
      STORY SECTION — scroll narrativo
@@ -977,6 +1091,224 @@
 
   /* Filtro categorías */
   function filterCards(cat,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.product-card').forEach(card=>{card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';});}
+</script>
+
+<script>
+/* ══ SCANNER WEBGL — vanilla JS ══ */
+(function(){
+  var canvas = document.getElementById('scanner-canvas');
+  if(!canvas) return;
+
+  var gl = canvas.getContext('webgl2', {alpha:true, premultipliedAlpha:true, antialias:false});
+  if(!gl){ gl = canvas.getContext('webgl', {alpha:true, premultipliedAlpha:true}); }
+  if(!gl) return;
+
+  var isWebGL2 = !!canvas.getContext('webgl2');
+
+  var vertSrc = isWebGL2 ? `#version 300 es
+in vec2 position;
+void main(){ gl_Position = vec4(position,0.,1.); }` :
+`attribute vec2 position;
+void main(){ gl_Position = vec4(position,0.,1.); }`;
+
+  var fragSrc = isWebGL2 ? `#version 300 es
+precision highp float;
+uniform vec2 iResolution; uniform float iTime;
+uniform float uSpeed,uSweepSpeed,uSweepWidth,uSweepFalloff,uScale,uFrequency,uRipple;
+uniform float uBandDensity,uLineSharpness,uGlow,uColorSpread,uBrightness,uContrast;
+uniform float uSoftness,uVignette,uOpacity;
+uniform vec3 uColor1,uColor2,uColor3;
+out vec4 fragColor;
+const float TAU=6.2831853;
+float signalField(vec2 p,float t){
+  float w=sin(p.x*1.3+t*.7);
+  w+=sin(p.y*1.7-t*.52)*.8;
+  w+=sin((p.x+p.y)*.9+t*.91)*.6;
+  w+=sin((p.x-p.y)*1.53-t*.63)*.42;
+  return w*.35;
+}
+vec3 palette(float f){
+  f=clamp(pow(clamp(f,0.,1.),uContrast),0.,1.);
+  vec3 c=mix(uColor1,uColor2,smoothstep(.08,.6,f));
+  return mix(c,uColor3,smoothstep(.68,1.,f));
+}
+float scanBand(float x,float aa,float sharp){
+  return pow(mix(.5,.5+.5*cos(x*TAU),aa),sharp);
+}
+void main(){
+  vec2 uv0=(gl_FragCoord.xy*2.-iResolution.xy)/iResolution.y;
+  vec2 p=uv0/max(uScale,.001);
+  float t=iTime*uSpeed;
+  float sig=signalField(p*uFrequency,t);
+  float coord=p.y+sig*uRipple;
+  float phase=coord/max(uSweepWidth,.05)-t*uSweepSpeed;
+  float sweep=pow(.5+.5*cos(phase*TAU),max(uSweepFalloff,.1));
+  float lc=coord*uBandDensity;
+  float aa=clamp(1./(1.+uSoftness*length(vec2(dFdx(lc),dFdy(lc)))*3.),0.,1.);
+  float body=clamp(.5+.5*sig,0.,1.);
+  body=body*body*uGlow*sweep;
+  float sharp=max(uLineSharpness,.1);
+  float split=uColorSpread*.16;
+  float fr=clamp(scanBand(lc+split,aa,sharp)*sweep+body,0.,1.);
+  float fg=clamp(scanBand(lc,aa,sharp)*sweep+body,0.,1.);
+  float fb=clamp(scanBand(lc-split,aa,sharp)*sweep+body,0.,1.);
+  vec3 col=vec3(palette(fr).r,palette(fg).g,palette(fb).b);
+  float inten=(fr+fg+fb)*.333*uBrightness;
+  inten*=clamp(1.-uVignette*smoothstep(.55,1.65,length(uv0)),0.,1.);
+  inten=clamp(inten,0.,1.);
+  float a=clamp(inten*uOpacity,0.,1.);
+  fragColor=vec4(clamp(col,0.,1.)*a,a);
+}` :
+`precision highp float;
+uniform vec2 iResolution; uniform float iTime;
+uniform float uSpeed,uSweepSpeed,uSweepWidth,uSweepFalloff,uScale,uFrequency,uRipple;
+uniform float uBandDensity,uLineSharpness,uGlow,uColorSpread,uBrightness,uContrast;
+uniform float uSoftness,uVignette,uOpacity;
+uniform vec3 uColor1,uColor2,uColor3;
+const float TAU=6.2831853;
+float signalField(vec2 p,float t){
+  float w=sin(p.x*1.3+t*.7);
+  w+=sin(p.y*1.7-t*.52)*.8;
+  w+=sin((p.x+p.y)*.9+t*.91)*.6;
+  w+=sin((p.x-p.y)*1.53-t*.63)*.42;
+  return w*.35;
+}
+vec3 palette(float f){
+  f=clamp(pow(clamp(f,0.,1.),uContrast),0.,1.);
+  vec3 c=mix(uColor1,uColor2,smoothstep(.08,.6,f));
+  return mix(c,uColor3,smoothstep(.68,1.,f));
+}
+float scanBand(float x,float aa,float sharp){
+  return pow(mix(.5,.5+.5*cos(x*TAU),aa),sharp);
+}
+void main(){
+  vec2 uv0=(gl_FragCoord.xy*2.-iResolution.xy)/iResolution.y;
+  vec2 p=uv0/max(uScale,.001);
+  float t=iTime*uSpeed;
+  float sig=signalField(p*uFrequency,t);
+  float coord=p.y+sig*uRipple;
+  float phase=coord/max(uSweepWidth,.05)-t*uSweepSpeed;
+  float sweep=pow(.5+.5*cos(phase*TAU),max(uSweepFalloff,.1));
+  float lc=coord*uBandDensity;
+  float aa=.7;
+  float body=clamp(.5+.5*sig,0.,1.);
+  body=body*body*uGlow*sweep;
+  float sharp=max(uLineSharpness,.1);
+  float split=uColorSpread*.16;
+  float fr=clamp(scanBand(lc+split,aa,sharp)*sweep+body,0.,1.);
+  float fg=clamp(scanBand(lc,aa,sharp)*sweep+body,0.,1.);
+  float fb=clamp(scanBand(lc-split,aa,sharp)*sweep+body,0.,1.);
+  vec3 col=vec3(palette(fr).r,palette(fg).g,palette(fb).b);
+  float inten=(fr+fg+fb)*.333*uBrightness;
+  inten*=clamp(1.-uVignette*smoothstep(.55,1.65,length(uv0)),0.,1.);
+  inten=clamp(inten,0.,1.);
+  float a=clamp(inten*uOpacity,0.,1.);
+  gl_FragColor=vec4(clamp(col,0.,1.)*a,a);
+}`;
+
+  function compile(type, src){
+    var sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    return sh;
+  }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vertSrc));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fragSrc));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  // Full-screen triangle
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  var posLoc = gl.getAttribLocation(prog, 'position');
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  gl.clearColor(0,0,0,0);
+
+  function u(name){ return gl.getUniformLocation(prog, name); }
+  var locs = {
+    iTime: u('iTime'), iRes: u('iResolution'),
+    speed: u('uSpeed'), sweepSpeed: u('uSweepSpeed'),
+    sweepWidth: u('uSweepWidth'), sweepFalloff: u('uSweepFalloff'),
+    scale: u('uScale'), freq: u('uFrequency'), ripple: u('uRipple'),
+    bandDensity: u('uBandDensity'), lineSharp: u('uLineSharpness'),
+    glow: u('uGlow'), colorSpread: u('uColorSpread'),
+    brightness: u('uBrightness'), contrast: u('uContrast'),
+    softness: u('uSoftness'), vignette: u('uVignette'), opacity: u('uOpacity'),
+    c1: u('uColor1'), c2: u('uColor2'), c3: u('uColor3')
+  };
+
+  // Set uniforms matching Scanner props
+  gl.uniform1f(locs.speed, 0.5);
+  gl.uniform1f(locs.sweepSpeed, 0.25);
+  gl.uniform1f(locs.sweepWidth, 1.6);
+  gl.uniform1f(locs.sweepFalloff, 6.0);
+  gl.uniform1f(locs.scale, 1.5);
+  gl.uniform1f(locs.freq, 2.0);
+  gl.uniform1f(locs.ripple, 0.22);
+  gl.uniform1f(locs.bandDensity, 11.0);
+  gl.uniform1f(locs.lineSharp, 5.5);
+  gl.uniform1f(locs.glow, 0.22);
+  gl.uniform1f(locs.colorSpread, 0.7);
+  gl.uniform1f(locs.brightness, 1.0);
+  gl.uniform1f(locs.contrast, 1.15);
+  gl.uniform1f(locs.softness, 1.4);
+  gl.uniform1f(locs.vignette, 0.45);
+  gl.uniform1f(locs.opacity, 1.0);
+  // Colors: #6C5ce7, #4fd1c5, #f0628a
+  gl.uniform3f(locs.c1, 0.424, 0.361, 0.906);
+  gl.uniform3f(locs.c2, 0.310, 0.820, 0.773);
+  gl.uniform3f(locs.c3, 0.941, 0.384, 0.541);
+
+  var t0 = performance.now();
+  var raf = 0;
+
+  function resize(){
+    var w = canvas.clientWidth * Math.min(window.devicePixelRatio||1, 2) | 0;
+    var h = canvas.clientHeight * Math.min(window.devicePixelRatio||1, 2) | 0;
+    if(canvas.width !== w || canvas.height !== h){
+      canvas.width = w; canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+    gl.uniform2f(locs.iRes, canvas.width, canvas.height);
+  }
+
+  function frame(now){
+    resize();
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform1f(locs.iTime, (now - t0) * 0.001);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    raf = requestAnimationFrame(frame);
+  }
+
+  // Only run when visible
+  var io = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){
+      if(!raf) raf = requestAnimationFrame(frame);
+    } else {
+      cancelAnimationFrame(raf); raf = 0;
+    }
+  }, {threshold: 0});
+  io.observe(canvas);
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){ cancelAnimationFrame(raf); raf = 0; }
+    else if(!raf) raf = requestAnimationFrame(frame);
+  });
+
+  // Smooth scroll to story
+  var btn = document.getElementById('scannerScrollBtn');
+  if(btn) btn.addEventListener('click', function(e){
+    e.preventDefault();
+    var target = document.getElementById('storyWrap');
+    if(target) target.scrollIntoView({behavior:'smooth'});
+  });
+})();
 </script>
 </body>
 </html>
