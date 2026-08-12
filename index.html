@@ -535,6 +535,21 @@
     <div class="scanner-badge">✦ Cubos didacticos premium · Colombia 🇨🇴</div>
     <h1 class="scanner-h1">Aprende jugando<br>con <em>Juegos TP</em></h1>
     <p class="scanner-sub">Cubos didácticos de tela, suaves y seguros, diseñados para estimular el aprendizaje de letras, números y animales desde los primeros meses.</p>
+
+    <!-- Cubo 3D girando — el producto se ve de inmediato, en la primera pantalla -->
+    <div class="hero-cube-wrap" aria-hidden="true">
+      <div class="hero-cube-spin">
+        <div class="hero-cube-3d">
+          <div class="hero-cube-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div>
+          <div class="hero-cube-face right"><img src="https://juegosdidacticostp.com/cubos-3d/numero-2-two.jpg" alt=""></div>
+          <div class="hero-cube-face back"><img src="https://juegosdidacticostp.com/cubos-3d/numero-3-three.jpg" alt=""></div>
+          <div class="hero-cube-face left"><img src="https://juegosdidacticostp.com/cubos-3d/simbolo-mas-v2.jpg" alt=""></div>
+          <div class="hero-cube-face top"><img src="https://juegosdidacticostp.com/cubos-3d/numero-4-cuatro-v2.jpg" alt=""></div>
+          <div class="hero-cube-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-5-cinco-v2.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
+
     <div class="scanner-btns">
       <a href="#storyWrap" class="scanner-btn-primary" id="scannerScrollBtn">Descubrir más ↓</a>
       <a href="https://wa.me/573163399222?text=Hola!%20estoy%20interesado%20en%20los%20cubos%20didacticos." class="scanner-btn-wa" target="_blank" rel="noopener">
@@ -598,6 +613,7 @@
 
   /* Ilustraciones */
   .story-illustration{width:100%;max-width:420px;border-radius:28px;margin:1.25rem auto 1rem;display:block;box-shadow:0 30px 60px -24px rgba(43,38,64,.4);}
+  .story-illustration-compact{max-width:220px;margin:.25rem auto .5rem;}
 
   /* App screens */
   .story-screens{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-top:2rem;}
@@ -653,9 +669,9 @@
   .masked-heading {
     position: relative;
     width: 100%;
-    max-width: 560px;
-    margin: 1.5rem auto .5rem;
-    aspect-ratio: 16 / 7;
+    max-width: 480px;
+    margin: .5rem auto .25rem;
+    aspect-ratio: 16 / 6;
     text-align: center;
   }
   .masked-heading svg { width: 100%; height: 100%; display: block; }
@@ -947,8 +963,8 @@
       </svg>
     </div>
 
-    <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration" loading="lazy">
-    <div class="pz-line" style="margin:.5rem 0;">
+    <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact" loading="lazy">
+    <div class="pz-line" style="margin:.25rem 0;">
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
     </div>
