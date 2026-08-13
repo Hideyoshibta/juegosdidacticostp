@@ -717,10 +717,10 @@
   .puzzle-piece:nth-child(6){background:linear-gradient(135deg,rgba(79,143,224,.28),rgba(139,124,246,.18));}
 
 
-  /* ══ ZOOM PORTAL — texto con gradiente fluido que crece y se abre como puerta ══ */
+  /* ══ ZOOM PORTAL — el texto crece con el scroll y da paso al contenido estático ══ */
   .zoom-portal {
     position: relative;
-    height: 280vh;
+    height: 130vh;
     z-index: 2;
   }
   .zoom-portal-sticky {
@@ -731,14 +731,6 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  }
-  .zoom-portal-stage {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   /* Texto con gradiente FLUIDO — se mueve como si fuera video, nunca color sólido */
@@ -766,34 +758,13 @@
     to { background-position: 400% 0; }
   }
 
-  /* El "portal": círculo que crece desde el centro del texto y revela la foto detrás */
-  .zoom-portal-reveal {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: circle(0% at 50% 50%);
-    will-change: clip-path, opacity;
-    opacity: 0;
-  }
-  .zoom-portal-photo {
-    width: min(600px, 90vw);
-    height: min(600px, 90vh);
-    object-fit: cover;
-    border-radius: 40px;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .zoom-portal { height: auto; }
-    .zoom-portal-sticky { position: relative; height: auto; padding: 3rem 0; flex-direction: column; }
+    .zoom-portal-sticky { position: relative; height: auto; padding: 2rem 0; }
     .zoom-portal-text { transform: none !important; animation: none; background-position: 0 0; }
-    .zoom-portal-reveal { position: relative; opacity: 1 !important; clip-path: none !important; margin-top: 2rem; }
-    .zoom-portal-photo { width: min(420px, 82vw); height: auto; border-radius: 28px; }
   }
   @media (max-width: 640px) {
-    .zoom-portal { height: 260vh; }
+    .zoom-portal { height: 115vh; }
   }
 
 
@@ -1054,17 +1025,13 @@
   <!-- ══ ZOOM PORTAL — el texto crece y se convierte en la puerta hacia TP Learning ══ -->
   <div class="zoom-portal" id="zoomPortal" data-story-panel>
     <div class="zoom-portal-sticky">
-      <div class="zoom-portal-stage">
-        <h2 class="zoom-portal-text">Ofrecemos<br>Educación Real</h2>
-        <div class="zoom-portal-reveal" id="zoomPortalReveal">
-          <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="zoom-portal-photo">
-        </div>
-      </div>
+      <h2 class="zoom-portal-text">Ofrecemos<br>Educación Real</h2>
     </div>
   </div>
 
-  <!-- Panel normal — TP Learning, revelado tras cruzar el portal -->
+  <!-- Panel normal — foto y TP Learning en flujo estático normal, nunca desaparecen -->
   <div class="story-panel" data-story-panel>
+    <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact">
     <div class="pz-line" style="margin:.25rem 0;">
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
@@ -1810,18 +1777,16 @@ void main(){
 </script>
 
 <script>
-/* ══ ZOOM PORTAL — scroll-driven: el texto crece y se abre como puerta hacia la siguiente sección ══ */
+/* ══ ZOOM PORTAL — scroll-driven: el texto crece con el scroll, luego el flujo normal continúa ══ */
 (function(){
   var section = document.getElementById('zoomPortal');
   var text = document.querySelector('.zoom-portal-text');
-  var reveal = document.getElementById('zoomPortalReveal');
-  if(!section || !text || !reveal) return;
+  if(!section || !text) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduceMotion) return; // el CSS de fallback deja todo visible y estático
 
   var ticking = false;
-
   function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
   function update(){
@@ -1832,20 +1797,11 @@ void main(){
 
     var progress = clamp(-rect.top / total, 0, 1);
 
-    // El texto crece de forma continua mientras se baja (nunca se detiene, solo crece)
-    var textScale = 1 + progress * 7;
+    // El texto crece de forma continua mientras se baja, y se desvanece al final
+    // para dar paso limpio a la foto/contenido que sigue en flujo normal debajo
+    var textScale = 1 + progress * 4.5;
     text.style.transform = 'scale(' + textScale.toFixed(3) + ')';
-
-    // El texto se desvanece según el portal se va abriendo, como si lo atravesáramos
-    var textOpacity = clamp(1 - progress / 0.65, 0, 1);
-    text.style.opacity = textOpacity.toFixed(3);
-
-    // El portal circular se abre progresivamente desde el centro del texto,
-    // empieza a notarse después del 25% para dar tiempo a que el texto crezca primero
-    var portalProgress = clamp((progress - 0.2) / 0.65, 0, 1);
-    var portalRadius = portalProgress * 150; // en % — más de 100% para cubrir esquinas
-    reveal.style.clipPath = 'circle(' + portalRadius.toFixed(1) + '% at 50% 50%)';
-    reveal.style.opacity = clamp(portalProgress * 1.3, 0, 1).toFixed(3);
+    text.style.opacity = clamp(1 - progress / 0.85, 0, 1).toFixed(3);
   }
 
   function onScroll(){
