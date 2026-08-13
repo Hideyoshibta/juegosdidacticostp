@@ -469,13 +469,15 @@
   }
 
 
-  /* ══ CUBO 3D DESTACADO — copia exacta del sistema que funciona en la sección Números ══ */
-  .hero-cube-wrap {
-    position: relative;
-    z-index: 2;
+  /* ══ CUBO 3D DESTACADO — estructura idéntica a .cube-piece que sí funciona ══ */
+  .hero-cube-center {
     display: flex;
     justify-content: center;
     margin: 1.5rem 0 .5rem;
+  }
+  .hero-cube-wrap {
+    position: relative;
+    z-index: 2;
     perspective: 700px;
   }
   .hero-cube-spin {
@@ -533,7 +535,8 @@
     <p class="scanner-sub">Cubos didácticos de tela, suaves y seguros, diseñados para estimular el aprendizaje de letras, números y animales desde los primeros meses.</p>
 
     <!-- Cubo 3D girando — el producto se ve de inmediato, en la primera pantalla -->
-    <div class="hero-cube-wrap" aria-hidden="true">
+    <div class="hero-cube-center">
+      <div class="hero-cube-wrap" aria-hidden="true">
       <div class="hero-cube-spin">
         <div class="hero-cube-3d">
           <div class="hero-cube-face front"><img src="https://juegosdidacticostp.com/cubos-3d/numero-1-uno.jpg" alt=""></div>
@@ -544,6 +547,7 @@
           <div class="hero-cube-face bottom"><img src="https://juegosdidacticostp.com/cubos-3d/numero-5-cinco-v2.jpg" alt=""></div>
         </div>
       </div>
+    </div>
     </div>
 
     <div class="scanner-btns">
@@ -942,8 +946,6 @@
 
   <!-- Panel 5 — Solución TP Learning -->
   <div class="story-panel" data-story-panel>
-    <span class="story-eyebrow" style="color:var(--mint);background:rgba(47,191,143,.1);border-color:rgba(47,191,143,.35);margin-bottom:.15rem;">La solución</span>
-
     <!-- Título con imagen recortada dentro del texto (mismo espíritu que MaskedHeading) -->
     <div class="masked-heading" data-masked-heading>
       <svg viewBox="0 0 800 350" preserveAspectRatio="xMidYMid meet">
@@ -1215,7 +1217,8 @@
   <p>Cubos didácticos de alta calidad diseñados para estimular el aprendizaje, la creatividad y el desarrollo sensorial.</p>
 
   <!-- Cubo 3D girando — el producto se ve de inmediato -->
-  <div class="hero-cube-wrap" aria-hidden="true">
+  <div class="hero-cube-center">
+      <div class="hero-cube-wrap" aria-hidden="true">
     <div class="hero-cube-spin">
       <div class="hero-cube-3d">
         <div class="hero-cube-face front"><img src="https://juegosdidacticostp.com/cubos-3d/letra-T.jpg" alt=""></div>
@@ -1227,6 +1230,7 @@
       </div>
     </div>
   </div>
+    </div>
 
   <div class="hero-btns">
     <a href="#productos" class="btn-primary">Ver colección</a>
