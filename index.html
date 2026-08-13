@@ -615,9 +615,39 @@
   .story-illustration{width:100%;max-width:420px;border-radius:28px;margin:1.25rem auto 1rem;display:block;box-shadow:0 30px 60px -24px rgba(43,38,64,.4);}
   .story-illustration-compact{max-width:200px;margin:0 auto .25rem;}
 
-  /* App screens */
-  .story-screens{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-top:2rem;}
-  .story-screens img{width:140px;border-radius:20px;box-shadow:0 20px 40px -18px rgba(43,38,64,.35);border:6px solid var(--ink);}
+  /* App screens — carrusel infinito, cruza la pantalla como loop continuo */
+  .app-screens-wrap {
+    margin-top: 2rem;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+  }
+  .story-screens {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    animation: appScreensLoop 16s linear infinite;
+  }
+  .story-screens img {
+    width: 150px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px -18px rgba(43,38,64,.35);
+    border: 6px solid var(--ink);
+    display: block;
+    flex-shrink: 0;
+  }
+  @keyframes appScreensLoop {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .app-screens-wrap:hover .story-screens { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .story-screens { animation: none; }
+  }
 
   .story-turn .story-h1 em{background:linear-gradient(120deg,var(--mint),var(--cyan));-webkit-background-clip:text;background-clip:text;}
   .story-wordmark{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;margin-top:.75rem;}
@@ -941,10 +971,11 @@
       </div>
     </div>
     <h1 class="story-h1">¿Y si el tiempo de pantalla<br><em>sí sumara?</em></h1>
-    <p class="story-sub">No se trata de quitarle la pantalla — se trata de que lo que mire, lo haga crecer.</p>
-  </div>
-  <!-- Panel 5 — Solución TP Learning -->
-  <div class="story-panel" data-story-panel>
+    <p class="story-sub" style="margin-bottom:.5rem;">No se trata de quitarle la pantalla — se trata de que lo que mire, lo haga crecer.</p>
+
+    <!-- Solución TP Learning — fusionado en el mismo panel, sin salto de scroll extra -->
+    <div class="masked-heading" data-masked-heading>
+      <svg viewBox="0 0 800 350" preserveAspectRatio="xMidYMid meet">
         <defs>
           <clipPath id="mhClip" clipPathUnits="userSpaceOnUse">
             <text x="400" y="140" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="76">Ofrecemos</text>
@@ -963,9 +994,14 @@
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
     </div>
     <p class="story-sub" style="margin-top:.5rem;">Letras, números y animales reales — con sonido real — pensados para que jugar en pantalla también desarrolle memoria, lenguaje y motricidad.</p>
-    <div class="story-screens">
-      <img src="tp-app-screenshot-home.png" alt="App TP Learning - inicio" loading="lazy">
-      <img src="tp-app-screenshot-domesticos.png" alt="App TP Learning - animales domésticos" loading="lazy">
+    <div class="app-screens-wrap">
+      <div class="story-screens">
+        <img src="tp-app-screenshot-home.png" alt="App TP Learning - inicio" loading="lazy">
+        <img src="tp-app-screenshot-domesticos.png" alt="App TP Learning - animales domésticos" loading="lazy">
+        <!-- duplicado para loop infinito perfecto -->
+        <img src="tp-app-screenshot-home.png" alt="" aria-hidden="true" loading="lazy">
+        <img src="tp-app-screenshot-domesticos.png" alt="" aria-hidden="true" loading="lazy">
+      </div>
     </div>
     <div class="story-features">
       <div class="story-feature"><span class="icon">🎯</span><h4>Sin scroll infinito</h4><p>Cada lección tiene principio y fin — se completa, no se desliza.</p></div>
