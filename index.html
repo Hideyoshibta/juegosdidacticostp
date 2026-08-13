@@ -717,25 +717,85 @@
   .puzzle-piece:nth-child(6){background:linear-gradient(135deg,rgba(79,143,224,.28),rgba(139,124,246,.18));}
 
 
-  /* ══ MASKED HEADING — "Ofrecemos Educación Real" con imagen dentro del texto ══ */
-  .masked-heading {
+  /* ══ ZOOM PORTAL — texto con gradiente fluido que crece y se abre como puerta ══ */
+  .zoom-portal {
+    position: relative;
+    height: 280vh;
+    z-index: 2;
+  }
+  .zoom-portal-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .zoom-portal-stage {
     position: relative;
     width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
-    aspect-ratio: 16 / 6.5;
-    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .masked-heading svg { width: 100%; height: 100%; display: block; }
-  .masked-heading-fill {
-    opacity: 1;
+
+  /* Texto con gradiente FLUIDO — se mueve como si fuera video, nunca color sólido */
+  .zoom-portal-text {
+    position: relative;
+    z-index: 2;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.7rem, 7vw, 3.4rem);
+    line-height: 1.15;
+    text-align: center;
+    padding: 0 1.5rem;
+    background: linear-gradient(100deg,
+      var(--coral) 0%, var(--violet) 20%, var(--cyan) 40%,
+      var(--mint) 60%, var(--gold) 80%, var(--coral) 100%);
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: portalTextFlow 6s linear infinite;
+    will-change: transform, opacity;
+    transform: scale(1);
+  }
+  @keyframes portalTextFlow {
+    to { background-position: 400% 0; }
+  }
+
+  /* El "portal": círculo que crece desde el centro del texto y revela la foto detrás */
+  .zoom-portal-reveal {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: circle(0% at 50% 50%);
+    will-change: clip-path, opacity;
+    opacity: 0;
+  }
+  .zoom-portal-photo {
+    width: min(600px, 90vw);
+    height: min(600px, 90vh);
+    object-fit: cover;
+    border-radius: 40px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zoom-portal { height: auto; }
+    .zoom-portal-sticky { position: relative; height: auto; padding: 3rem 0; flex-direction: column; }
+    .zoom-portal-text { transform: none !important; animation: none; background-position: 0 0; }
+    .zoom-portal-reveal { position: relative; opacity: 1 !important; clip-path: none !important; margin-top: 2rem; }
+    .zoom-portal-photo { width: min(420px, 82vw); height: auto; border-radius: 28px; }
   }
   @media (max-width: 640px) {
-    .masked-heading { aspect-ratio: 16 / 8.5; max-width: 100%; }
+    .zoom-portal { height: 260vh; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .masked-heading-fill { transition: none; opacity: 1; transform: none; }
-  }
+
 
 
   /* ══ TÍTULO ESTÁTICO (fuera del carrusel) ══ */
@@ -989,24 +1049,22 @@
       </div>
     </div>
     <h1 class="story-h1">¿Y si el tiempo de pantalla<br><em>sí sumara?</em></h1>
-    <p class="story-sub" style="margin-bottom:.5rem;">No se trata de quitarle la pantalla — se trata de que lo que mire, lo haga crecer.</p>
+  </div>
 
-    <!-- Solución TP Learning — fusionado en el mismo panel, sin salto de scroll extra -->
-    <div class="masked-heading" data-masked-heading>
-      <svg viewBox="0 0 800 350" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <clipPath id="mhClip" clipPathUnits="userSpaceOnUse">
-            <text x="400" y="140" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="76">Ofrecemos</text>
-            <text x="400" y="240" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="76">Educación Real</text>
-          </clipPath>
-        </defs>
-        <g clip-path="url(#mhClip)" class="masked-heading-fill">
-          <image href="tp-story-solucion-aprende.jpg" x="-60" y="-40" width="920" height="430" preserveAspectRatio="xMidYMid slice"></image>
-        </g>
-      </svg>
+  <!-- ══ ZOOM PORTAL — el texto crece y se convierte en la puerta hacia TP Learning ══ -->
+  <div class="zoom-portal" id="zoomPortal" data-story-panel>
+    <div class="zoom-portal-sticky">
+      <div class="zoom-portal-stage">
+        <h2 class="zoom-portal-text">Ofrecemos<br>Educación Real</h2>
+        <div class="zoom-portal-reveal" id="zoomPortalReveal">
+          <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="zoom-portal-photo">
+        </div>
+      </div>
     </div>
+  </div>
 
-    <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact" loading="lazy">
+  <!-- Panel normal — TP Learning, revelado tras cruzar el portal -->
+  <div class="story-panel" data-story-panel>
     <div class="pz-line" style="margin:.25rem 0;">
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
@@ -1042,8 +1100,8 @@
   var reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
   /* ── Blobs de fondo ── */
-  var BLOB_COLORS=['rgba(242,96,122,.18)','rgba(139,124,246,.16)','rgba(52,184,196,.14)','rgba(240,169,62,.15)','rgba(47,191,143,.16)'];
-  var BLOB_SIZES=['340px','300px','280px','320px','360px'];
+  var BLOB_COLORS=['rgba(242,96,122,.38)','rgba(139,124,246,.36)','rgba(52,184,196,.34)','rgba(240,169,62,.36)','rgba(47,191,143,.38)'];
+  var BLOB_SIZES=['460px','420px','400px','440px','480px'];
   var BLOB_POS=[['8%','15%'],['58%','55%'],['25%','70%'],['65%','10%'],['15%','45%']];
   var blobs=[];
   if(false){ // blobs DOM reemplazados por el canvas #storyShader (más fluido, mejor rendimiento)
@@ -1750,5 +1808,58 @@ void main(){
   });
 })();
 </script>
-</body></body>
+
+<script>
+/* ══ ZOOM PORTAL — scroll-driven: el texto crece y se abre como puerta hacia la siguiente sección ══ */
+(function(){
+  var section = document.getElementById('zoomPortal');
+  var text = document.querySelector('.zoom-portal-text');
+  var reveal = document.getElementById('zoomPortalReveal');
+  if(!section || !text || !reveal) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return; // el CSS de fallback deja todo visible y estático
+
+  var ticking = false;
+
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+  function update(){
+    ticking = false;
+    var rect = section.getBoundingClientRect();
+    var total = rect.height - window.innerHeight;
+    if(total <= 0) return;
+
+    var progress = clamp(-rect.top / total, 0, 1);
+
+    // El texto crece de forma continua mientras se baja (nunca se detiene, solo crece)
+    var textScale = 1 + progress * 7;
+    text.style.transform = 'scale(' + textScale.toFixed(3) + ')';
+
+    // El texto se desvanece según el portal se va abriendo, como si lo atravesáramos
+    var textOpacity = clamp(1 - progress / 0.65, 0, 1);
+    text.style.opacity = textOpacity.toFixed(3);
+
+    // El portal circular se abre progresivamente desde el centro del texto,
+    // empieza a notarse después del 25% para dar tiempo a que el texto crezca primero
+    var portalProgress = clamp((progress - 0.2) / 0.65, 0, 1);
+    var portalRadius = portalProgress * 150; // en % — más de 100% para cubrir esquinas
+    reveal.style.clipPath = 'circle(' + portalRadius.toFixed(1) + '% at 50% 50%)';
+    reveal.style.opacity = clamp(portalProgress * 1.3, 0, 1).toFixed(3);
+  }
+
+  function onScroll(){
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+</script>
+
+</body>
 </html>
