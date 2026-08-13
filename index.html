@@ -717,26 +717,26 @@
   .puzzle-piece:nth-child(6){background:linear-gradient(135deg,rgba(79,143,224,.28),rgba(139,124,246,.18));}
 
 
-  /* ══ ZOOM PORTAL — el texto crece con el scroll y da paso al contenido estático ══ */
-  .zoom-portal {
+  /* ══ PUERTA CON ZOOM — el texto tapa el contenido; al hacer scroll dentro de esta
+     sección crece y se abre; si se retrocede, se cierra y vuelve a su lugar ══ */
+  .zoom-door-wrap {
     position: relative;
-    height: 130vh;
     z-index: 2;
   }
-  .zoom-portal-sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
+  .zoom-door-content {
+    position: relative;
+  }
+  .zoom-door {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    background: linear-gradient(180deg,#F6F1FE 0%,#F0E9FB 45%,#F3EAF3 100%);
+    pointer-events: none;
   }
-
-  /* Texto con gradiente FLUIDO — se mueve como si fuera video, nunca color sólido */
-  .zoom-portal-text {
-    position: relative;
-    z-index: 2;
+  .zoom-door-text {
     font-family: 'Sora', sans-serif;
     font-weight: 800;
     font-size: clamp(1.7rem, 7vw, 3.4rem);
@@ -750,22 +750,17 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: portalTextFlow 6s linear infinite;
+    animation: doorTextFlow 6s linear infinite;
     will-change: transform, opacity;
     transform: scale(1);
   }
-  @keyframes portalTextFlow {
+  @keyframes doorTextFlow {
     to { background-position: 400% 0; }
   }
-
   @media (prefers-reduced-motion: reduce) {
-    .zoom-portal { height: auto; }
-    .zoom-portal-sticky { position: relative; height: auto; padding: 2rem 0; }
-    .zoom-portal-text { transform: none !important; animation: none; background-position: 0 0; }
+    .zoom-door { display: none; }
   }
-  @media (max-width: 640px) {
-    .zoom-portal { height: 115vh; }
-  }
+
 
 
 
@@ -1023,16 +1018,10 @@
   </div>
 
   <!-- ══ ZOOM PORTAL — el texto crece y se convierte en la puerta hacia TP Learning ══ -->
-  <div class="zoom-portal" id="zoomPortal" data-story-panel>
-    <div class="zoom-portal-sticky">
-      <h2 class="zoom-portal-text">Ofrecemos<br>Educación Real</h2>
-    </div>
-  </div>
-
-  <!-- Panel normal — foto y TP Learning en flujo estático normal, nunca desaparecen -->
-  <div class="story-panel" data-story-panel>
-    <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact">
-    <div class="pz-line" style="margin:.25rem 0;">
+  <div class="zoom-door-wrap" id="zoomDoorWrap" data-story-panel>
+    <div class="zoom-door-content">
+      <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact">
+      <div class="pz-line" style="margin:.25rem 0;">
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
       <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
     </div>
@@ -1053,8 +1042,14 @@
     </div>
     <div class="story-cta-row">
       <a href="https://github.com/Hideyoshibta/juegosdidacticostp/releases/download/v1.0.0-2/app-release.apk" class="btn-primary" target="_blank" rel="noopener">📱 Descargá TP Learning gratis</a>
+      </div>
+      <div class="story-scrolldown"><span>Y si preferís algo sin pantalla, conocé nuestros cubos físicos</span><span class="arrow">↓</span></div>
     </div>
-    <div class="story-scrolldown"><span>Y si preferís algo sin pantalla, conocé nuestros cubos físicos</span><span class="arrow">↓</span></div>
+
+    <!-- La puerta: overlay que tapa el contenido hasta que el usuario hace zoom -->
+    <div class="zoom-door" id="zoomDoor">
+      <h2 class="zoom-door-text" id="zoomDoorText">Ofrecemos<br>Educación Real</h2>
+    </div>
   </div>
 
 </div>
@@ -1777,31 +1772,39 @@ void main(){
 </script>
 
 <script>
-/* ══ ZOOM PORTAL — scroll-driven: el texto crece con el scroll, luego el flujo normal continúa ══ */
+/* ══ PUERTA CON ZOOM — reversible: se abre al centrar la sección en pantalla,
+   se cierra de nuevo si el usuario retrocede. No consume altura de scroll extra. ══ */
 (function(){
-  var section = document.getElementById('zoomPortal');
-  var text = document.querySelector('.zoom-portal-text');
-  if(!section || !text) return;
+  var wrap = document.getElementById('zoomDoorWrap');
+  var door = document.getElementById('zoomDoor');
+  var text = document.getElementById('zoomDoorText');
+  if(!wrap || !door || !text) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduceMotion) return; // el CSS de fallback deja todo visible y estático
+  if(reduceMotion) return; // el CSS de fallback oculta la puerta y deja el contenido visible
 
   var ticking = false;
   function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
   function update(){
     ticking = false;
-    var rect = section.getBoundingClientRect();
-    var total = rect.height - window.innerHeight;
-    if(total <= 0) return;
+    var rect = wrap.getBoundingClientRect();
+    var vh = window.innerHeight;
 
-    var progress = clamp(-rect.top / total, 0, 1);
+    // "progress" mide qué tan centrada está la sección en la pantalla:
+    // 0 = la parte de arriba de la sección recién entra por abajo (puerta cerrada)
+    // 1 = la parte de arriba de la sección llegó a estar a la altura del centro (puerta abierta)
+    // Es puramente posicional — si el usuario sube, esto disminuye y la puerta se cierra sola.
+    var progress = clamp(1 - (rect.top / (vh * 0.6)), 0, 1);
 
-    // El texto crece de forma continua mientras se baja, y se desvanece al final
-    // para dar paso limpio a la foto/contenido que sigue en flujo normal debajo
     var textScale = 1 + progress * 4.5;
+    var textOpacity = clamp(1 - progress / 0.85, 0, 1);
+    var doorOpacity = clamp(1 - progress / 0.95, 0, 1);
+
     text.style.transform = 'scale(' + textScale.toFixed(3) + ')';
-    text.style.opacity = clamp(1 - progress / 0.85, 0, 1).toFixed(3);
+    text.style.opacity = textOpacity.toFixed(3);
+    door.style.opacity = doorOpacity.toFixed(3);
+    door.style.pointerEvents = doorOpacity > 0.05 ? 'auto' : 'none';
   }
 
   function onScroll(){
