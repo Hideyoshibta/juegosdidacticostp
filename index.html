@@ -722,7 +722,7 @@
      deshace exactamente lo que bajar construyó. ══ */
   .zoom-door-wrap {
     position: relative;
-    height: 340vh; /* espacio real de scroll para que el gesto se sienta controlado */
+    height: 190vh; /* espacio de scroll controlado, sin excederse */
     z-index: 2;
   }
   .zoom-door-sticky {
@@ -783,7 +783,7 @@
   }
 
   @media (max-width: 640px) {
-    .zoom-door-wrap { height: 300vh; }
+    .zoom-door-wrap { height: 170vh; }
     .zoom-door-content { max-height: 62vh; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1839,10 +1839,13 @@ void main(){
 
     // Cada pieza del contenido tiene su propia ventana dentro del progreso total,
     // repartidas en cascada para que se sientan "encajando" una tras otra.
-    var windowSize = 1 / (pieceCount + 1.4); // deja aire entre piezas
+    // Todas las piezas terminan de aparecer bien antes del final del scroll (al 78%),
+    // dejando margen para que el usuario vea el CTA completo sin tener que agotar el scroll.
+    var lastPieceEnd = 0.78;
+    var windowSize = lastPieceEnd / (pieceCount * 0.72);
     pieces.forEach(function(piece, i){
-      var startAt = i * windowSize * 0.85;
-      var endAt = startAt + windowSize * 1.6;
+      var startAt = i * windowSize * 0.72;
+      var endAt = startAt + windowSize;
       var pieceProgress = clamp((progress - startAt) / (endAt - startAt), 0, 1);
 
       piece.style.opacity = pieceProgress.toFixed(3);
