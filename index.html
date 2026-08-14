@@ -717,26 +717,28 @@
   .puzzle-piece:nth-child(6){background:linear-gradient(135deg,rgba(79,143,224,.28),rgba(139,124,246,.18));}
 
 
-  /* ══ PUERTA CON ZOOM — el texto tapa el contenido; al hacer scroll dentro de esta
-     sección crece y se abre; si se retrocede, se cierra y vuelve a su lugar ══ */
+  /* ══ ZOOM SINCRONIZADO CON SCROLL — el texto crece y el contenido se integra pieza
+     por pieza en la MISMA proporción que se hace scroll. 100% reversible: subir
+     deshace exactamente lo que bajar construyó. ══ */
   .zoom-door-wrap {
     position: relative;
+    height: 340vh; /* espacio real de scroll para que el gesto se sienta controlado */
     z-index: 2;
   }
-  .zoom-door-content {
-    position: relative;
-  }
-  .zoom-door {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
+  .zoom-door-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg,#F6F1FE 0%,#F0E9FB 45%,#F3EAF3 100%);
-    pointer-events: none;
+    overflow: hidden;
+    padding: 1.5rem;
   }
   .zoom-door-text {
+    position: relative;
+    z-index: 3;
     font-family: 'Sora', sans-serif;
     font-weight: 800;
     font-size: clamp(1.7rem, 7vw, 3.4rem);
@@ -751,15 +753,47 @@
     background-clip: text;
     color: transparent;
     animation: doorTextFlow 6s linear infinite;
-    will-change: transform, opacity;
-    transform: scale(1);
+    will-change: transform;
+    transform: scale(1) translateY(0);
+    flex-shrink: 0;
   }
   @keyframes doorTextFlow {
     to { background-position: 400% 0; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .zoom-door { display: none; }
+
+  .zoom-door-content {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    text-align: center;
   }
+  .zoom-door-content::-webkit-scrollbar { display: none; }
+
+  /* Cada pieza empieza invisible y ligeramente desplazada; el JS anima su llegada
+     escalonadamente según el progreso del scroll — nunca todo de golpe. */
+  .zoom-piece {
+    opacity: 0;
+    transform: translateY(24px) scale(.94);
+    will-change: opacity, transform;
+  }
+
+  @media (max-width: 640px) {
+    .zoom-door-wrap { height: 300vh; }
+    .zoom-door-content { max-height: 62vh; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .zoom-door-wrap { height: auto; }
+    .zoom-door-sticky { position: relative; height: auto; overflow: visible; }
+    .zoom-door-text { animation: none; background-position: 0 0; transform: none !important; }
+    .zoom-door-content { max-height: none; overflow: visible; }
+    .zoom-piece { opacity: 1 !important; transform: none !important; }
+  }
+
 
 
 
@@ -1017,38 +1051,36 @@
     <h1 class="story-h1">¿Y si el tiempo de pantalla<br><em>sí sumara?</em></h1>
   </div>
 
-  <!-- ══ ZOOM PORTAL — el texto crece y se convierte en la puerta hacia TP Learning ══ -->
+  <!-- ══ ZOOM PORTAL — el texto crece y el contenido se va integrando pieza por pieza, sincronizado 1:1 con el scroll, completamente reversible ══ -->
   <div class="zoom-door-wrap" id="zoomDoorWrap" data-story-panel>
-    <div class="zoom-door-content">
-      <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact">
-      <div class="pz-line" style="margin:.25rem 0;">
-      <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
-      <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
-    </div>
-    <p class="story-sub" style="margin-top:.5rem;">Letras, números y animales reales — con sonido real — pensados para que jugar en pantalla también desarrolle memoria, lenguaje y motricidad.</p>
-    <div class="app-screens-wrap">
-      <div class="story-screens">
-        <img src="tp-app-screenshot-home.png" alt="App TP Learning - inicio" loading="lazy">
-        <img src="tp-app-screenshot-domesticos.png" alt="App TP Learning - animales domésticos" loading="lazy">
-        <!-- duplicado para loop infinito perfecto -->
-        <img src="tp-app-screenshot-home.png" alt="" aria-hidden="true" loading="lazy">
-        <img src="tp-app-screenshot-domesticos.png" alt="" aria-hidden="true" loading="lazy">
-      </div>
-    </div>
-    <div class="story-features">
-      <div class="story-feature"><span class="icon">🎯</span><h4>Sin scroll infinito</h4><p>Cada lección tiene principio y fin — se completa, no se desliza.</p></div>
-      <div class="story-feature"><span class="icon">🔊</span><h4>Sonidos reales</h4><p>Animales, letras y números con audio real.</p></div>
-      <div class="story-feature"><span class="icon">🏆</span><h4>Progreso que se ve</h4><p>El logro es aprender, no seguir mirando.</p></div>
-    </div>
-    <div class="story-cta-row">
-      <a href="https://github.com/Hideyoshibta/juegosdidacticostp/releases/download/v1.0.0-2/app-release.apk" class="btn-primary" target="_blank" rel="noopener">📱 Descargá TP Learning gratis</a>
-      </div>
-      <div class="story-scrolldown"><span>Y si preferís algo sin pantalla, conocé nuestros cubos físicos</span><span class="arrow">↓</span></div>
-    </div>
-
-    <!-- La puerta: overlay que tapa el contenido hasta que el usuario hace zoom -->
-    <div class="zoom-door" id="zoomDoor">
+    <div class="zoom-door-sticky">
       <h2 class="zoom-door-text" id="zoomDoorText">Ofrecemos<br>Educación Real</h2>
+      <div class="zoom-door-content" id="zoomDoorContent">
+        <img src="tp-story-solucion-aprende.jpg" alt="Niño sonriendo aprendiendo con la app" class="story-illustration story-illustration-compact zoom-piece" data-zoom-piece="0">
+        <div class="pz-line zoom-piece" data-zoom-piece="1" style="margin:.25rem 0;">
+          <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--mint);--wx:-80px;--wy:-50px;--wr:-12deg;--wd:.0s;">TP</span>
+          <span class="pz-word" style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--ink);--wx:80px;--wy:-40px;--wr:14deg;--wd:.1s;">LEARNING</span>
+        </div>
+        <p class="story-sub zoom-piece" data-zoom-piece="2" style="margin-top:.5rem;">Letras, números y animales reales — con sonido real — pensados para que jugar en pantalla también desarrolle memoria, lenguaje y motricidad.</p>
+        <div class="app-screens-wrap zoom-piece" data-zoom-piece="3">
+          <div class="story-screens">
+            <img src="tp-app-screenshot-home.png" alt="App TP Learning - inicio" loading="lazy">
+            <img src="tp-app-screenshot-domesticos.png" alt="App TP Learning - animales domésticos" loading="lazy">
+            <!-- duplicado para loop infinito perfecto -->
+            <img src="tp-app-screenshot-home.png" alt="" aria-hidden="true" loading="lazy">
+            <img src="tp-app-screenshot-domesticos.png" alt="" aria-hidden="true" loading="lazy">
+          </div>
+        </div>
+        <div class="story-features zoom-piece" data-zoom-piece="4">
+          <div class="story-feature"><span class="icon">🎯</span><h4>Sin scroll infinito</h4><p>Cada lección tiene principio y fin — se completa, no se desliza.</p></div>
+          <div class="story-feature"><span class="icon">🔊</span><h4>Sonidos reales</h4><p>Animales, letras y números con audio real.</p></div>
+          <div class="story-feature"><span class="icon">🏆</span><h4>Progreso que se ve</h4><p>El logro es aprender, no seguir mirando.</p></div>
+        </div>
+        <div class="story-cta-row zoom-piece" data-zoom-piece="5">
+          <a href="https://github.com/Hideyoshibta/juegosdidacticostp/releases/download/v1.0.0-2/app-release.apk" class="btn-primary" target="_blank" rel="noopener">📱 Descargá TP Learning gratis</a>
+        </div>
+        <div class="story-scrolldown zoom-piece" data-zoom-piece="6"><span>Y si preferís algo sin pantalla, conocé nuestros cubos físicos</span><span class="arrow">↓</span></div>
+      </div>
     </div>
   </div>
 
@@ -1772,39 +1804,52 @@ void main(){
 </script>
 
 <script>
-/* ══ PUERTA CON ZOOM — reversible: se abre al centrar la sección en pantalla,
-   se cierra de nuevo si el usuario retrocede. No consume altura de scroll extra. ══ */
+/* ══ ZOOM SINCRONIZADO — el progreso del scroll controla el texto Y cada pieza
+   del contenido con la MISMA variable. Subir deshace exactamente lo que bajar
+   construyó, pieza por pieza, sin saltos. ══ */
 (function(){
   var wrap = document.getElementById('zoomDoorWrap');
-  var door = document.getElementById('zoomDoor');
   var text = document.getElementById('zoomDoorText');
-  if(!wrap || !door || !text) return;
+  var contentBox = document.getElementById('zoomDoorContent');
+  if(!wrap || !text || !contentBox) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduceMotion) return; // el CSS de fallback oculta la puerta y deja el contenido visible
+  if(reduceMotion) return; // el CSS de fallback deja todo visible y estático
 
+  var pieces = Array.prototype.slice.call(contentBox.querySelectorAll('.zoom-piece'));
+  var pieceCount = pieces.length;
   var ticking = false;
+
   function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
   function update(){
     ticking = false;
     var rect = wrap.getBoundingClientRect();
-    var vh = window.innerHeight;
+    var total = rect.height - window.innerHeight;
+    if(total <= 0) return;
 
-    // "progress" mide qué tan centrada está la sección en la pantalla:
-    // 0 = la parte de arriba de la sección recién entra por abajo (puerta cerrada)
-    // 1 = la parte de arriba de la sección llegó a estar a la altura del centro (puerta abierta)
-    // Es puramente posicional — si el usuario sube, esto disminuye y la puerta se cierra sola.
-    var progress = clamp(1 - (rect.top / (vh * 0.6)), 0, 1);
+    // progress 0→1: cuánto se ha recorrido de la sección completa.
+    // Es puramente una función de la posición actual — nunca "recuerda" nada,
+    // así que subir y bajar producen exactamente los mismos valores en espejo.
+    var progress = clamp(-rect.top / total, 0, 1);
 
-    var textScale = 1 + progress * 4.5;
-    var textOpacity = clamp(1 - progress / 0.85, 0, 1);
-    var doorOpacity = clamp(1 - progress / 0.95, 0, 1);
+    // Fase del texto: crece durante todo el progreso, nunca de golpe.
+    var textScale = 1 + progress * 3.2;
+    text.style.transform = 'scale(' + textScale.toFixed(3) + ') translateY(' + (-progress * 40).toFixed(1) + 'px)';
 
-    text.style.transform = 'scale(' + textScale.toFixed(3) + ')';
-    text.style.opacity = textOpacity.toFixed(3);
-    door.style.opacity = doorOpacity.toFixed(3);
-    door.style.pointerEvents = doorOpacity > 0.05 ? 'auto' : 'none';
+    // Cada pieza del contenido tiene su propia ventana dentro del progreso total,
+    // repartidas en cascada para que se sientan "encajando" una tras otra.
+    var windowSize = 1 / (pieceCount + 1.4); // deja aire entre piezas
+    pieces.forEach(function(piece, i){
+      var startAt = i * windowSize * 0.85;
+      var endAt = startAt + windowSize * 1.6;
+      var pieceProgress = clamp((progress - startAt) / (endAt - startAt), 0, 1);
+
+      piece.style.opacity = pieceProgress.toFixed(3);
+      var translateY = (1 - pieceProgress) * 24;
+      var scale = 0.94 + pieceProgress * 0.06;
+      piece.style.transform = 'translateY(' + translateY.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
+    });
   }
 
   function onScroll(){
