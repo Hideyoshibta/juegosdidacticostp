@@ -743,35 +743,14 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal-gradient-bg { animation: none; }
   }
-  .reveal-waves {
+  #revealScannerCanvas {
     position: absolute;
-    left: 0; right: 0; bottom: -6px;
-    height: 190px;
+    inset: 0;
     z-index: 1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .reveal-wave-svg {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 200%;
+    width: 100%;
     height: 100%;
     display: block;
-  }
-  .reveal-wave-back {
-    opacity: .22;
-    animation: revealWaveScroll 22s linear infinite;
-  }
-  .reveal-wave-front {
-    opacity: .32;
-    animation: revealWaveScroll 14s linear infinite reverse;
-  }
-  @keyframes revealWaveScroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal-wave-back, .reveal-wave-front { animation: none; }
+    pointer-events: none;
   }
 
   .reveal-key-light {
@@ -833,10 +812,10 @@
   .reveal-toby {
     position: relative;
     width: 150px;
-    transform: rotate(-8deg) scale(.94);
+    transform: rotate(-8deg) scale(1);
     transform-origin: 68% 88%;
     filter: contrast(1.08) saturate(1.06) drop-shadow(0 22px 20px rgba(0,0,0,.58)) drop-shadow(0 2px 4px rgba(139,124,246,.14));
-    opacity: 0;
+    opacity: 1;
   }
   .reveal-toby img { width: 100%; display: block; }
 
@@ -1286,14 +1265,7 @@
   <div id="revealSection" data-story-panel>
     <div id="revealStage">
       <div class="reveal-gradient-bg"></div>
-      <div class="reveal-waves" aria-hidden="true">
-        <svg class="reveal-wave-svg reveal-wave-back" viewBox="0 0 2880 140" preserveAspectRatio="none">
-          <path d="M0,70 C240,20 480,120 720,70 C960,20 1200,120 1440,70 C1680,20 1920,120 2160,70 C2400,20 2640,120 2880,70 L2880,140 L0,140 Z" fill="#8B7CF6"></path>
-        </svg>
-        <svg class="reveal-wave-svg reveal-wave-front" viewBox="0 0 2880 140" preserveAspectRatio="none">
-          <path d="M0,90 C240,40 480,140 720,90 C960,40 1200,140 1440,90 C1680,40 1920,140 2160,90 C2400,40 2640,140 2880,90 L2880,140 L0,140 Z" fill="#34B8C4"></path>
-        </svg>
-      </div>
+      <canvas id="revealScannerCanvas" aria-hidden="true"></canvas>
       <div class="reveal-key-light"></div>
       <div class="reveal-grain"></div>
 
@@ -1705,24 +1677,26 @@
 </script>
 
 <script>
-/* ══ SCANNER WEBGL — vanilla JS ══ */
+/* ══ SCANNER WEBGL — motor reutilizable, mismo shader del hero en múltiples canvas ══ */
 (function(){
-  var canvas = document.getElementById('scanner-canvas');
-  if(!canvas) return;
 
-  var gl = canvas.getContext('webgl2', {alpha:true, premultipliedAlpha:true, antialias:false});
-  if(!gl){ gl = canvas.getContext('webgl', {alpha:true, premultipliedAlpha:true}); }
-  if(!gl) return;
+  function initScanner(canvasId, colors, opts){
+    var canvas = document.getElementById(canvasId);
+    if(!canvas) return;
 
-  var isWebGL2 = !!canvas.getContext('webgl2');
+    var gl = canvas.getContext('webgl2', {alpha:true, premultipliedAlpha:true, antialias:false});
+    if(!gl){ gl = canvas.getContext('webgl', {alpha:true, premultipliedAlpha:true}); }
+    if(!gl) return;
 
-  var vertSrc = isWebGL2 ? `#version 300 es
+    var isWebGL2 = !!canvas.getContext('webgl2');
+
+    var vertSrc = isWebGL2 ? `#version 300 es
 in vec2 position;
 void main(){ gl_Position = vec4(position,0.,1.); }` :
 `attribute vec2 position;
 void main(){ gl_Position = vec4(position,0.,1.); }`;
 
-  var fragSrc = isWebGL2 ? `#version 300 es
+    var fragSrc = isWebGL2 ? `#version 300 es
 precision highp float;
 uniform vec2 iResolution; uniform float iTime;
 uniform float uSpeed,uSweepSpeed,uSweepWidth,uSweepFalloff,uScale,uFrequency,uRipple;
@@ -1817,102 +1791,109 @@ void main(){
   gl_FragColor=vec4(clamp(col,0.,1.)*a,a);
 }`;
 
-  function compile(type, src){
-    var sh = gl.createShader(type);
-    gl.shaderSource(sh, src);
-    gl.compileShader(sh);
-    return sh;
-  }
-  var prog = gl.createProgram();
-  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vertSrc));
-  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fragSrc));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  // Full-screen triangle
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
-  var posLoc = gl.getAttribLocation(prog, 'position');
-  gl.enableVertexAttribArray(posLoc);
-  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-  gl.clearColor(0,0,0,0);
-
-  function u(name){ return gl.getUniformLocation(prog, name); }
-  var locs = {
-    iTime: u('iTime'), iRes: u('iResolution'),
-    speed: u('uSpeed'), sweepSpeed: u('uSweepSpeed'),
-    sweepWidth: u('uSweepWidth'), sweepFalloff: u('uSweepFalloff'),
-    scale: u('uScale'), freq: u('uFrequency'), ripple: u('uRipple'),
-    bandDensity: u('uBandDensity'), lineSharp: u('uLineSharpness'),
-    glow: u('uGlow'), colorSpread: u('uColorSpread'),
-    brightness: u('uBrightness'), contrast: u('uContrast'),
-    softness: u('uSoftness'), vignette: u('uVignette'), opacity: u('uOpacity'),
-    c1: u('uColor1'), c2: u('uColor2'), c3: u('uColor3')
-  };
-
-  // Set uniforms matching Scanner props
-  gl.uniform1f(locs.speed, 0.5);
-  gl.uniform1f(locs.sweepSpeed, 0.25);
-  gl.uniform1f(locs.sweepWidth, 1.6);
-  gl.uniform1f(locs.sweepFalloff, 6.0);
-  gl.uniform1f(locs.scale, 1.5);
-  gl.uniform1f(locs.freq, 2.0);
-  gl.uniform1f(locs.ripple, 0.22);
-  gl.uniform1f(locs.bandDensity, 11.0);
-  gl.uniform1f(locs.lineSharp, 5.5);
-  gl.uniform1f(locs.glow, 0.22);
-  gl.uniform1f(locs.colorSpread, 0.7);
-  gl.uniform1f(locs.brightness, 1.0);
-  gl.uniform1f(locs.contrast, 1.15);
-  gl.uniform1f(locs.softness, 1.4);
-  gl.uniform1f(locs.vignette, 0.45);
-  gl.uniform1f(locs.opacity, 1.0);
-  // Colors: #6C5ce7, #4fd1c5, #f0628a
-  gl.uniform3f(locs.c1, 0.424, 0.361, 0.906);
-  gl.uniform3f(locs.c2, 0.310, 0.820, 0.773);
-  gl.uniform3f(locs.c3, 0.941, 0.384, 0.541);
-
-  var t0 = performance.now();
-  var raf = 0;
-
-  function resize(){
-    var w = canvas.clientWidth * Math.min(window.devicePixelRatio||1, 2) | 0;
-    var h = canvas.clientHeight * Math.min(window.devicePixelRatio||1, 2) | 0;
-    if(canvas.width !== w || canvas.height !== h){
-      canvas.width = w; canvas.height = h;
-      gl.viewport(0, 0, w, h);
+    function compile(type, src){
+      var sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return sh;
     }
-    gl.uniform2f(locs.iRes, canvas.width, canvas.height);
-  }
+    var prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, vertSrc));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fragSrc));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
 
-  function frame(now){
-    resize();
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.uniform1f(locs.iTime, (now - t0) * 0.001);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-    raf = requestAnimationFrame(frame);
-  }
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    var posLoc = gl.getAttribLocation(prog, 'position');
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
 
-  // Only run when visible
-  var io = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){
-      if(!raf) raf = requestAnimationFrame(frame);
-    } else {
-      cancelAnimationFrame(raf); raf = 0;
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0,0,0,0);
+
+    function u(name){ return gl.getUniformLocation(prog, name); }
+    var locs = {
+      iTime: u('iTime'), iRes: u('iResolution'),
+      speed: u('uSpeed'), sweepSpeed: u('uSweepSpeed'),
+      sweepWidth: u('uSweepWidth'), sweepFalloff: u('uSweepFalloff'),
+      scale: u('uScale'), freq: u('uFrequency'), ripple: u('uRipple'),
+      bandDensity: u('uBandDensity'), lineSharp: u('uLineSharpness'),
+      glow: u('uGlow'), colorSpread: u('uColorSpread'),
+      brightness: u('uBrightness'), contrast: u('uContrast'),
+      softness: u('uSoftness'), vignette: u('uVignette'), opacity: u('uOpacity'),
+      c1: u('uColor1'), c2: u('uColor2'), c3: u('uColor3')
+    };
+
+    opts = opts || {};
+    gl.uniform1f(locs.speed, opts.speed || 0.5);
+    gl.uniform1f(locs.sweepSpeed, opts.sweepSpeed || 0.25);
+    gl.uniform1f(locs.sweepWidth, opts.sweepWidth || 1.6);
+    gl.uniform1f(locs.sweepFalloff, opts.sweepFalloff || 6.0);
+    gl.uniform1f(locs.scale, opts.scale || 1.5);
+    gl.uniform1f(locs.freq, opts.freq || 2.0);
+    gl.uniform1f(locs.ripple, opts.ripple != null ? opts.ripple : 0.22);
+    gl.uniform1f(locs.bandDensity, opts.bandDensity || 11.0);
+    gl.uniform1f(locs.lineSharp, opts.lineSharp || 5.5);
+    gl.uniform1f(locs.glow, opts.glow != null ? opts.glow : 0.22);
+    gl.uniform1f(locs.colorSpread, opts.colorSpread != null ? opts.colorSpread : 0.7);
+    gl.uniform1f(locs.brightness, opts.brightness != null ? opts.brightness : 1.0);
+    gl.uniform1f(locs.contrast, opts.contrast || 1.15);
+    gl.uniform1f(locs.softness, opts.softness || 1.4);
+    gl.uniform1f(locs.vignette, opts.vignette != null ? opts.vignette : 0.45);
+    gl.uniform1f(locs.opacity, opts.opacity != null ? opts.opacity : 1.0);
+    gl.uniform3f(locs.c1, colors[0][0], colors[0][1], colors[0][2]);
+    gl.uniform3f(locs.c2, colors[1][0], colors[1][1], colors[1][2]);
+    gl.uniform3f(locs.c3, colors[2][0], colors[2][1], colors[2][2]);
+
+    var t0 = performance.now();
+    var raf = 0;
+
+    function resize(){
+      var w = canvas.clientWidth * Math.min(window.devicePixelRatio||1, 2) | 0;
+      var h = canvas.clientHeight * Math.min(window.devicePixelRatio||1, 2) | 0;
+      if(canvas.width !== w || canvas.height !== h){
+        canvas.width = w; canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+      gl.uniform2f(locs.iRes, canvas.width, canvas.height);
     }
-  }, {threshold: 0});
-  io.observe(canvas);
 
-  document.addEventListener('visibilitychange', function(){
-    if(document.hidden){ cancelAnimationFrame(raf); raf = 0; }
-    else if(!raf) raf = requestAnimationFrame(frame);
-  });
+    function frame(now){
+      resize();
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform1f(locs.iTime, (now - t0) * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      raf = requestAnimationFrame(frame);
+    }
 
-  // Smooth scroll to story
+    var io = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){
+        if(!raf) raf = requestAnimationFrame(frame);
+      } else {
+        cancelAnimationFrame(raf); raf = 0;
+      }
+    }, {threshold: 0});
+    io.observe(canvas);
+
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ cancelAnimationFrame(raf); raf = 0; }
+      else if(!raf) raf = requestAnimationFrame(frame);
+    });
+  }
+
+  // Colores de marca: #6C5ce7 (violeta), #4fd1c5 (cyan), #f0628a (coral)
+  var BRAND_COLORS = [
+    [0.424, 0.361, 0.906],
+    [0.310, 0.820, 0.773],
+    [0.941, 0.384, 0.541]
+  ];
+
+  initScanner('scanner-canvas', BRAND_COLORS, {});
+  initScanner('revealScannerCanvas', BRAND_COLORS, { opacity: 0.85, vignette: 0.55 });
+
   var btn = document.getElementById('scannerScrollBtn');
   if(btn) btn.addEventListener('click', function(e){
     e.preventDefault();
@@ -2099,8 +2080,7 @@ void main(){
   tl.to('.reveal-key-light', { opacity: 1, duration: 15, ease: 'power1.out' }, 0)
     .to('.reveal-logo-row', { opacity: 1, duration: 10, ease: 'power1.out' }, 3);
 
-  /* Fase 2 — 15-30%: aparece Toby con asentamiento contenido */
-  tl.to('#revealToby', { opacity: 1, scale: 1, duration: 15, ease: 'back.out(0.8)' }, 15);
+  /* Cubi principal: ya visible desde el inicio (CSS), no requiere animación de entrada */
 
   /* El segundo Cubi entra justo después, con espacio propio, para que se sienta
      estructurado y no amontonado junto al primero. */
