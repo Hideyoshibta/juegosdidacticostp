@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://juegosdidacticostp.com data: blob:; media-src 'self' https://juegosdidacticostp.com; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://juegosdidacticostp.com data: blob:; media-src 'self' https://juegosdidacticostp.com; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -716,6 +716,8 @@
 
 
   /* ══ TP LEARNING REVEAL — GSAP ScrollTrigger, escena cinematográfica pineada ══ */
+  .reveal-toby, .reveal-cubi-side, .reveal-phone, .reveal-block, .reveal-benefit, .reveal-cta, .reveal-particle, .reveal-mask { will-change: transform, opacity; backface-visibility: hidden; }
+  #revealStage { contain: layout paint; }
   #revealSection {
     position: relative;
     height: 380vh;
@@ -2054,8 +2056,37 @@ void main(){
 <script>
 /* ══ TP LEARNING REVEAL — timeline GSAP + ScrollTrigger, 7 fases ══ */
 (function(){
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  function cargar(src, integridad, listo, falla){
+    var el = document.createElement('script');
+    el.src = src; el.integrity = integridad; el.crossOrigin = 'anonymous';
+    el.onload = listo; el.onerror = falla;
+    document.head.appendChild(el);
+  }
+  function estatico(){
+    var sel = ['.reveal-key-light','.reveal-logo-row','#revealCubiSide','#revealPhone','.reveal-benefit','#revealCta','#revealSubcta'];
+    sel.forEach(function(q){
+      document.querySelectorAll(q).forEach(function(n){ n.style.opacity = '1'; n.style.transform = 'none'; });
+    });
+    var d = document.getElementById('revealCtaDivider');
+    if (d) { d.style.transform = 'scaleX(1)'; d.style.opacity = '1'; }
+    var h = document.getElementById('revealHint');
+    if (h) h.style.display = 'none';
+  }
+  function iniciar(){
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') { estatico(); return; }
+    montar();
+  }
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    iniciar();
+  } else {
+    cargar('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', 'sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt', function(){
+      cargar('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', 'sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d', iniciar, estatico);
+    }, estatico);
+  }
+  function montar(){
   gsap.registerPlugin(ScrollTrigger);
+  gsap.ticker.lagSmoothing(0);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2073,9 +2104,10 @@ void main(){
       trigger: '#revealSection',
       start: 'top top',
       end: 'bottom bottom',
-      scrub: .6,
+      scrub: 1,
       pin: '#revealStage',
-      anticipatePin: 1
+      anticipatePin: 1,
+      invalidateOnRefresh: true
     }
   });
 
@@ -2141,6 +2173,7 @@ void main(){
     opacity: 0,
     scrollTrigger: { trigger: '#revealSection', start: 'top top', end: '+=200', scrub: true }
   });
+  }
 })();
 </script>
 
